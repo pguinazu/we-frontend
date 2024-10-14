@@ -1,0 +1,6 @@
+image: 888594506437.dkr.ecr.us-east-2.amazonaws.com/cicd-node-asf:14
+
+include:
+  - project: 'arquitectura/cicd/devops/gitlabops'
+    file:
+      - pre-script-template.yml
