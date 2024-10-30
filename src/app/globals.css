@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body {
+  @apply h-full;
+  background: linear-gradient(3.12deg, #434343 3.74%, #232323 79.77%, #000000 124.44%);
+}
+
+:root {
+  --FontFamilyGeneral: 'Lato', sans-serif; /* O la fuente que usas en Figma */
+}
