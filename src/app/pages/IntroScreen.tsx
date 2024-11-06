@@ -21,12 +21,13 @@ export default function IntroScreen() {
             </div>
 
             <div className="absolute left-1/2 top-[395px] transform -translate-x-1/2">
-                <Title text="W3 are cripto" />
+                <Title text="W3 are crypto" />
             </div>
 
-            <div className="absolute left-1/2 top-[445px] transform -translate-x-1/2">
+            {/* removed from figma: */}
+            {/*<div className="absolute left-1/2 top-[445px] transform -translate-x-1/2">
                 <Subtitle text="In code w3 trust" />
-            </div>
+            </div> */}
 
             <div className="absolute left-1/2 bottom-[168px] transform -translate-x-1/2 w-[296px]">
                 <Button label="Crear cuenta" onClick={handleContinueClick} fullWidth />

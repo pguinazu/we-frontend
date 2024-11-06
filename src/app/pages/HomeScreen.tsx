@@ -48,11 +48,11 @@ export default function HomePage() {
         <div className="text-lg font-semibold">**** 4569</div>
         <Subtitle text="Saldo disponible:" />
         <div className="text-2xl font-bold">USD 0,00</div>
+      </div>
         <div className="flex mt-4 space-x-4">
           <Button label="Recibir" fullWidth onClick={handleReceiveClick} />
           <Button label="Pausar tarjeta" fullWidth onClick={handlePauseCardClick} />
         </div>
-      </div>
 
       {/* Empty Transactions Section */}
       <div className="flex flex-col items-center mt-8">

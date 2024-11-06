@@ -6,7 +6,7 @@ import AppSubtitle from '../components/AppSubtitle';
 export default function LoginPage() {
   return (
     <main className="flex mt-3 flex-col items-center justify-center min-h-screen text-white">
-      <div className='absolute top-6 left-6 '>
+      <div className='absolute top-6'>
         <div className="mb-6">
           <AppTitle text="Bienvenido a W3" />
         </div>
