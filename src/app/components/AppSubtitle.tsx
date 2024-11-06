@@ -7,7 +7,7 @@ interface SubtitleProps {
 const Subtitle: React.FC<SubtitleProps> = ({ text }) => {
   return (
     <p
-      className="w-[296px] text-[14px] font-semibold leading-[24px] text-center mx-auto font-[var(--FontFamilyGeneral)]"
+      className="w-[296px] text-[14px] font-semibold leading-[24px] text-left mx-auto font-[var(--FontFamilyGeneral)]"
       style={{
         color: 'var(--Schemes-Surface, #FEF7FF)',
       }}
