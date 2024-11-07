@@ -7,6 +7,7 @@ import IntroScreen from './pages/IntroScreen';
 import HomeScreen from './pages/HomeScreen';
 import PrincipalFaqs from './pages/faq/PrincipalFaqs';
 import LoginScreenLastStep from './pages/login/LoginScreenLastStep';
+import SuccessAccountCreated from './pages/account/SuccessAccountCreated';
 
 export default function HomePage() {
   return (

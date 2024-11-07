@@ -5,15 +5,11 @@ import Subtitle from '../../components/Subtitle';
 import Title from '../../components/Title';
 import PopUp from '../../components/PopUp';
 import LoginPersonalInfoForm from '../../components/LoginPersonalInfoForm';
-// import { FiArrowLeft } from 'react-icons/fi';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const LoginScreenLastStep = () => {
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [showPopUp, setShowPopUp] = useState(false);
-
-  const handleInputChange = (setter: { (value: React.SetStateAction<string>): void; (value: React.SetStateAction<string>): void; (value: React.SetStateAction<string>): void; (arg0: any): void; }) => (e: { target: { value: any; }; }) => {
-    setter(e.target.value);
-  };
 
   const handleTermsChange = () => {
     setTermsAccepted((prev) => !prev);
@@ -28,9 +24,9 @@ const LoginScreenLastStep = () => {
   };
 
   return (
-    <div className="w-[360px] h-[830px]  flex flex-col items-center p-4 relative">
+    <div className="w-[360px] h-[830px] flex flex-col items-center p-4 relative">
       <div className="w-full flex items-center mb-4 text-[#FEF7FF]">
-        {/* <FiArrowLeft className="mr-2" /> Falta icono */}
+        <ArrowBackIcon className="mr-2" /> {/* Icono de flecha hacia la izquierda */}
         <span>Volver</span>
       </div>
       <div className="w-full mb-4">
