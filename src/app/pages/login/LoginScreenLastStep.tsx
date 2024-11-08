@@ -32,11 +32,11 @@ const LoginScreenLastStep = () => {
       <div className="w-full mb-4">
         <Title text="Último paso" />
       </div>
-      <div className="w-full mb-6">
+      <div className="w-full">
         <Subtitle text="Te pedimos estos últimos datos para poder crearte la cuenta" />
       </div>
 
-      <LoginPersonalInfoForm />
+      <LoginPersonalInfoForm/>
 
       <div className="w-full text-center text-[#FEF7FF] text-[13px] my-6">
         o ingresá con redes sociales
