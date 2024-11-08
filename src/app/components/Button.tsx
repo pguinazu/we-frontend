@@ -1,9 +1,10 @@
 import React from 'react';
 
 interface ButtonProps {
-  label: string;
+  label: string | React.ReactNode;
   onClick: () => void;
   fullWidth?: boolean;
+  className?: string;
 }
 
 const Button: React.FC<ButtonProps> = ({ label, onClick, fullWidth = false }) => {
