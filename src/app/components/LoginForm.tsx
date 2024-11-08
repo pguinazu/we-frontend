@@ -10,9 +10,18 @@ const LoginForm: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showPasswordRules, setShowPasswordRules] = useState(false); // Estado para mostrar u ocultar las reglas de contraseña
 
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleClickShowConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
+
+  const handlePasswordChange = (e: { target: { value: any; }; }) => {
+    const newPassword = e.target.value;
+    setPassword(newPassword);
+    if (newPassword.length === 1) {
+      setShowPasswordRules(true); // Muestra las reglas cuando el usuario comienza a escribir
+    }
+  };
 
   const handleContinueClick = () => {
     console.log("Botón Continuar clickeado");
@@ -61,7 +70,7 @@ const LoginForm: React.FC = () => {
             type={showPassword ? 'text' : 'password'}
             fullWidth
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={handlePasswordChange}
             InputProps={{
               style: { backgroundColor: '#FAFAFA' },
               endAdornment: (
@@ -72,17 +81,19 @@ const LoginForm: React.FC = () => {
             }}
           />
 
-          {/* Lista de validaciones */}
-          <ul className="mt-2 text-sm list-disc pl-5">
-            {passwordValidationRules.map((rule, index) => (
-              <li
-                key={index}
-                className={rule.isValid ? 'text-white' : 'text-red-500'}
-              >
-                {rule.label}
-              </li>
-            ))}
-          </ul>
+          {/* Muestra las reglas solo si showPasswordRules es verdadero */}
+          {showPasswordRules && (
+            <ul className="mt-2 text-sm list-disc pl-5">
+              {passwordValidationRules.map((rule, index) => (
+                <li
+                  key={index}
+                  className={rule.isValid ? 'text-white' : 'text-red-500'}
+                >
+                  {rule.label}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
 
         <div className="relative">
