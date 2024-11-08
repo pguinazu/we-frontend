@@ -13,8 +13,8 @@ export default function HomePage() {
   return (
     <main className="flex mt-3 flex-col items-center justify-center min-h-screen text-white bg-center bg-no-repeat bg-cover">
       {/* <SplashScreen /> */}
-      <IntroScreen />
-      {/* <HomeScreen /> */}
+      {/* <IntroScreen /> */}
+      <HomeScreen />
 
       {/* <LoginScreenLastStep/> */}
       {/* <SuccessAccountCreated/> */}
