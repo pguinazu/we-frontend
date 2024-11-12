@@ -4,10 +4,10 @@ import Button from '../../components/Button';
 import Subtitle from '../../components/Subtitle';
 import Title from '../../components/Title';
 import PopUp from '../../components/PopUp';
-import LoginPersonalInfoForm from '../../components/LoginPersonalInfoForm';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import LoginPersonalInfoPhone from '@/app/components/LoginPersonalInfoPhone';
 
-const LoginScreenLastStep = () => {
+const LoginScreenLastStepPhoneNumber = () => {
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [showPopUp, setShowPopUp] = useState(false);
 
@@ -24,7 +24,7 @@ const LoginScreenLastStep = () => {
   };
 
   return (
-    <div className="w-[360px] h-[830px] flex flex-col items-center p-4 relative">
+    <div className="w-full h-full flex flex-col items-center p-4 relative">
       <div className="w-full flex items-center mb-4 text-[#FEF7FF]">
         <ArrowBackIcon className="mr-2" /> {/* Icono de flecha hacia la izquierda */}
         <span>Volver</span>
@@ -36,16 +36,16 @@ const LoginScreenLastStep = () => {
         <Subtitle text="Te pedimos estos últimos datos para poder crearte la cuenta" />
       </div>
 
-      <LoginPersonalInfoForm/>
+      <LoginPersonalInfoPhone/>
 
-      <div className="w-full text-center text-[#FEF7FF] text-[13px] my-6">
+      {/* <div className="w-full text-center text-[#FEF7FF] text-[13px] my-6">
         o ingresá con redes sociales
-      </div>
+      </div> */}
 
-      <div className="flex flex-col gap-4 w-full">
+      {/* <div className="flex flex-col gap-4 w-full">
         <Button label="Registrarse con Google" onClick={() => {}} fullWidth />
         <Button label="Registrarse con Facebook" onClick={() => {}} fullWidth />
-      </div>
+      </div> */}
 
       {showPopUp && (
         <PopUp onClose={handleClosePopUp}>
@@ -60,4 +60,4 @@ const LoginScreenLastStep = () => {
   );
 };
 
-export default LoginScreenLastStep;
+export default LoginScreenLastStepPhoneNumber;

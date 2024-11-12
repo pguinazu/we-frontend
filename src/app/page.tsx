@@ -2,20 +2,22 @@ import React from 'react';
 import Link from 'next/link';
 import Title from './components/Title';
 import Subtitle from './components/Subtitle';
-import SplashScreen from './pages/SplashScreen';
-import IntroScreen from './pages/IntroScreen';
-import HomeScreen from './pages/HomeScreen';
-import PrincipalFaqs from './pages/faq/PrincipalFaqs';
-import LoginScreenLastStep from './pages/login/LoginScreenLastStep';
-import SuccessAccountCreated from './pages/account/SuccessAccountCreated';
-import LoginScreenLastStepPhoneNumber from './pages/login/LoginScreenLastStepPhoneNumber';
+import SplashScreen from './auth/splash/page';
+import IntroScreen from './auth/intro/page';
+import HomeScreen from './dashboard/page';
+import PrincipalFaqs from './faq/page';
+import LoginScreenLastStep from './auth/login-last-step/page';
+import SuccessAccountCreated from './auth/success-account/page';
+import LoginScreenLastStepPhoneNumber from './auth/login-last-step-phone/page';
+import localFont from "next/font/local";
+import "./globals.css";
 
 export default function HomePage() {
   return (
     <main className="flex mt-3 flex-col items-center justify-center min-h-screen text-white bg-center bg-no-repeat bg-cover">
-      {/* <SplashScreen /> */}
+      <SplashScreen />
       {/* <IntroScreen /> */}
-      <HomeScreen />
+      {/* <HomeScreen /> */}
 
       {/* <LoginScreenLastStep/> */}
       {/* <LoginScreenLastStepPhoneNumber/> */}

@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { TextField, IconButton, InputAdornment } from '@mui/material';
 import { Visibility, VisibilityOff, ErrorOutline } from '@mui/icons-material';
 import Button from '../components/Button';
+import { useRouter } from 'next/navigation';
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -14,6 +15,8 @@ const LoginForm: React.FC = () => {
   const [showPasswordRules, setShowPasswordRules] = useState(false);
   const [touchedFields, setTouchedFields] = useState({ email: false, password: false, confirmPassword: false });
 
+  const router = useRouter();
+  
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleClickShowConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
 
@@ -31,6 +34,7 @@ const LoginForm: React.FC = () => {
 
   const handleContinueClick = () => {
     console.log("Botón Continuar clickeado");
+    router.push('/auth/login-last-step');
   };
 
   // Validar que el correo electrónico tenga un formato válido

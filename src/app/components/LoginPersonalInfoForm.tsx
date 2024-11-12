@@ -4,6 +4,9 @@ import React, { useState } from 'react';
 import { TextField, Button, InputAdornment } from '@mui/material';
 import { ErrorOutline } from '@mui/icons-material';
 import PopUp from './PopUp';
+import { useRouter } from 'next/navigation';
+import PhoneInput from './PhoneInput1';
+import PhoneInput2 from './PhoneInput2';
 
 const LoginPersonalInfoForm: React.FC = () => {
   const [name, setName] = useState('');
@@ -12,9 +15,12 @@ const LoginPersonalInfoForm: React.FC = () => {
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [showPopUp, setShowPopUp] = useState(false);
   const [touchedFields, setTouchedFields] = useState({ name: false, lastName: false, phone: false });
+  
+  const router = useRouter();
 
   const handleCreateAccount = () => {
     // Lógica para crear cuenta aquí
+    router.push('/auth/success-account');
   };
 
   const handleTermsChange = () => {
@@ -41,10 +47,10 @@ const LoginPersonalInfoForm: React.FC = () => {
   const isPhoneValid = /^\d{8,18}$/.test(phone);
 
   // Verificar si el formulario es válido
-  const isFormValid = isNameValid && isLastNameValid && isPhoneValid && termsAccepted;
+  const isFormValid = isNameValid && isLastNameValid && termsAccepted; //agregar validacion isPhoneValid, revisando regla segun autocomplete de codigo de area
 
   return (
-    <div className="relative mx-auto mt-10 p-5 w-[296px] h-auto bg-[#202020] shadow-md rounded-md flex flex-col gap-6">
+    <div className="relative mt-10 w-full h-auto bg-[#202020] shadow-md rounded-md flex flex-col gap-6 p-2 pb-3">
       <div className="flex flex-col gap-4">
         <TextField
           label="Nombre"
@@ -88,26 +94,9 @@ const LoginPersonalInfoForm: React.FC = () => {
           }}
         />
 
-        <TextField
-          label="Teléfono"
-          placeholder="5411 2563-2500"
-          variant="filled"
-          value={phone}
-          onChange={handleInputChange(setPhone, 'phone')}
-          fullWidth
-          error={!isPhoneValid && touchedFields.phone}
-          helperText={!isPhoneValid && touchedFields.phone ? "Solo números y guiones" : ""}
-          InputProps={{
-            style: { backgroundColor: '#FAFAFA' },
-            endAdornment: (
-              !isPhoneValid && touchedFields.phone && (
-                <InputAdornment position="end">
-                  <ErrorOutline color="error" />
-                </InputAdornment>
-              )
-            ),
-          }}
-        />
+      {/* ------------ opciones para codigo de area pais -------------- */}
+        {/* <PhoneInput /> */}
+        <PhoneInput2 />
       </div>
 
       <div className="flex items-center gap-2">
@@ -143,7 +132,7 @@ const LoginPersonalInfoForm: React.FC = () => {
       {showPopUp && (
         <PopUp onClose={handleClosePopUp}>
           <div className="text-black">
-            <h2 className="text-lg font-bold mb-4">Términos y Condiciones</h2>
+            <h2 className="text-lg  mb-4">Términos y Condiciones</h2>
             <p>Aquí van los términos y condiciones del servicio...</p>
           </div>
         </PopUp>
