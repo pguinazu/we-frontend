@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -8,8 +9,46 @@ html, body {
 }
 
 :root {
-  --FontFamilyGeneral: 'Roboto'; 
+  --FontFamilyGeneral: 'Lato', sans-serif; 
 }
+
+/* globals.css */
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 4s ease-in-out forwards;
+  will-change: opacity;
+}
+
+.fade-out {
+  animation: fadeOut 4s ease-in-out forwards;
+  will-change: opacity;
+}
+
+.animate-splash {
+  animation: splash 0.8s ease-out forwards;
+}
+
 
 @keyframes splash {
   0% {
@@ -23,8 +62,4 @@ html, body {
     transform: scale(1);
     opacity: 1;
   }
-}
-
-.animate-splash {
-  animation: splash 0.8s ease-out forwards;
 }

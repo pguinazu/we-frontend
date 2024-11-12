@@ -1,12 +1,12 @@
 'use client';
 
 import React, { useState } from 'react';
-import BlackButton from '../../components/BlackButton';
-import Button from '../../components/Button';
+import BlackButton from '../components/BlackButton';
+import Button from '../components/Button';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-
 
 const faqs = [
   { question: '¿Qué es W3?', answer: 'W3 es una tarjeta prepaga.' },
@@ -24,9 +24,8 @@ const PrincipalFaqs = () => {
   };
 
   return (
-    <div className="relative w-[360px] h-[800px] flex flex-col items-center p-5">
-
-<div className="w-full flex items-center mb-4 text-[#FEF7FF]">
+    <div className="relative w-full h-full flex flex-col items-center p-5">
+      <div className="w-full flex items-center mb-4 text-[#FEF7FF]">
         <ArrowBackIcon className="mr-2" /> {/* Icono de flecha hacia la izquierda */}
         <span>Volver</span>
       </div>
@@ -35,7 +34,7 @@ const PrincipalFaqs = () => {
         <HelpOutlineIcon className="text-white" />
         <h2 className="text-white font-lato text-lg ml-2">Preguntas frecuentes</h2>
       </div>
-      <h3 className="text-white text-xl font-bold mb-5">¿Tenés alguna pregunta?</h3>
+      <h3 className="text-white text-sm mb-5">¿Tenés alguna pregunta?</h3>
       <div className="w-full flex flex-col gap-4">
         {faqs.map((faq, index) => (
           <div key={index} className="bg-[#FAFAFA] p-4 rounded-md shadow-md">
@@ -43,21 +42,31 @@ const PrincipalFaqs = () => {
               className="flex justify-between items-center cursor-pointer"
               onClick={() => toggleFaq(index)}
             >
-              <span className="font-bold text-black">{faq.question}</span>
-              <ArrowDropDownIcon className='text-black'/>
+              <span style={{ fontSize: '12px', fontWeight: '600', lineHeight: '24px' }} className="">{faq.question}</span>
+              {activeIndex === index ? (
+                <ArrowDropUpIcon className="text-black" />
+              ) : (
+                <ArrowDropDownIcon className="text-black" />
+              )}
             </div>
             {activeIndex === index && (
-              <p className="mt-3 text-gray-700">{faq.answer}</p>
+              <p
+                style={{ fontSize: '14px', fontWeight: '400', lineHeight: '24px' }} 
+                className="mt-3">
+                  {faq.answer}
+              </p>
             )}
           </div>
         ))}
       </div>
-      <div className="w-full flex flex-col items-center gap-4 mt-20">
+      <div className="w-full flex flex-col items-center gap-4 mt-4">
+        <div className='pb-10'>
         <BlackButton
           label="Busca más preguntas acá"
           onClick={() => console.log('Busca más preguntas acá')}
-          fullWidth={true}
+          className="w-[250px] h-[40px] bg-[#100F0F] rounded-md pb-10" // Ajustes para tamaño y posición
         />
+        </div>
         <Button
           label="Volver al inicio"
           onClick={() => console.log('Volver al inicio')}
