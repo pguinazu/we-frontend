@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { TextField, IconButton } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import Button from '../components/Button';
+import { useRouter } from 'next/navigation';
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -11,11 +12,14 @@ const LoginForm: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+  const router = useRouter();
+  
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleClickShowConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
 
   const handleContinueClick = () => {
     console.log("Botón Continuar clickeado");
+    router.push('/auth/login-last-step');
   };
 
   // Funciones de validación de contraseña
