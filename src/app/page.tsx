@@ -2,7 +2,6 @@ import React from 'react';
 import Link from 'next/link';
 import Title from './components/Title';
 import Subtitle from './components/Subtitle';
-import SplashScreen from './auth/splash/page';
 import IntroScreen from './auth/intro/page';
 import HomeScreen from './dashboard/page';
 import PrincipalFaqs from './faq/page';
@@ -15,8 +14,7 @@ import "./globals.css";
 export default function HomePage() {
   return (
     <main className="flex mt-3 flex-col items-center justify-center min-h-screen text-white bg-center bg-no-repeat bg-cover">
-      <SplashScreen />
-      {/* <IntroScreen /> */}
+      <IntroScreen />
       {/* <HomeScreen /> */}
 
       {/* <LoginScreenLastStep/> */}
