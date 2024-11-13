@@ -9,7 +9,7 @@ import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const faqs = [
-  { question: '¿Qué es W3?', answer: 'W3 es una tarjeta prepaga.' },
+  { question: '¿Qué es WƐ?', answer: 'WƐ es una tarjeta prepaga.' },
   { question: '¿Cómo cargo mi tarjeta VISA?', answer: 'Puedes cargarla en puntos autorizados.' },
   { question: '¿Dónde la puedo usar?', answer: 'Puedes usarla en cualquier comercio que acepte VISA.' },
   { question: '¿Cómo podés contactarte con nosotros?', answer: 'Puedes contactarte a través de nuestro sitio web.' },

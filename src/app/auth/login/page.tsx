@@ -8,7 +8,7 @@ export default function LoginPage() {
     <main className="flex mt-3 flex-col items-center justify-center min-h-screen text-white">
       <div className='absolute top-6'>
         <div className="mb-3">
-          <AppTitle text="Bienvenido a W3" />
+          <AppTitle text="Bienvenido a WƐ" />
         </div>
         <div className="mb-4">
           <AppSubtitle text="Empecemos por ingresar un correo electrónico y una contraseña para crear tu cuenta" />
