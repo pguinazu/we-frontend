@@ -113,7 +113,7 @@ const LoginPage = () => {
           }}
         />
 
-        {/* Sección de Recordame y Olvidé mi contraseña */}
+        {/* Sección de Recordarme y Olvidé mi contraseña */}
         <div className="flex justify-between items-center w-full text-[#FAFAFA] text-[12px] font-semibold">
           <div className="flex items-center space-x-1">
             <Checkbox
@@ -122,7 +122,7 @@ const LoginPage = () => {
               style={{ color: '#FAFAFA', padding: '0 4px 0 0' }}
               size="small"
             />
-            <span>Recordame</span>
+            <span>Recordarme</span>
           </div>
           <span className="cursor-pointer underline text-[11px] font-medium whitespace-nowrap">
             ¿Te olvidaste la contraseña?
