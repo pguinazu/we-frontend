@@ -16,16 +16,14 @@ const LoginForm: React.FC = () => {
   const [touchedFields, setTouchedFields] = useState({ email: false, password: false, confirmPassword: false });
 
   const router = useRouter();
-  
+
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleClickShowConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newPassword = e.target.value;
     setPassword(newPassword);
-    if (newPassword.length === 1) {
-      setShowPasswordRules(true);
-    }
+    setShowPasswordRules(true); // Siempre muestra las reglas mientras se escribe
   };
 
   const handleBlur = (field: string) => {
@@ -33,7 +31,6 @@ const LoginForm: React.FC = () => {
   };
 
   const handleContinueClick = () => {
-    console.log("Botón Continuar clickeado");
     router.push('/auth/login-last-step');
   };
 
@@ -67,7 +64,7 @@ const LoginForm: React.FC = () => {
   const isFormValid = isEmailValid && isPasswordConfirmed && passwordValidationRules.every(rule => rule.isValid);
 
   return (
-    <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 p-5 w-[296px] bg-[#202020] shadow-md rounded-md flex flex-col gap-6">
+    <div className="relative w-full max-w-xs p-5 bg-[#202020] shadow-md rounded-md flex flex-col gap-6">
       <div className="flex flex-col gap-4">
         <TextField
           label="Correo electrónico"
@@ -77,7 +74,7 @@ const LoginForm: React.FC = () => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           onBlur={() => handleBlur('email')}
-          error={!isEmailValid && touchedFields.email} // Mostrar error solo después de perder el foco
+          error={!isEmailValid && touchedFields.email}
           helperText={!isEmailValid && touchedFields.email ? "Correo electrónico no válido" : ""}
           InputProps={{
             style: { backgroundColor: '#FAFAFA' },
@@ -104,11 +101,7 @@ const LoginForm: React.FC = () => {
               endAdornment: (
                 <InputAdornment position="end">
                   <IconButton onClick={handleClickShowPassword}>
-                    {showPassword ? (
-                      <VisibilityOff color={!passwordValidationRules.every(rule => rule.isValid) && touchedFields.password ? 'error' : 'inherit'} />
-                    ) : (
-                      <Visibility color={!passwordValidationRules.every(rule => rule.isValid) && touchedFields.password ? 'error' : 'inherit'} />
-                    )}
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
                   </IconButton>
                 </InputAdornment>
               ),
@@ -129,41 +122,35 @@ const LoginForm: React.FC = () => {
           )}
         </div>
 
-        <div className="relative">
-          <TextField
-            label="Confirmar contraseña"
-            placeholder="Repetir contraseña"
-            variant="filled"
-            type={showConfirmPassword ? 'text' : 'password'}
-            fullWidth
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            onBlur={() => handleBlur('confirmPassword')}
-            error={!isPasswordConfirmed && touchedFields.confirmPassword} // Mostrar error solo después de perder el foco
-            helperText={!isPasswordConfirmed && touchedFields.confirmPassword ? "Las contraseñas no coinciden" : ""}
-            InputProps={{
-              style: { backgroundColor: '#FAFAFA' },
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={handleClickShowConfirmPassword}>
-                    {showConfirmPassword ? (
-                      <VisibilityOff color={!isPasswordConfirmed && touchedFields.confirmPassword ? 'error' : 'inherit'} />
-                    ) : (
-                      <Visibility color={!isPasswordConfirmed && touchedFields.confirmPassword ? 'error' : 'inherit'} />
-                    )}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
-        </div>
+        <TextField
+          label="Confirmar contraseña"
+          placeholder="Repetir contraseña"
+          variant="filled"
+          type={showConfirmPassword ? 'text' : 'password'}
+          fullWidth
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          onBlur={() => handleBlur('confirmPassword')}
+          error={!isPasswordConfirmed && touchedFields.confirmPassword}
+          helperText={!isPasswordConfirmed && touchedFields.confirmPassword ? "Las contraseñas no coinciden" : ""}
+          InputProps={{
+            style: { backgroundColor: '#FAFAFA' },
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton onClick={handleClickShowConfirmPassword}>
+                  {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+        />
       </div>
 
       <Button
         label="Continuar"
         onClick={handleContinueClick}
         fullWidth
-        disabled={!isFormValid} // Deshabilitar el botón si el formulario no es válido
+        disabled={!isFormValid}
         className={!isFormValid ? 'opacity-50 cursor-not-allowed' : ''}
       />
     </div>
