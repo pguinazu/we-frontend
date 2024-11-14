@@ -7,6 +7,7 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useRouter } from 'next/navigation';
 
 const faqs = [
   { question: '¿Qué es WƐ?', answer: 'WƐ es una tarjeta prepaga.' },
@@ -18,6 +19,7 @@ const faqs = [
 
 const PrincipalFaqs = () => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const router = useRouter();
 
   const toggleFaq = (index: number) => {
     setActiveIndex(activeIndex === index ? null : index);
@@ -25,8 +27,8 @@ const PrincipalFaqs = () => {
 
   return (
     <div className="relative w-full h-full flex flex-col items-center p-5">
-      <div className="w-full flex items-center mb-4 text-[#FEF7FF]">
-        <ArrowBackIcon className="mr-2" /> {/* Icono de flecha hacia la izquierda */}
+      <div className="w-full flex items-center mb-4 text-[#FEF7FF] cursor-pointer" onClick={() => router.back()}>
+        <ArrowBackIcon className="mr-2" />
         <span>Volver</span>
       </div>
 
@@ -42,7 +44,7 @@ const PrincipalFaqs = () => {
               className="flex justify-between items-center cursor-pointer"
               onClick={() => toggleFaq(index)}
             >
-              <span style={{ fontSize: '12px', fontWeight: '600', lineHeight: '24px' }} className="">{faq.question}</span>
+              <span style={{ fontSize: '12px', fontWeight: '600', lineHeight: '24px' }}>{faq.question}</span>
               {activeIndex === index ? (
                 <ArrowDropUpIcon className="text-black" />
               ) : (
@@ -61,15 +63,15 @@ const PrincipalFaqs = () => {
       </div>
       <div className="w-full flex flex-col items-center gap-4 mt-4">
         <div className='pb-10'>
-        <BlackButton
-          label="Busca más preguntas acá"
-          onClick={() => console.log('Busca más preguntas acá')}
-          className="w-[250px] h-[40px] bg-[#100F0F] rounded-md pb-10" // Ajustes para tamaño y posición
-        />
+          <BlackButton
+            label="Busca más preguntas acá"
+            onClick={() => console.log('Busca más preguntas acá')}
+            className="w-[250px] h-[40px] bg-[#100F0F] rounded-md pb-10"
+          />
         </div>
         <Button
           label="Volver al inicio"
-          onClick={() => console.log('Volver al inicio')}
+          onClick={() => router.push('/dashboard')}
           fullWidth={true}
         />
       </div>

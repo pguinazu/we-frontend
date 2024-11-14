@@ -13,13 +13,17 @@ export default function IntroScreen() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowSplash(false);
-    }, 2000); // Ajusta el tiempo para sincronizar el efecto del splash con el contenido
+    }, 2000);
 
-    return () => clearTimeout(timer); // Limpiar el temporizador
+    return () => clearTimeout(timer);
   }, []);
 
   const handleContinueClick = () => {
     router.push('/auth/login');
+  };
+
+  const handleLoginClick = () => {
+    router.push('/auth/login-manual');
   };
 
   return (
@@ -45,7 +49,10 @@ export default function IntroScreen() {
           </div>
 
           <div className="absolute left-1/2 bottom-[120px] transform -translate-x-1/2 text-center font-lato font-semibold text-sm fade-in">
-            ¿Ya tienes cuenta? Ingresa
+            ¿Ya tienes cuenta?{' '}
+            <span onClick={handleLoginClick} className="underline cursor-pointer">
+              Ingresa
+            </span>
           </div>
         </>
       )}

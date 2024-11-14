@@ -1,9 +1,9 @@
 import React from 'react';
 
 interface SubtitleProps {
-  text: string;
-  textAlign?: 'left' | 'center' | 'right'; // Propiedad opcional para la alineación,
-  className?: string; // Agregar className como opcional
+  text: React.ReactNode; // Cambiar a React.ReactNode para aceptar JSX
+  textAlign?: 'left' | 'center' | 'right';
+  className?: string;
 }
 
 const Subtitle: React.FC<SubtitleProps> = ({ text, textAlign = 'center', className }) => {

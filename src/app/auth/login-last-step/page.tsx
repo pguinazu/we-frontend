@@ -5,11 +5,14 @@ import Subtitle from '../../components/Subtitle';
 import Title from '../../components/Title';
 import PopUp from '../../components/PopUp';
 import LoginPersonalInfoForm from '../../components/LoginPersonalInfoForm';
+import { useRouter } from 'next/navigation';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const LoginScreenLastStep = () => {
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [showPopUp, setShowPopUp] = useState(false);
+
+  const router = useRouter();
 
   const handleTermsChange = () => {
     setTermsAccepted((prev) => !prev);
@@ -25,8 +28,8 @@ const LoginScreenLastStep = () => {
 
   return (
     <div className="w-full h-full flex flex-col items-center p-5 relative">
-      <div className="w-full flex items-center mb-4 text-[#FEF7FF]">
-        <ArrowBackIcon className="mr-2" /> {/* Icono de flecha hacia la izquierda */}
+      <div className="w-full flex items-center mb-4 text-[#FEF7FF] cursor-pointer" onClick={() => router.back()}>
+        <ArrowBackIcon className="mr-2" />
         <span>Volver</span>
       </div>
       <div className="w-full mb-4">
