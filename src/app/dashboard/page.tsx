@@ -10,8 +10,12 @@ import PauseCircleOutlineIcon from '@mui/icons-material/PauseCircleOutline';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import Image from 'next/image';
+import { useForm } from '../LoginContext'; // Ajusta la ruta según la ubicación de tu FormContext
 
 export default function HomePage() {
+
+  const { formData } = useForm();
+
   const handleReceiveClick = () => {
     console.log('Recibir fondos');
   };
@@ -27,7 +31,7 @@ export default function HomePage() {
         <div className="bg-[#EADDFF] text-[#4F378A] flex items-center justify-center rounded-full w-8 h-8">
           A
         </div>
-        <span className="text-sm ml-2">Hola {`{UserName}`}</span>
+        <span className="text-sm ml-2">Hola {formData.name}</span>
       </div>
 
       <div className="relative w-[296px] bg-gradient-to-r from-black to-[#434343] rounded-lg p-6 shadow-lg mt-6 z-10">
