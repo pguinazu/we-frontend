@@ -5,19 +5,22 @@ import Subtitle from '../../components/Subtitle';
 import Title from '../../components/Title';
 import PopUp from '../../components/PopUp';
 import LoginPersonalInfoForm from '../../components/LoginPersonalInfoForm';
+import { useRouter } from 'next/navigation';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const LoginScreenLastStep = () => {
-  const [termsAccepted, setTermsAccepted] = useState(false);
+  // const [termsAccepted, setTermsAccepted] = useState(false); // lint fix
   const [showPopUp, setShowPopUp] = useState(false);
 
-  const handleTermsChange = () => {
-    setTermsAccepted((prev) => !prev);
-  };
+  const router = useRouter();
 
-  const handleOpenPopUp = () => {
-    setShowPopUp(true);
-  };
+  // const handleTermsChange = () => {
+  //   setTermsAccepted((prev) => !prev);
+  // }; // lint fix
+
+  // const handleOpenPopUp = () => {
+  //   setShowPopUp(true);
+  // }; // lint fix
 
   const handleClosePopUp = () => {
     setShowPopUp(false);
@@ -25,18 +28,18 @@ const LoginScreenLastStep = () => {
 
   return (
     <div className="w-full h-full flex flex-col items-center p-5 relative">
-      <div className="w-full flex items-center mb-4 text-[#FEF7FF]">
-        <ArrowBackIcon className="mr-2" /> {/* Icono de flecha hacia la izquierda */}
+      <div className="w-full flex items-center mb-4 text-[#FEF7FF] cursor-pointer" onClick={() => router.back()}>
+        <ArrowBackIcon className="mr-2" />
         <span>Volver</span>
       </div>
       <div className="w-full mb-4">
         <Title text="Último paso" textAlign='left' />
       </div>
-      <div className="w-full" >
+      <div className="w-full">
         <Subtitle text="Te pedimos estos últimos datos para poder crearte la cuenta" textAlign='left' />
       </div>
 
-      <LoginPersonalInfoForm />
+      <LoginPersonalInfoForm/>
 
       {/* <div className=''> */}
         <div className="w-full text-center text-[#FEF7FF] text-[13px] my-6">

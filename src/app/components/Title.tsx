@@ -16,9 +16,8 @@ const Title: React.FC<TitleProps> = ({ text, textAlign = 'center', className }) 
         fontWeight: '700',
         fontSize: '24px',
         lineHeight: '32px',
-        fontFamily: 'Lato',
         fontStyle: 'normal',
-      }} // Aplicamos `textAlign` aquí
+      }}
     >
       {text}
     </h1>

@@ -1,9 +1,14 @@
 'use client'
 
-import React from 'react';
+import React, { ReactNode } from 'react';
 import PropTypes from 'prop-types';
 
-const PopUp = ({ children, onClose } : any ) => {
+interface PopUpProps {
+  children: ReactNode; // Cualquier contenido válido en React
+  onClose: () => void; // Función sin parámetros
+}
+
+const PopUp: React.FC<PopUpProps> = ({ children, onClose }) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 px-4">
       <div className="absolute inset-0 bg-black opacity-50" onClick={onClose}></div>

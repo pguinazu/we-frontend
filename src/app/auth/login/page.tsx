@@ -1,23 +1,39 @@
+'use client'
+
 import React from 'react';
 import LoginForm from '../../components/LoginForm';
-import AppTitle from '../../components/AppTitle';
-import AppSubtitle from '../../components/AppSubtitle';
-import Title from '@/app/components/Title';
-import Subtitle from '@/app/components/Subtitle';
+import Title from '../../components/Title';
+import Subtitle from '../../components/Subtitle';
+import Button from '../../components/Button';
 
 export default function LoginPage() {
   return (
-    <main className="flex mt-3 flex-col items-center justify-center min-h-screen text-white">
-      <div className='absolute top-6'>
-        <div className="mb-3">
-          <Title text="Bienvenido a W3" />
+    <main className="flex flex-col items-center justify-start min-h-screen text-white p-4 mt-3">
+      {/* Encabezado */}
+      <div className="w-full max-w-xs mb-4">
+        <div className="w-full mb-4">
+          <Title text="Bienvenido a WƐ" textAlign="left" />
         </div>
-        <div className="mb-4">
-          <Subtitle text="Empecemos por ingresar un correo electrónico y una contraseña para crear tu cuenta" />
+        <div className="w-full">
+          <Subtitle 
+            text="Empecemos por ingresar un correo electrónico y una contraseña para crear tu cuenta"
+            textAlign="left" 
+          />
         </div>
       </div>
-      <div className="w-full max-w-md">
-        <LoginForm />
+
+      {/* Formulario de inicio de sesión */}
+      <LoginForm />
+
+    {/* Texto para redes sociales */}
+<div className="w-full max-w-xs my-6">
+  <Subtitle text="o ingresá con redes sociales" className="text-center" />
+</div>
+
+      {/* Botones de redes sociales */}
+      <div className="flex flex-col gap-4 w-full max-w-xs">
+        <Button label="Registrarse con Google" onClick={() => {}} fullWidth className="bg-white text-[#202020]" />
+        <Button label="Registrarse con Facebook" onClick={() => {}} fullWidth className="bg-[#3B5998] text-white" />
       </div>
     </main>
   );

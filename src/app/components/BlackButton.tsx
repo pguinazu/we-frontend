@@ -1,12 +1,16 @@
 import React from 'react';
 
 interface ButtonProps {
-  label: string;
+  label: string | React.ReactNode;
   onClick: () => void;
   fullWidth?: boolean;
+  className?: string;
+  variant?: 'receive' | 'pause'; // Agrega una variante para personalizar el fondo
 }
 
-const BlackButton: React.FC<ButtonProps> = ({ label, onClick, fullWidth = false }) => {
+const BlackButton: React.FC<ButtonProps> = ({ label, onClick, fullWidth = false, className }) => {
+
+
   return (
     <button
       className={`${
@@ -17,6 +21,6 @@ const BlackButton: React.FC<ButtonProps> = ({ label, onClick, fullWidth = false 
       {label}
     </button>
   );
-}
+};
 
 export default BlackButton;
