@@ -9,7 +9,10 @@ export default function PhoneInput2() {
     setFormData({ ...formData, phone: event.target.value });
   };
 
-  const handleCountryCodeChange = (event: any, newValue: { label: string; code: string } | null) => {
+  const handleCountryCodeChange = (
+    event: React.SyntheticEvent<Element, Event>,
+    newValue: { label: string; code: string } | null
+  ) => {
     if (newValue) setFormData({ ...formData, countryCode: newValue.code });
   };
 

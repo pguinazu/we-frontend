@@ -9,18 +9,18 @@ import { useRouter } from 'next/navigation';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const LoginScreenLastStep = () => {
-  const [termsAccepted, setTermsAccepted] = useState(false);
+  // const [termsAccepted, setTermsAccepted] = useState(false); // lint fix
   const [showPopUp, setShowPopUp] = useState(false);
 
   const router = useRouter();
 
-  const handleTermsChange = () => {
-    setTermsAccepted((prev) => !prev);
-  };
+  // const handleTermsChange = () => {
+  //   setTermsAccepted((prev) => !prev);
+  // }; // lint fix
 
-  const handleOpenPopUp = () => {
-    setShowPopUp(true);
-  };
+  // const handleOpenPopUp = () => {
+  //   setShowPopUp(true);
+  // }; // lint fix
 
   const handleClosePopUp = () => {
     setShowPopUp(false);

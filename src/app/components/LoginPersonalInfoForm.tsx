@@ -11,7 +11,7 @@ import { useForm } from '../LoginContext';
 const LoginPersonalInfoForm: React.FC = () => {
   const { formData, setFormData } = useForm();
   const [showPopUp, setShowPopUp] = useState(false);
-  const [touchedFields, setTouchedFields] = useState({ name: false, lastName: false, phone: false });
+  // const [touchedFields, setTouchedFields] = useState({ name: false, lastName: false, phone: false });
 
   const router = useRouter();
 
@@ -34,11 +34,11 @@ const LoginPersonalInfoForm: React.FC = () => {
     setShowPopUp(false);
   };
 
-  const handleInputChange = (setter: React.Dispatch<React.SetStateAction<string>>, field: string) =>
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setter(e.target.value);
-      setTouchedFields((prev) => ({ ...prev, [field]: true }));
-  };
+  // const handleInputChange = (setter: React.Dispatch<React.SetStateAction<string>>, field: string) =>
+  //   (e: React.ChangeEvent<HTMLInputElement>) => {
+  //     setter(e.target.value);
+  //     setTouchedFields((prev) => ({ ...prev, [field]: true }));
+  // };
 
   // Validaciones
   const isNameValid = /^[a-zA-Z\s]+$/.test(formData.name);
@@ -57,12 +57,12 @@ const LoginPersonalInfoForm: React.FC = () => {
           value={formData.name}
           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
           fullWidth
-          error={!isNameValid && touchedFields.name}
-          helperText={!isNameValid && touchedFields.name ? "Solo letras y espacios" : ""}
+          error={!isNameValid} // lint fix: se quito && touchedFields.name
+          helperText={!isNameValid ? "Solo letras y espacios" : ""} // lint fix: se quito && touchedFields.name
           InputProps={{
             style: { backgroundColor: '#FAFAFA' },
             endAdornment: (
-              !isNameValid && touchedFields.name && (
+              !isNameValid && ( // lint fix: se quito && touchedFields.name
                 <InputAdornment position="end">
                   <ErrorOutline color="error" />
                 </InputAdornment>
@@ -78,12 +78,12 @@ const LoginPersonalInfoForm: React.FC = () => {
           value={formData.lastName}
           onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
           fullWidth
-          error={!isLastNameValid && touchedFields.lastName}
-          helperText={!isLastNameValid && touchedFields.lastName ? "Solo letras y espacios" : ""}
+          error={!isLastNameValid} // lint fix: se quito && touchedFields.lastName
+          helperText={!isLastNameValid ? "Solo letras y espacios" : ""} // lint fix: se quito && touchedFields.lastName
           InputProps={{
             style: { backgroundColor: '#FAFAFA' },
             endAdornment: (
-              !isLastNameValid && touchedFields.lastName && (
+              !isLastNameValid && ( // lint fix: se quito && touchedFields.lastName
                 <InputAdornment position="end">
                   <ErrorOutline color="error" />
                 </InputAdornment>
