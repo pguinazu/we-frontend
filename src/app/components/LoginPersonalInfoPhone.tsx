@@ -1,8 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import { TextField, InputAdornment } from '@mui/material';
-import { ErrorOutline } from '@mui/icons-material';
 import Button from '../components/Button';
 import PopUp from './PopUp';
 import PhoneInput from './PhoneInput1';
@@ -11,7 +9,7 @@ const LoginPersonalInfoPhone: React.FC = () => {
   const [phone, setPhone] = useState('');
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [showPopUp, setShowPopUp] = useState(false);
-  const [phoneTouched, setPhoneTouched] = useState(false); // Estado para seguimiento de interacción
+  // const [phoneTouched, setPhoneTouched] = useState(false); // Estado para seguimiento de interacción // lint fix
 
   const handleCreateAccount = () => {
     // Lógica para crear cuenta aquí
@@ -29,10 +27,10 @@ const LoginPersonalInfoPhone: React.FC = () => {
     setShowPopUp(false);
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPhone(e.target.value);
-    if (!phoneTouched) setPhoneTouched(true); // Marca como tocado solo la primera vez
-  };
+  // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setPhone(e.target.value);
+  //   if (!phoneTouched) setPhoneTouched(true); // Marca como tocado solo la primera vez
+  // };
 
   // Validar que el número de teléfono solo contenga dígitos y guiones
   const isPhoneValid = /^\d+(-\d+)*$/.test(phone); // Acepta solo dígitos y guiones

@@ -8,16 +8,16 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import LoginPersonalInfoPhone from '@/app/components/LoginPersonalInfoPhone';
 
 const LoginScreenLastStepPhoneNumber = () => {
-  const [termsAccepted, setTermsAccepted] = useState(false);
+  // const [termsAccepted, setTermsAccepted] = useState(false);
   const [showPopUp, setShowPopUp] = useState(false);
 
-  const handleTermsChange = () => {
-    setTermsAccepted((prev) => !prev);
-  };
+  // const handleTermsChange = () => {
+  //   setTermsAccepted((prev) => !prev);
+  // }; // lint fix
 
-  const handleOpenPopUp = () => {
-    setShowPopUp(true);
-  };
+  // const handleOpenPopUp = () => {
+  //   setShowPopUp(true);
+  // }; // lint fix
 
   const handleClosePopUp = () => {
     setShowPopUp(false);
