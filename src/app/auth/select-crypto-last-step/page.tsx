@@ -11,17 +11,22 @@ import BlackButton from "@/app/components/BlackButton";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlined";
 import UsbOutlinedIcon from "@mui/icons-material/UsbOutlined";
+import SmallText from "@/app/components/SmallText";
+import { useCryptoContext } from "../../CryptoContext";
 
 const CryptoFinalScreen = () => {
   const router = useRouter();
+  const { selectedCrypto, selectedNetwork } = useCryptoContext();
 
   const handleCopyClick = () => {
-    navigator.clipboard.writeText("jzj3ty7pssp1v8qw3to8y4tg0349595");
+    navigator.clipboard.writeText(selectedNetwork?.hash || "Hash no disponible");
     alert("Dirección copiada al portapapeles");
   };
 
   const handleShareClick = () => {
-    console.log("Compartir dirección");
+    console.log("Datos seleccionados:");
+    console.log("Criptomoneda:", selectedCrypto);
+    console.log("Red:", selectedNetwork);
   };
 
   const handleGoHomeClick = () => {
@@ -43,19 +48,22 @@ const CryptoFinalScreen = () => {
       </div>
 
       <div className="w-full mt-16">
-        <Title text="Dirección de DAI" textAlign="center" />
+        <Title
+          text={`Dirección de ${selectedCrypto?.title || "Criptomoneda"}`}
+          textAlign="center"
+        />
       </div>
 
       <div className="w-full bg-[#373535] p-5 rounded-lg shadow-md mt-6">
         <div className="flex justify-between items-center flex-wrap">
           <div className="max-w-[80%]">
             <Subtitle
-              text="Tu dirección de Tron (TRC 20)"
+              text={`Tu dirección de ${selectedNetwork?.title || "Red"}`}
               textAlign="left"
               className="text-[#FAFAFA]"
             />
             <p className="text-[#FEF7FF] text-sm mt-1 break-words">
-              jzj3ty7pssp1v8qw3to8y4tg0349595
+              {selectedNetwork?.hash || "Hash no disponible"}
             </p>
           </div>
           <div
@@ -83,24 +91,23 @@ const CryptoFinalScreen = () => {
       </div>
 
       <div className="w-full bg-[#202020] p-5 rounded-lg shadow-md mt-2">
-        <div className="mt-4">
+        <div className="">
           {/* Moneda */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <MonetizationOnOutlinedIcon className="text-[#FAFAFA] w-4 h-4 shrink-0 sm:w-5 sm:h-5" />
-              <Subtitle text="Moneda" textAlign="left" className="text-[#FAFAFA]" />
+              <SmallText text="Moneda" className="text-[#FAFAFA]" />
             </div>
             <div className="flex items-center gap-2 shrink-0">
-              {/* <img
-                src="/icons/DAI.png"
-                alt="DAI"
-                className="w-4 h-4 sm:w-5 sm:h-5 shrink-0"
-              /> */}
-              <Subtitle
-                text="DAI"
-                textAlign="right"
-                className="text-[#FAFAFA] max-w-[120px] sm:max-w-[140px] overflow-hidden text-ellipsis"
-                title="DAI"
+              <img
+                src={selectedCrypto?.icon || "/icons/default.png"}
+                alt={selectedCrypto?.title || "Criptomoneda"}
+                className="w-6 h-6"
+              />
+              <SmallText
+                text={selectedCrypto?.title || "Criptomoneda"}
+                className="text-[#FAFAFA] max-w-[140px] overflow-hidden"
+                title={selectedCrypto?.title || "Criptomoneda"}
               />
             </div>
           </div>
@@ -112,19 +119,18 @@ const CryptoFinalScreen = () => {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <UsbOutlinedIcon className="text-[#FAFAFA] w-4 h-4 shrink-0 sm:w-5 sm:h-5" />
-              <Subtitle text="Red" textAlign="left" className="text-[#FAFAFA]" />
+              <SmallText text="Red" className="text-[#FAFAFA]" />
             </div>
             <div className="flex items-center gap-2 shrink-0">
-              {/* <img
-                src="/icons/Tron.png"
-                alt="Tron"
-                className="w-4 h-4 sm:w-5 sm:h-5 shrink-0"
-              /> */}
-              <Subtitle
-                text="Tron (TRC 20)"
-                textAlign="right"
-                className="text-[#FAFAFA] sm:max-w-[140px] overflow-hidden text-ellipsis"
-                title="Tron (TRC 20)"
+              <img
+                src={selectedNetwork?.icon || "/icons/default.png"}
+                alt={selectedNetwork?.title || "Red"}
+                className="w-6 h-6"
+              />
+              <SmallText
+                text={selectedNetwork?.title || "Red"}
+                className="text-[#FAFAFA] max-w-[140px] overflow-hidden"
+                title={selectedNetwork?.title || "Red"}
               />
             </div>
           </div>
@@ -134,7 +140,7 @@ const CryptoFinalScreen = () => {
       <div className="w-full bg-[#202020] p-5 rounded-lg shadow-md mt-6 flex items-center gap-4">
         <InfoOutlinedIcon className="text-[#FAFAFA] w-5 h-5 shrink-0" />
         <Subtitle
-          text="Asegúrate de depositar DAI desde la red elegida: Tron (TRC 20). De lo contrario perderás tus fondos y no podrás recuperarlos."
+          text={`Asegúrate de depositar ${selectedCrypto?.title || "Criptomoneda"} desde la red elegida: ${selectedNetwork?.title || "Red"}. De lo contrario perderás tus fondos y no podrás recuperarlos.`}
           textAlign="left"
           className="text-[#FAFAFA]"
         />

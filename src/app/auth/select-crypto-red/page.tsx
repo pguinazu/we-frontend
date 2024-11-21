@@ -1,31 +1,34 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { useRouter } from 'next/navigation';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import CryptoCard from '@/app/components/CryptoCard';
-import Subtitle from '@/app/components/Subtitle';
+import React from "react";
+import { useRouter } from "next/navigation";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import CryptoCard from "@/app/components/CryptoCard";
+import Subtitle from "@/app/components/Subtitle";
+import { useCryptoContext } from "../../CryptoContext";
 
 const SelectCryptoRed = () => {
+  const { setSelectedNetwork } = useCryptoContext();
   const networks = [
     {
-      icon: '/icons/Tron.png',
-      title: 'Tron (TRC 20)',
-      subtitle: 'Red nativa para hacer transferencias de Tron',
-      hash: 'a1b2c3d4e5f6g7h8i9j0',
+      icon: "/icons/Tron.png",
+      title: "Tron (TRC 20)",
+      subtitle: "Red nativa para hacer transferencias de Tron",
+      hash: "a1b2c3d4e5f6g7h8i9j0",
     },
     {
-      icon: '/icons/Polygon.png',
-      title: 'Polygon',
-      subtitle: 'Red nativa de MATIC',
-      hash: 'z9y8x7w6v5u4t3s2r1q0',
+      icon: "/icons/Polygon.png",
+      title: "Polygon",
+      subtitle: "Red nativa de MATIC",
+      hash: "z9y8x7w6v5u4t3s2r1q0",
     },
   ];
 
   const router = useRouter();
 
-  const handleCardClick = () => {
-    router.push('/auth/select-crypto-last-step');
+  const handleCardClick = (network: typeof networks[0]) => {
+    setSelectedNetwork(network);
+    router.push("/auth/select-crypto-last-step");
   };
 
   return (
@@ -44,7 +47,11 @@ const SelectCryptoRed = () => {
 
       <div className="w-full bg-[#202020] p-5 rounded-md shadow-md flex flex-col gap-4 mt-4">
         {networks.map((network) => (
-          <div key={network.hash} onClick={handleCardClick} className="cursor-pointer">
+          <div
+            key={network.hash}
+            onClick={() => handleCardClick(network)}
+            className="cursor-pointer"
+          >
             <CryptoCard
               icon={network.icon}
               title={network.title}

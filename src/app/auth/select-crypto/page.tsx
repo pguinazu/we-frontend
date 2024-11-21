@@ -1,34 +1,37 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { useRouter } from 'next/navigation';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import CryptoCard from '@/app/components/CryptoCard';
-import Subtitle from '@/app/components/Subtitle';
+import React from "react";
+import { useRouter } from "next/navigation";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import CryptoCard from "@/app/components/CryptoCard";
+import Subtitle from "@/app/components/Subtitle";
+import { useCryptoContext } from "../../CryptoContext";
 
 const SelectCrypto = () => {
+  const { setSelectedCrypto } = useCryptoContext();
   const cryptos = [
     {
-      icon: '/icons/USDC.png',
-      title: 'USDC',
-      subtitle: 'USDC',
+      icon: "/icons/USDC.png",
+      title: "USDC",
+      subtitle: "USDC",
     },
     {
-      icon: '/icons/Tether.png',
-      title: 'Tether',
-      subtitle: 'USDT',
+      icon: "/icons/Tether.png",
+      title: "Tether",
+      subtitle: "USDT",
     },
     {
-      icon: '/icons/DAI.png',
-      title: 'DAI',
-      subtitle: 'DAI',
+      icon: "/icons/DAI.png",
+      title: "DAI",
+      subtitle: "DAI",
     },
   ];
 
   const router = useRouter();
 
-  const handleCardClick = () => {
-    router.push('/auth/select-crypto-red');
+  const handleCardClick = (crypto: typeof cryptos[0]) => {
+    setSelectedCrypto(crypto);
+    router.push("/auth/select-crypto-red");
   };
 
   return (
@@ -49,7 +52,7 @@ const SelectCrypto = () => {
         {cryptos.map((crypto, index) => (
           <div
             key={index}
-            onClick={handleCardClick}
+            onClick={() => handleCardClick(crypto)}
             className="cursor-pointer"
           >
             <CryptoCard
