@@ -10,14 +10,15 @@ import PauseCircleOutlineIcon from '@mui/icons-material/PauseCircleOutline';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import Image from 'next/image';
-import { useForm } from '../LoginContext'; // Ajusta la ruta según la ubicación de tu FormContext
+import { useRouter } from 'next/navigation';
+import { useForm } from '../LoginContext';
 
 export default function HomePage() {
-
   const { formData } = useForm();
+  const router = useRouter();
 
   const handleReceiveClick = () => {
-    console.log('Recibir fondos');
+    router.push('/auth/select-crypto');
   };
 
   const handlePauseCardClick = () => {
@@ -26,7 +27,6 @@ export default function HomePage() {
 
   return (
     <main className="flex flex-col items-center min-h-screen text-white relative">
-      
       <div className="flex items-center px-8 mt-4 w-full">
         <div className="bg-[#EADDFF] text-[#4F378A] flex items-center justify-center rounded-full w-8 h-8">
           A
@@ -42,13 +42,12 @@ export default function HomePage() {
           <Image src="/icons/WeCard.png" alt="We Card" width={35} height={35} className="opacity-60" />
         </div>
         <div className="text-lg tracking-wider">**** 4569</div>
-        
         <div className="flex items-center justify-between mt-6">
           <div>
             <p className="text-xs font-normal">Saldo disponible:</p>
-            <div className="text-2xl  text-left">USD 0,00</div>
+            <div className="text-2xl text-left">USD 0,00</div>
           </div>
-          <div className='pt-6'>
+          <div className="pt-6">
             <div className="flex items-center justify-center w-[44px] h-[24px] bg-[#FEF7FF] rounded-full p-[4px_4px]">
               <NavigateNextIcon className="text-gray-800" style={{ width: '24px', height: '24px' }} />
             </div>
@@ -58,13 +57,21 @@ export default function HomePage() {
 
       <div className="flex mt-4 space-x-4 w-[296px] z-10">
         <BlackButton
-          label={<><FileDownloadIcon className="mr-2" />Recibir</>}
+          label={
+            <>
+              <FileDownloadIcon className="mr-2" />Recibir
+            </>
+          }
           fullWidth
           onClick={handleReceiveClick}
           className="text-sm bg-[#100F0F] text-[#FAFAFA] rounded-md h-[68px]"
         />
         <BlackButton
-          label={<><PauseCircleOutlineIcon className="mr-2" />Pausar tarjeta</>}
+          label={
+            <>
+              <PauseCircleOutlineIcon className="mr-2" />Pausar tarjeta
+            </>
+          }
           fullWidth
           onClick={handlePauseCardClick}
           className="text-sm bg-[#202020] text-[#FAFAFA] rounded-md h-[68px]"
@@ -74,7 +81,10 @@ export default function HomePage() {
       <div className="flex flex-col items-center mt-8 z-10">
         <OutboxIcon className="text-white mb-4 !text-[50px]" />
         <Title text="Aún no hay movimientos" className="text-center text-xl pb-3" />
-        <Subtitle text="Pronto podrás ver los últimos movimientos que realizaste en tu cuenta" className="text-center" />
+        <Subtitle
+          text="Pronto podrás ver los últimos movimientos que realizaste en tu cuenta"
+          className="text-center"
+        />
       </div>
 
       <div className="flex flex-col items-start mt-8 px-8 w-full z-10">
@@ -95,13 +105,17 @@ export default function HomePage() {
           </div>
         </div>
 
-        <Subtitle text={
-  <>
-    Vas a poder usar tu tarjeta en cualquier negocio físico o virtual que acepte VISA alrededor del mundo. Para más info,<span> </span>
-    <Link href="/faq" className="underline">ingresa acá</Link>
-  </>
-} className="mt-4" />
-
+        <Subtitle
+          text={
+            <>
+              Vas a poder usar tu tarjeta en cualquier negocio físico o virtual que acepte VISA alrededor del mundo. Para más info,<span> </span>
+              <Link href="/faq" className="underline">
+                ingresa acá
+              </Link>
+            </>
+          }
+          className="mt-4"
+        />
       </div>
     </main>
   );
