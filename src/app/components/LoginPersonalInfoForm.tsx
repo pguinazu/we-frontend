@@ -7,6 +7,8 @@ import PopUp from './PopUp';
 import { useRouter } from 'next/navigation';
 import PhoneInput from './PhoneInput1';
 import PhoneInput2 from './PhoneInput2';
+import { useForm } from '../LoginContext';
+import { authService } from '../services/authService';
 
 const LoginPersonalInfoForm: React.FC = () => {
   const [name, setName] = useState('');
@@ -18,9 +20,15 @@ const LoginPersonalInfoForm: React.FC = () => {
   
   const router = useRouter();
 
-  const handleCreateAccount = () => {
-    // Lógica para crear cuenta aquí
-    router.push('/auth/success-account');
+  const handleCreateAccount = async () => {
+    console.log("Form data:", formData); // Log para ver los datos en consola
+    try {
+      const result = await authService.signUp(formData);
+      console.log('User registered:', result);
+      router.push('/auth/success-account');
+    } catch (error) {
+      console.error('Error registering user:', error);
+    }
   };
 
   const handleTermsChange = () => {
@@ -42,9 +50,8 @@ const LoginPersonalInfoForm: React.FC = () => {
   };
 
   // Validaciones
-  const isNameValid = /^[a-zA-Z\s]+$/.test(name);
-  const isLastNameValid = /^[a-zA-Z\s]+$/.test(lastName);
-  const isPhoneValid = /^\d{8,18}$/.test(phone);
+  const isNameValid = /^[a-zA-Z\s]+$/.test(formData.firstName);
+  const isLastNameValid = /^[a-zA-Z\s]+$/.test(formData.lastName);
 
   // Verificar si el formulario es válido
   const isFormValid = isNameValid && isLastNameValid && termsAccepted; //agregar validacion isPhoneValid, revisando regla segun autocomplete de codigo de area
@@ -56,8 +63,8 @@ const LoginPersonalInfoForm: React.FC = () => {
           label="Nombre"
           placeholder="Juan"
           variant="filled"
-          value={name}
-          onChange={handleInputChange(setName, 'name')}
+          value={formData.firstName}
+          onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
           fullWidth
           error={!isNameValid && touchedFields.name}
           helperText={!isNameValid && touchedFields.name ? "Solo letras y espacios" : ""}

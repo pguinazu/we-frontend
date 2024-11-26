@@ -3,15 +3,17 @@ import { SetStateAction, useState } from 'react';
 import countries from '../../../public/select-options/countries.json';
 
 export default function PhoneInput2() {
-  const [phone, setPhone] = useState('');
-  const [countryCode, setCountryCode] = useState('');
-  
-  const handlePhoneChange = (event: { target: { value: SetStateAction<string>; }; }) => {
-    setPhone(event.target.value);
+  const { formData, setFormData } = useForm();
+
+  const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, phoneNumber: event.target.value });
   };
 
-  const handleCountryCodeChange = (event: any, newValue: { label: string; code: string } | null) => {
-    if (newValue) setCountryCode(newValue.code);
+  const handleCountryCodeChange = (
+    event: React.SyntheticEvent<Element, Event>,
+    newValue: { label: string; code: string } | null
+  ) => {
+    if (newValue) setFormData({ ...formData, phoneCountryCode: newValue.code });
   };
 
   const countryCodes = countries;
@@ -33,13 +35,13 @@ export default function PhoneInput2() {
           label="Teléfono"
           placeholder="11-2563-2500"
           variant="filled"
-          value={phone}
+          value={formData.phoneNumber}
           onChange={handlePhoneChange}
           fullWidth
           InputProps={{
             style: { backgroundColor: '#FAFAFA' },
             startAdornment: (
-              <InputAdornment position="start">{countryCode}</InputAdornment>
+              <InputAdornment position="start">{formData.phoneCountryCode}</InputAdornment>
             ),
           }}
         />

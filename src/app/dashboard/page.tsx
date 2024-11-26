@@ -27,7 +27,7 @@ export default function  HomePage() {
         <div className="bg-[#EADDFF] text-[#4F378A] flex items-center justify-center rounded-full w-8 h-8">
           A
         </div>
-        <span className="text-sm ml-2">Hola {`{UserName}`}</span>
+        <span className="text-sm ml-2">Hola {formData.firstName}</span>
       </div>
 
       {/* Sección de la tarjeta principal */}
