@@ -9,7 +9,7 @@ interface SubtitleProps extends React.HTMLAttributes<HTMLParagraphElement> {
 const Subtitle: React.FC<SubtitleProps> = ({ text, textAlign = 'center', className, ...props }) => {
   return (
     <p
-      className={`w-[296px] text-[14px] leading-[24px] text-center mx-auto ${className}`}
+      className={`w-[296px] text-[14px] leading-[24px] mx-auto ${className}`}
       style={{
         color: 'var(--Schemes-Surface, #FEF7FF)',
         textAlign,
