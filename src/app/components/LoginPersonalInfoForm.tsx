@@ -55,7 +55,7 @@ const LoginPersonalInfoForm: React.FC = () => {
   const isFormValid = isNameValid && isLastNameValid ; //agregar validacion isPhoneValid, revisando regla segun autocomplete de codigo de area
 
   return (
-    <div className="relative mt-10 w-full h-auto bg-[#202020] shadow-md rounded-md flex flex-col gap-6 p-2 pb-3">
+    <div className="relative mt-4 w-full h-auto bg-[#202020] shadow-md rounded-md flex flex-col gap-6 p-2 pb-3">
       <div className="flex flex-col gap-4">
         <TextField
           label="Nombre"
@@ -135,7 +135,7 @@ const LoginPersonalInfoForm: React.FC = () => {
       {showPopUp && (
         <PopUp onClose={handleClosePopUp}>
           <div className="text-black">
-            <h2 className="text-lg  mb-4">Términos y Condiciones</h2>
+            <h2 className="text-lg mb-4">Términos y Condiciones</h2>
             <p>Aquí van los términos y condiciones del servicio...</p>
           </div>
         </PopUp>
