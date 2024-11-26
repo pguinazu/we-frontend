@@ -2,18 +2,7 @@
 
 // FormContext.tsx
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-
-// Define la estructura de los datos del formulario
-interface FormData {
-  email: string;
-  password: string;
-  confirmPassword: string;
-  name: string;
-  lastName: string;
-  termsAccepted: boolean;
-  phone: string;
-  countryCode: string
-}
+import { FormData } from "./interfaces/formData";
 
 // Define las propiedades del contexto, que incluyen los datos y una función para actualizar los datos
 interface FormContextProps {
@@ -29,12 +18,12 @@ export const FormProvider = ({ children }: { children: ReactNode }) => {
   const [formData, setFormData] = useState<FormData>({
     email: '',
     password: '',
-    confirmPassword: '',
-    name: '',
+    confirmPassword: '', // sacar/confirmar si se saca para peticion a api
+    firstName: '',
     lastName: '',
-    termsAccepted: false,
-    phone: '',
-    countryCode: ''
+    termsAccepted: false, // sacar/confirmar si se saca para peticion a api
+    phoneNumber: '',
+    phoneCountryCode: ''
   });
 
   return (

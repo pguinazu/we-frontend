@@ -6,14 +6,14 @@ export default function PhoneInput2() {
   const { formData, setFormData } = useForm();
 
   const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, phone: event.target.value });
+    setFormData({ ...formData, phoneNumber: event.target.value });
   };
 
   const handleCountryCodeChange = (
     event: React.SyntheticEvent<Element, Event>,
     newValue: { label: string; code: string } | null
   ) => {
-    if (newValue) setFormData({ ...formData, countryCode: newValue.code });
+    if (newValue) setFormData({ ...formData, phoneCountryCode: newValue.code });
   };
 
   const countryCodes = countries;
@@ -40,13 +40,13 @@ export default function PhoneInput2() {
           label="Teléfono"
           placeholder="11-2563-2500"
           variant="filled"
-          value={formData.phone}
+          value={formData.phoneNumber}
           onChange={handlePhoneChange}
           fullWidth
           InputProps={{
             style: { backgroundColor: '#FAFAFA' },
             startAdornment: (
-              <InputAdornment position="start">{formData.countryCode}</InputAdornment>
+              <InputAdornment position="start">{formData.phoneCountryCode}</InputAdornment>
             ),
           }}
         />

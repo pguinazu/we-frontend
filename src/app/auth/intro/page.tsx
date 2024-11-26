@@ -41,7 +41,7 @@ export default function IntroScreen() {
           </div>
 
           <div className="absolute left-1/2 top-[395px] transform -translate-x-1/2 fade-in">
-            <Title text="Wε are crypto" />
+            <Title text="WƐ are crypto" />
           </div>
 
           <div className="absolute left-1/2 bottom-[168px] transform -translate-x-1/2 w-[296px] fade-in">

@@ -32,7 +32,7 @@ export default function RootLayout({
       >
         <FormProvider>
         <CryptoProvider>
-        {children}
+          {children}
         </CryptoProvider>
         </FormProvider>
       </body>

@@ -38,13 +38,42 @@ const LoginScreenLastStepPhoneNumber = () => {
 
       <LoginPersonalInfoPhone/>
 
-      {/* <div className="w-full text-center text-[#FEF7FF] text-[13px] my-6">
-        o ingresá con redes sociales
-      </div> */}
+      {/* <div className="flex flex-col gap-4 w-full max-w-xs">
+        <Button
+          label={
+            <div className="flex items-center justify-center gap-3 h-full">
+              <img
+                src="/icons/Google.png"
+                alt="Google Icon"
+                className="w-8 h-8"
+              />
+              <span className="text-[16px] leading-none">
+                Registrarse con Google
+              </span>
+            </div>
+          }
+          onClick={() => {}}
+          fullWidth
+          className="flex items-center justify-center "
+        />
 
-      {/* <div className="flex flex-col gap-4 w-full">
-        <Button label="Registrarse con Google" onClick={() => {}} fullWidth />
-        <Button label="Registrarse con Facebook" onClick={() => {}} fullWidth />
+        <Button
+          label={
+            <div className="flex items-center justify-center gap-3 h-full">
+              <img
+                src="/icons/Facebook.png"
+                alt="Facebook Icon"
+                className="w-8 h-8"
+              />
+              <span className="text-[16px]  leading-none">
+                Registrarse con Facebook
+              </span>
+            </div>
+          }
+          onClick={() => {}}
+          fullWidth
+          className="flex items-center justify-center"
+        />
       </div> */}
 
       {showPopUp && (

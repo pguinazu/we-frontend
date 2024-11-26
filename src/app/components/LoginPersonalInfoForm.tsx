@@ -7,6 +7,7 @@ import PopUp from './PopUp';
 import { useRouter } from 'next/navigation';
 import PhoneInput2 from './PhoneInput2';
 import { useForm } from '../LoginContext';
+import { authService } from '../services/authService';
 
 const LoginPersonalInfoForm: React.FC = () => {
   const { formData, setFormData } = useForm();
@@ -15,9 +16,15 @@ const LoginPersonalInfoForm: React.FC = () => {
 
   const router = useRouter();
 
-  const handleCreateAccount = () => {
+  const handleCreateAccount = async () => {
     console.log("Form data:", formData); // Log para ver los datos en consola
-    router.push('/auth/success-account');
+    try {
+      const result = await authService.signUp(formData);
+      console.log('User registered:', result);
+      router.push('/auth/success-account');
+    } catch (error) {
+      console.error('Error registering user:', error);
+    }
   };
 
   const handleTermsChange = () => {
@@ -41,21 +48,21 @@ const LoginPersonalInfoForm: React.FC = () => {
   // };
 
   // Validaciones
-  const isNameValid = /^[a-zA-Z\s]+$/.test(formData.name);
+  const isNameValid = /^[a-zA-Z\s]+$/.test(formData.firstName);
   const isLastNameValid = /^[a-zA-Z\s]+$/.test(formData.lastName);
 
   // Verificar si el formulario es válido
   const isFormValid = isNameValid && isLastNameValid ; //agregar validacion isPhoneValid, revisando regla segun autocomplete de codigo de area
 
   return (
-    <div className="relative mt-10 w-full h-auto bg-[#202020] shadow-md rounded-md flex flex-col gap-6 p-2 pb-3">
+    <div className="relative mt-4 w-full h-auto bg-[#202020] shadow-md rounded-md flex flex-col gap-6 p-2 pb-3">
       <div className="flex flex-col gap-4">
         <TextField
           label="Nombre"
           placeholder="Juan"
           variant="filled"
-          value={formData.name}
-          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+          value={formData.firstName}
+          onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
           fullWidth
           error={!isNameValid} // lint fix: se quito && touchedFields.name
           helperText={!isNameValid ? "Solo letras y espacios" : ""} // lint fix: se quito && touchedFields.name
@@ -128,7 +135,7 @@ const LoginPersonalInfoForm: React.FC = () => {
       {showPopUp && (
         <PopUp onClose={handleClosePopUp}>
           <div className="text-black">
-            <h2 className="text-lg  mb-4">Términos y Condiciones</h2>
+            <h2 className="text-lg mb-4">Términos y Condiciones</h2>
             <p>Aquí van los términos y condiciones del servicio...</p>
           </div>
         </PopUp>
