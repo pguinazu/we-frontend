@@ -39,13 +39,13 @@ export default function HomePage() {
           <div className="flex items-center gap-2">
             <Image src="/icons/VisaIcon.png" alt="Visa Icon" width={50} height={20} />
           </div>
-          <Image src="/icons/WeCard.png" alt="We Card" width={35} height={35} className="opacity-60" />
+          <Image src="/icons/WeIcon.png" alt="We Card" width={35} height={35}   />
         </div>
-        <div className="text-lg tracking-wider">**** 4569</div>
+        <div className="text-lg tracking-wider" style={{ color: '#EADDFF' }}>**** 4569</div>
         <div className="flex items-center justify-between mt-6">
           <div>
-            <p className="text-xs font-normal">Saldo disponible:</p>
-            <div className="text-2xl text-left">USD 0,00</div>
+            <p className="text-xs font-normal" style={{ color: '#EADDFF' }}>Saldo disponible:</p>
+            <div className="text-2xl text-left" style={{ color: '#EADDFF' }}>USD 0,00</div>
           </div>
           <div className="pt-6">
             <div className="flex items-center justify-center w-[44px] h-[24px] bg-[#FEF7FF] rounded-full p-[4px_4px]">
@@ -88,7 +88,7 @@ export default function HomePage() {
       </div>
 
       <div className="flex flex-col items-start mt-8 px-8 w-full z-10">
-        <Subtitle text="¿Dónde podes usar la tarjeta?" />
+        <Subtitle text="¿Dónde podes usar la tarjeta?" textAlign="left" />
 
         <div className="flex justify-between mt-4 w-full">
           <div className="flex items-center justify-center w-[70px] h-[48px]">
@@ -114,7 +114,8 @@ export default function HomePage() {
               </Link>
             </>
           }
-          className="mt-4"
+          className="mt-4 text-left"
+          textAlign="left"
         />
       </div>
     </main>
