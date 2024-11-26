@@ -6,6 +6,7 @@
 html, body {
   @apply h-full;
   background: linear-gradient(3.12deg, #000000 3.74%, #232323 79.77%, #434343 124.44%);
+  font-family: var(--FontFamilyGeneral);
 }
 
 :root {
@@ -62,4 +63,24 @@ html, body {
     transform: scale(1);
     opacity: 1;
   }
+}
+
+@keyframes grow {
+  0% {
+    transform: translate(-50%, 0) scale(0.5); /* Inicia más pequeño pero en la posición final */
+  }
+  100% {
+    transform: translate(-50%, 0) scale(1); /* Termina en tamaño normal */
+  }
+}
+
+.final-position-logo {
+  position: absolute;
+  top: 120px; /* Posición final sobre los botones */
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.animate-grow {
+  animation: grow 1.5s ease-out forwards; /* Ajusta la duración según prefieras */
 }

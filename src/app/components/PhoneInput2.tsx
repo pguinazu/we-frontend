@@ -1,5 +1,5 @@
 import { TextField, Autocomplete, InputAdornment } from '@mui/material';
-import { SetStateAction, useState } from 'react';
+import { useForm } from '../LoginContext';
 import countries from '../../../public/select-options/countries.json';
 
 export default function PhoneInput2() {
@@ -25,9 +25,14 @@ export default function PhoneInput2() {
           options={countryCodes}
           getOptionLabel={(option) => `${option.label} (${option.code})`}
           onChange={handleCountryCodeChange}
-          style={{backgroundColor: '#FAFAFA'}}
+          style={{ backgroundColor: '#FAFAFA' }}
           renderInput={(params) => (
-            <TextField {...params} label="País" variant="filled" style={{backgroundColor: '#FAFAFA'}}/>
+            <TextField
+              {...params}
+              label="País"
+              variant="filled"
+              style={{ backgroundColor: '#FAFAFA' }}
+            />
           )}
           sx={{ minWidth: 120 }}
         />

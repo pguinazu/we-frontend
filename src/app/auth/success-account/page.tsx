@@ -9,9 +9,15 @@ import { useRouter } from 'next/navigation';
 
 const SuccessAccountCreated = () => {
   const router = useRouter();
+
   const handleGoToAccount = () => {
     router.push('/dashboard');
   };
+
+  const handleGoToFaqs = () => {
+    router.push('/faq');
+  };
+
   return (
     <div className="relative w-full h-full flex flex-col items-center justify-center">
       <div className="flex flex-col items-center gap-5">
@@ -30,14 +36,14 @@ const SuccessAccountCreated = () => {
           label="Ingresar a mi cuenta"
           onClick={handleGoToAccount}
           fullWidth={true}
-          className="text-black font-semibold shadow-md rounded-md"
+          className="text-black shadow-md rounded-md"
         />
         <div className="w-full border border-white rounded-md">
           <BlackButton
             label="Ver preguntas frecuentes"
-            onClick={() => console.log('Ver preguntas frecuentes')}
+            onClick={handleGoToFaqs}
             fullWidth={true}
-            className="text-white font-semibold"
+            className="text-white"
           />
         </div>
       </div>
