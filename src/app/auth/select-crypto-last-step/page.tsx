@@ -80,12 +80,11 @@ const CryptoFinalScreen = () => {
         <Subtitle
           text="Seleccionaste"
           textAlign="left"
-          className="text-[#FAFAFA]"
         />
         <Subtitle
           text="Modificar"
           textAlign="right"
-          className="text-[#AFAFAF] underline cursor-pointer"
+          className="underline cursor-pointer"
           onClick={handleModifyClick}
         />
       </div>
