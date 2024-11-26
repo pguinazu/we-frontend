@@ -11,19 +11,17 @@ import { useForm } from '../LoginContext';
 const LoginPersonalInfoForm: React.FC = () => {
   const { formData, setFormData } = useForm();
   const [showPopUp, setShowPopUp] = useState(false);
-  // const [touchedFields, setTouchedFields] = useState({ name: false, lastName: false, phone: false });
+  const [touchedFields, setTouchedFields] = useState({ name: false, lastName: false }); // Rastrear campos tocados
 
   const router = useRouter();
 
   const handleCreateAccount = () => {
-    console.log("Form data:", formData); // Log para ver los datos en consola
+    console.log("Form data:", formData);
     router.push('/auth/success-account');
   };
 
   const handleTermsChange = () => {
-    // setTermsAccepted((prev) => !prev);
     setFormData({ ...formData, termsAccepted: !formData.termsAccepted });
-
   };
 
   const handleOpenPopUp = () => {
@@ -34,21 +32,19 @@ const LoginPersonalInfoForm: React.FC = () => {
     setShowPopUp(false);
   };
 
-  // const handleInputChange = (setter: React.Dispatch<React.SetStateAction<string>>, field: string) =>
-  //   (e: React.ChangeEvent<HTMLInputElement>) => {
-  //     setter(e.target.value);
-  //     setTouchedFields((prev) => ({ ...prev, [field]: true }));
-  // };
+  const handleBlur = (field: string) => {
+    setTouchedFields((prev) => ({ ...prev, [field]: true }));
+  };
 
   // Validaciones
   const isNameValid = /^[a-zA-Z\s]+$/.test(formData.name);
   const isLastNameValid = /^[a-zA-Z\s]+$/.test(formData.lastName);
 
   // Verificar si el formulario es válido
-  const isFormValid = isNameValid && isLastNameValid ; //agregar validacion isPhoneValid, revisando regla segun autocomplete de codigo de area
+  const isFormValid = isNameValid && isLastNameValid;
 
   return (
-    <div className="relative mt-10 w-full h-auto bg-[#202020] shadow-md rounded-md flex flex-col gap-6 p-2 pb-3">
+    <div className="relative mt-4 w-full h-auto bg-[#202020] shadow-md rounded-md flex flex-col gap-6 p-2 pb-3">
       <div className="flex flex-col gap-4">
         <TextField
           label="Nombre"
@@ -56,13 +52,14 @@ const LoginPersonalInfoForm: React.FC = () => {
           variant="filled"
           value={formData.name}
           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+          onBlur={() => handleBlur('name')} // Marcar el campo como tocado al salir
           fullWidth
-          error={!isNameValid} // lint fix: se quito && touchedFields.name
-          helperText={!isNameValid ? "Solo letras y espacios" : ""} // lint fix: se quito && touchedFields.name
+          error={!isNameValid && touchedFields.name} // Mostrar error solo si el campo fue tocado
+          helperText={!isNameValid && touchedFields.name ? "Solo letras y espacios" : ""}
           InputProps={{
             style: { backgroundColor: '#FAFAFA' },
             endAdornment: (
-              !isNameValid && ( // lint fix: se quito && touchedFields.name
+              !isNameValid && touchedFields.name && (
                 <InputAdornment position="end">
                   <ErrorOutline color="error" />
                 </InputAdornment>
@@ -77,13 +74,14 @@ const LoginPersonalInfoForm: React.FC = () => {
           variant="filled"
           value={formData.lastName}
           onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+          onBlur={() => handleBlur('lastName')} // Marcar el campo como tocado al salir
           fullWidth
-          error={!isLastNameValid} // lint fix: se quito && touchedFields.lastName
-          helperText={!isLastNameValid ? "Solo letras y espacios" : ""} // lint fix: se quito && touchedFields.lastName
+          error={!isLastNameValid && touchedFields.lastName} // Mostrar error solo si el campo fue tocado
+          helperText={!isLastNameValid && touchedFields.lastName ? "Solo letras y espacios" : ""}
           InputProps={{
             style: { backgroundColor: '#FAFAFA' },
             endAdornment: (
-              !isLastNameValid && ( // lint fix: se quito && touchedFields.lastName
+              !isLastNameValid && touchedFields.lastName && (
                 <InputAdornment position="end">
                   <ErrorOutline color="error" />
                 </InputAdornment>
@@ -128,7 +126,7 @@ const LoginPersonalInfoForm: React.FC = () => {
       {showPopUp && (
         <PopUp onClose={handleClosePopUp}>
           <div className="text-black">
-            <h2 className="text-lg  mb-4">Términos y Condiciones</h2>
+            <h2 className="text-lg mb-4">Términos y Condiciones</h2>
             <p>Aquí van los términos y condiciones del servicio...</p>
           </div>
         </PopUp>
