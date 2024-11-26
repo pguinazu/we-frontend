@@ -32,7 +32,7 @@ const LoginScreenLastStep = () => {
         <ArrowBackIcon className="mr-2" />
         <span>Volver</span>
       </div>
-      <div className="w-full mb-4">
+      <div className="w-full mb-2">
         <Title text="Último paso" textAlign='left' />
       </div>
       <div className="w-full">
@@ -42,14 +42,48 @@ const LoginScreenLastStep = () => {
       <LoginPersonalInfoForm/>
 
       {/* <div className=''> */}
-        <div className="w-full text-center text-[#FEF7FF] text-[13px] my-6">
-          o ingresá con redes sociales
-        </div>
+      <Subtitle className='w-full text-center mt-8 mb-4' text="o ingresá con redes sociales"/>
 
-        <div className="flex flex-col gap-4 w-full">
-          <Button label="Registrarse con Google" onClick={() => {}} fullWidth />
-          <Button label="Registrarse con Facebook" onClick={() => {}} fullWidth />
-        </div>
+
+      <div className="flex flex-col gap-4 w-full max-w-xs">
+        {/* Botón Google */}
+        <Button
+          label={
+            <div className="flex items-center justify-center gap-3 h-full">
+              <img
+                src="/icons/Google.png"
+                alt="Google Icon"
+                className="w-8 h-8"
+              />
+              <span className="text-[16px] leading-none">
+                Registrarse con Google
+              </span>
+            </div>
+          }
+          onClick={() => {}}
+          fullWidth
+          className="flex items-center justify-center"
+        />
+
+        {/* Botón Facebook */}
+        <Button
+          label={
+            <div className="flex items-center justify-center gap-3 h-full">
+              <img
+                src="/icons/Facebook.png"
+                alt="Facebook Icon"
+                className="w-8 h-8"
+              />
+              <span className="text-[16px] leading-none">
+                Registrarse con Facebook
+              </span>
+            </div>
+          }
+          onClick={() => {}}
+          fullWidth
+          className="flex items-center justify-center"
+        />
+      </div>
 
         {showPopUp && (
           <PopUp onClose={handleClosePopUp}>
