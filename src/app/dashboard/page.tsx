@@ -11,7 +11,7 @@ import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useForm } from '../LoginContext';
+import { useForm } from '../contexts/SignUpContext';
 import BackgroundCard from '../components/BackgroundCard';
 
 export default function HomePage() {

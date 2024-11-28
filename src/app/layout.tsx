@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { FormProvider } from "./LoginContext";
-import { CryptoProvider } from "./CryptoContext";
+import { FormProvider } from "./contexts/SignUpContext";
+import { CryptoProvider } from "./contexts/CryptoContext";
+import { LoginProvider } from "./contexts/LogInContext";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -31,9 +32,9 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <FormProvider>
-        <CryptoProvider>
-          {children}
-        </CryptoProvider>
+          <LoginProvider>
+            <CryptoProvider>{children}</CryptoProvider>
+          </LoginProvider>
         </FormProvider>
       </body>
     </html>

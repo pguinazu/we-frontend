@@ -7,10 +7,12 @@ import Title from '@/app/components/Title';
 import Subtitle from '@/app/components/Subtitle';
 import { Visibility, VisibilityOff, ErrorOutline } from '@mui/icons-material';
 import { useRouter } from 'next/navigation';
+import { useLogin } from '@/app/contexts/LogInContext';
+import { authService } from '@/app/services/authService';
+
 
 const LoginPage = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const { loginData, setLoginData  } = useLogin();
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [emailError, setEmailError] = useState(false);
@@ -19,37 +21,36 @@ const LoginPage = () => {
 
   const router = useRouter();
 
-  // Usuario de prueba
-  const adminUser = { email: 'admin', password: 'Pepe1234.' };
 
   // Reglas de validación de la contraseña
   const passwordValidationRules = [
-    password.length >= 8 && password.length <= 16,
-    /[A-Z]/.test(password),
-    /[0-9]/.test(password),
-    /[!@#$%^&*(),.?":{}|<>]/.test(password),
+    loginData.password.length >= 8 && loginData.password.length <= 16,
+    /[A-Z]/.test(loginData.password),
+    /[0-9]/.test(loginData.password),
+    /[!@#$%^&*(),.?":{}|<>]/.test(loginData.password),
   ];
 
   // Validación completa de la contraseña
   const isPasswordValid = passwordValidationRules.every((rule) => rule);
 
-  const handleLogin = () => {
-    // Verifica si las credenciales coinciden con el usuario de prueba
-    if (email === adminUser.email && password === adminUser.password) {
-      console.log("Inicio de sesión exitoso");
+  const handleLogin = async () => {
+    console.log("Form data:", loginData); // Log para ver los datos en consola
+    try{
+      const result = await authService.login(loginData);
+      console.log('User Login:', result);
       router.push('/dashboard');
-    } else {
-      setEmailError(email !== adminUser.email);
-      setPasswordError(password !== adminUser.password);
+    }catch(error){
+      console.error('Error Logging user:', error);
+    
     }
-  };
+  }
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
   };
 
   // Verifica si ambos campos están llenos y si la contraseña cumple con las reglas para habilitar el botón
-  const isFormValid = email !== '' && password !== '' && isPasswordValid;
+  const isFormValid = loginData.userEmail !== '' && loginData.password !== '' && isPasswordValid;
 
   return (
     <div
@@ -76,11 +77,8 @@ const LoginPage = () => {
           label="Correo electrónico"
           placeholder="juan@gmail.com"
           variant="filled"
-          value={email}
-          onChange={(e) => {
-            setEmail(e.target.value);
-            setTouched((prev) => ({ ...prev, email: true }));
-          }}
+          value={loginData.userEmail}
+          onChange={(e) => setLoginData({ ...loginData, userEmail: e.target.value })}
           fullWidth
           error={emailError && touched.email}
           helperText={emailError && touched.email ? "Este correo no se encuentra registrado" : ""}
@@ -99,11 +97,8 @@ const LoginPage = () => {
           placeholder="Contraseña"
           variant="filled"
           type={showPassword ? 'text' : 'password'}
-          value={password}
-          onChange={(e) => {
-            setPassword(e.target.value);
-            setTouched((prev) => ({ ...prev, password: true }));
-          }}
+          value={loginData.password}
+          onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
           fullWidth
           error={passwordError && touched.password}
           helperText={passwordError && touched.password ? "La contraseña ingresada no es correcta, volve a intentarlo" : ""}

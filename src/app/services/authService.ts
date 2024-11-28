@@ -1,17 +1,17 @@
 import axios from 'axios';
-import { FormData } from "../interfaces/formData";
+import { SignUpForm } from "../interfaces/formData";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080/api';
 
 export const authService = {
-  signUp: async (data: FormData) => {
+  signUp: async (data: SignUpForm) => {
     const response = await axios.post(`${API_URL}/signup`, data, {
       headers: { 'Content-Type': 'application/json' },
     });
     return response.data;
   },
 
-  login: async (data: { username: string; password: string; rememberMe: boolean }) => {
+  login: async (data: { userEmail: string; password: string; rememberMe?: boolean }) => {
     const response = await axios.post(`${API_URL}/authenticate`, data, {
       headers: { 'Content-Type': 'application/json' },
     });

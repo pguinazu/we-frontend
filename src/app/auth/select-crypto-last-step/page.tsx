@@ -12,7 +12,7 @@ import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlined";
 import UsbOutlinedIcon from "@mui/icons-material/UsbOutlined";
 import SmallText from "@/app/components/SmallText";
-import { useCryptoContext } from "../../CryptoContext";
+import { useCryptoContext } from "../../contexts/CryptoContext";
 
 const CryptoFinalScreen = () => {
   const router = useRouter();

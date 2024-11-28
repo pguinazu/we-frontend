@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import CryptoCard from "@/app/components/CryptoCard";
 import Subtitle from "@/app/components/Subtitle";
-import { useCryptoContext } from "../../CryptoContext";
+import { useCryptoContext } from "../../contexts/CryptoContext";
 
 const SelectCryptoRed = () => {
   const { setSelectedNetwork } = useCryptoContext();

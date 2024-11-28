@@ -2,12 +2,12 @@
 
 // FormContext.tsx
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { FormData } from "./interfaces/formData";
+import { SignUpForm } from '../interfaces/formData';
 
 // Define las propiedades del contexto, que incluyen los datos y una función para actualizar los datos
 interface FormContextProps {
-  formData: FormData;
-  setFormData: (data: FormData) => void;
+  formData: SignUpForm;
+  setFormData: (data: SignUpForm) => void;
 }
 
 // Crea el contexto sin valores iniciales específicos
@@ -15,7 +15,7 @@ const FormContext = createContext<FormContextProps | undefined>(undefined);
 
 // Crea el proveedor del contexto, que envuelve a los componentes que necesitan acceso a los datos
 export const FormProvider = ({ children }: { children: ReactNode }) => {
-  const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState<SignUpForm>({
     email: '',
     password: '',
     confirmPassword: '', // sacar/confirmar si se saca para peticion a api
