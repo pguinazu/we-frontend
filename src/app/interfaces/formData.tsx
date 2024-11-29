@@ -1,4 +1,4 @@
-export interface FormData {
+export interface SignUpForm {
   email: string;
   password: string;
   confirmPassword: string;
@@ -8,3 +8,10 @@ export interface FormData {
   phoneNumber: string;
   phoneCountryCode: string,
 }
+
+export interface LoginData {
+  userEmail: string;
+  password: string;
+  rememberMe?: boolean;
+}
+

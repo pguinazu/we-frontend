@@ -6,7 +6,7 @@ import { ErrorOutline } from '@mui/icons-material';
 import PopUp from './PopUp';
 import { useRouter } from 'next/navigation';
 import PhoneInput2 from './PhoneInput2';
-import { useForm } from '../LoginContext';
+import { useForm } from '../contexts/SignUpContext';
 import { authService } from '../services/authService';
 
 const LoginPersonalInfoForm: React.FC = () => {
