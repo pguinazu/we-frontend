@@ -4,13 +4,10 @@
 @tailwind utilities;
 
 html, body {
-  @apply h-full w-full; /* Mantiene el tamaño completo pero no afecta el layout */
-  margin: 0;
+  @apply h-full;
   background: linear-gradient(3.12deg, #000000 3.74%, #232323 79.77%, #434343 124.44%);
   font-family: var(--FontFamilyGeneral);
-  overflow-x: hidden; /* Por si hay scroll horizontal no deseado */
 }
-
 
 :root {
   --FontFamilyGeneral: 'Lato', sans-serif; 

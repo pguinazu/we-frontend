@@ -3,8 +3,6 @@
 import React, { useState } from 'react';
 import { TextField, Checkbox, InputAdornment } from '@mui/material';
 import Button from '@/app/components/Button';
-import Title from '@/app/components/Title';
-import Subtitle from '@/app/components/Subtitle';
 import { Visibility, VisibilityOff, ErrorOutline } from '@mui/icons-material';
 import { useRouter } from 'next/navigation';
 
@@ -13,20 +11,15 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
-  const [emailError, setEmailError] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
   const [touched, setTouched] = useState({ email: false, password: false });
 
   const router = useRouter();
-
-  // Usuario de prueba
-  const adminUser = { email: 'admin', password: 'Pepe1234.' };
 
   // Reglas de validación de la contraseña
   const passwordValidationRules = [
     password.length >= 8 && password.length <= 16,
     /[A-Z]/.test(password),
-    /[0-9]/.test(password),
+    /\d/.test(password),
     /[!@#$%^&*(),.?":{}|<>]/.test(password),
   ];
 
@@ -35,13 +28,8 @@ const LoginPage = () => {
 
   const handleLogin = () => {
     // Verifica si las credenciales coinciden con el usuario de prueba
-    if (email === adminUser.email && password === adminUser.password) {
       console.log("Inicio de sesión exitoso");
       router.push('/dashboard');
-    } else {
-      setEmailError(email !== adminUser.email);
-      setPasswordError(password !== adminUser.password);
-    }
   };
 
   const togglePasswordVisibility = () => {
@@ -53,21 +41,15 @@ const LoginPage = () => {
 
   return (
     <div
-      className="flex flex-col items-center justify-start min-h-screen px-6"
+      className="flex flex-col items-center justify-center min-h-screen px-6"
       style={{
         background: 'linear-gradient(3.12deg, #000000 3.74%, #232323 79.77%, #434343 124.44%)',
       }}
     >
       {/* Encabezado */}
-      <div className="w-full max-w-xs mb-4">
-        <div className="flex items-center gap-3 mb-4 px-3 pt-7">
-          <img src="/icons/WeIcon.png" alt="We Icon" className="w-8 h-8" />
-          <Title text="Iniciar sesión" textAlign="left" />
-        </div>
-        <Subtitle 
-          text="Ingresa tus datos para poder empezar a usar tu tarjeta crypto"
-          textAlign="left" 
-        />
+      <div className="text-center text-white mb-8">
+        <h1 className="text-[20px]">Iniciar sesión en W3</h1>
+        <p className="text-[16px] mt-2">Ingresa tus datos para poder empezar a usar tu tarjeta cripto</p>
       </div>
 
       {/* Formulario */}
@@ -82,11 +64,11 @@ const LoginPage = () => {
             setTouched((prev) => ({ ...prev, email: true }));
           }}
           fullWidth
-          error={emailError && touched.email}
-          helperText={emailError && touched.email ? "Este correo no se encuentra registrado" : ""}
+          error={touched.email}
+          helperText={touched.email ? "Este correo no se encuentra registrado" : ""}
           InputProps={{
             style: { backgroundColor: '#FAFAFA' },
-            endAdornment: emailError && touched.email ? (
+            endAdornment: touched.email ? (
               <InputAdornment position="end">
                 <ErrorOutline color="error" />
               </InputAdornment>
@@ -105,11 +87,11 @@ const LoginPage = () => {
             setTouched((prev) => ({ ...prev, password: true }));
           }}
           fullWidth
-          error={passwordError && touched.password}
-          helperText={passwordError && touched.password ? "La contraseña ingresada no es correcta, volve a intentarlo" : ""}
+          error={touched.password}
+          helperText={touched.password ? "La contraseña ingresada no es correcta, volve a intentarlo" : ""}
           InputProps={{
             style: { backgroundColor: '#FAFAFA' },
-            endAdornment: passwordError && touched.password ? (
+            endAdornment: touched.password ? (
               <InputAdornment position="end">
                 <ErrorOutline color="error" />
               </InputAdornment>
@@ -147,45 +129,23 @@ const LoginPage = () => {
       </div>
 
       {/* Separador de redes sociales */}
-      <Subtitle className='w-full text-center mt-8 mb-4' text="o ingresá con redes sociales"/>
+      <div className="w-full text-center text-[#FEF7FF] text-[14px] my-6">
+        o ingresá con redes sociales
+      </div>
 
-      <div className="flex flex-col gap-4 w-full max-w-xs">
-        {/* Botón Google */}
+      {/* Botones de redes sociales */}
+      <div className="flex flex-col gap-4 w-[296px]">
         <Button
-          label={
-            <div className="flex items-center justify-center gap-3 h-full">
-              <img
-                src="/icons/Google.png"
-                alt="Google Icon"
-                className="w-8 h-8"
-              />
-              <span className="text-[16px] leading-none">
-                Registrarse con Google
-              </span>
-            </div>
-          }
-          onClick={() => {}}
-          fullWidth
-          className="flex items-center justify-center"
+          label="Registrarse con Google"
+          onClick={() => console.log("Google login")}
+          fullWidth={true}
+          className="bg-white text-[#202020]"
         />
-
-        {/* Botón Facebook */}
         <Button
-          label={
-            <div className="flex items-center justify-center gap-3 h-full">
-              <img
-                src="/icons/Facebook.png"
-                alt="Facebook Icon"
-                className="w-8 h-8"
-              />
-              <span className="text-[16px] leading-none">
-                Registrarse con Facebook
-              </span>
-            </div>
-          }
-          onClick={() => {}}
-          fullWidth
-          className="flex items-center justify-center"
+          label="Registrarse con Facebook"
+          onClick={() => console.log("Facebook login")}
+          fullWidth={true}
+          className="bg-[#3B5998] text-white"
         />
       </div>
 

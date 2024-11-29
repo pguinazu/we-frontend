@@ -6,7 +6,6 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import BlackButton from '@/app/components/BlackButton';
 import Title from '@/app/components/Title';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
 
 const SuccessAccountCreated = () => {
   const router = useRouter();
@@ -23,7 +22,12 @@ const SuccessAccountCreated = () => {
     <div className="relative w-full h-full flex flex-col items-center justify-center">
       <div className="flex flex-col items-center gap-5">
         <div className="flex justify-center items-center">
-          <Image alt="Success Icon" width={241} height={201} src={'/icons/Success.png'}/>
+          <CheckCircleIcon
+            className="text-green-700"
+            style={{
+              fontSize: '150px',
+            }}
+          />
         </div>
         <Title className="text-center text-white text-[20px] leading-[28px] w-[241px]" textAlign="center" text="¡Felicitaciones, tu cuenta se ha creado con éxito!" />
       </div>
