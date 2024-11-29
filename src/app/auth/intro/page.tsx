@@ -48,11 +48,15 @@ export default function IntroScreen() {
             <Button label="Crear cuenta" onClick={handleContinueClick} fullWidth />
           </div>
 
-          <div className="absolute left-1/2 bottom-[120px] transform -translate-x-1/2 text-center  text-sm fade-in">
+          <div className="absolute left-1/2 bottom-[120px] transform -translate-x-1/2 text-center text-sm fade-in">
             ¿Ya tienes cuenta?{' '}
-            <span onClick={handleLoginClick} className="underline cursor-pointer">
+            <button
+              onClick={handleLoginClick}
+              className="underline cursor-pointer bg-transparent border-none p-0 text-sm"
+              style={{ all: 'unset' }} // Para eliminar estilos nativos del botón
+            >
               Ingresa
-            </span>
+            </button>
           </div>
         </>
       )}

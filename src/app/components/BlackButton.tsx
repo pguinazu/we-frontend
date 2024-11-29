@@ -5,7 +5,6 @@ interface ButtonProps {
   onClick: () => void;
   fullWidth?: boolean;
   className?: string;
-  variant?: 'receive' | 'pause'; // Agrega una variante para personalizar el fondo
 }
 
 const BlackButton: React.FC<ButtonProps> = ({ label, onClick, fullWidth = false, className }) => {

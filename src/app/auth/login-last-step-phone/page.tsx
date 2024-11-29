@@ -8,16 +8,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import LoginPersonalInfoPhone from '@/app/components/LoginPersonalInfoPhone';
 
 const LoginScreenLastStepPhoneNumber = () => {
-  // const [termsAccepted, setTermsAccepted] = useState(false);
   const [showPopUp, setShowPopUp] = useState(false);
-
-  // const handleTermsChange = () => {
-  //   setTermsAccepted((prev) => !prev);
-  // }; // lint fix
-
-  // const handleOpenPopUp = () => {
-  //   setShowPopUp(true);
-  // }; // lint fix
 
   const handleClosePopUp = () => {
     setShowPopUp(false);
@@ -37,44 +28,6 @@ const LoginScreenLastStepPhoneNumber = () => {
       </div>
 
       <LoginPersonalInfoPhone/>
-
-      {/* <div className="flex flex-col gap-4 w-full max-w-xs">
-        <Button
-          label={
-            <div className="flex items-center justify-center gap-3 h-full">
-              <img
-                src="/icons/Google.png"
-                alt="Google Icon"
-                className="w-8 h-8"
-              />
-              <span className="text-[16px] leading-none">
-                Registrarse con Google
-              </span>
-            </div>
-          }
-          onClick={() => {}}
-          fullWidth
-          className="flex items-center justify-center "
-        />
-
-        <Button
-          label={
-            <div className="flex items-center justify-center gap-3 h-full">
-              <img
-                src="/icons/Facebook.png"
-                alt="Facebook Icon"
-                className="w-8 h-8"
-              />
-              <span className="text-[16px]  leading-none">
-                Registrarse con Facebook
-              </span>
-            </div>
-          }
-          onClick={() => {}}
-          fullWidth
-          className="flex items-center justify-center"
-        />
-      </div> */}
 
       {showPopUp && (
         <PopUp onClose={handleClosePopUp}>

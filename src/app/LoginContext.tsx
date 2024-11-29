@@ -1,7 +1,7 @@
 'use client'
 
 // FormContext.tsx
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useMemo } from 'react';
 import { FormData } from "./interfaces/formData";
 
 // Define las propiedades del contexto, que incluyen los datos y una función para actualizar los datos
@@ -26,8 +26,11 @@ export const FormProvider = ({ children }: { children: ReactNode }) => {
     phoneCountryCode: ''
   });
 
+  // Usa useMemo para evitar la recreación del valor del contexto en cada render
+  const contextValue = useMemo(() => ({ formData, setFormData }), [formData]);
+
   return (
-    <FormContext.Provider value={{ formData, setFormData }}>
+    <FormContext.Provider value={contextValue}>
       {children}
     </FormContext.Provider>
   );

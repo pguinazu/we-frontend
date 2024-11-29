@@ -8,16 +8,7 @@ import LoginPersonalInfoForm from '../../components/LoginPersonalInfoForm';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const LoginScreenLastStep = () => {
-  // const [termsAccepted, setTermsAccepted] = useState(false);
   const [showPopUp, setShowPopUp] = useState(false);
-
-  // const handleTermsChange = () => {
-  //   setTermsAccepted((prev) => !prev);
-  // };
-
-  // const handleOpenPopUp = () => {
-  //   setShowPopUp(true);
-  // };
 
   const handleClosePopUp = () => {
     setShowPopUp(false);

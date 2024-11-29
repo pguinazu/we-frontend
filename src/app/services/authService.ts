@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { FormData } from "../interfaces/formData";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080/api';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api-dev.we.asf.dev/api';
 
 export const authService = {
   signUp: async (data: FormData) => {

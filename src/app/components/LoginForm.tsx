@@ -35,7 +35,7 @@ const LoginForm: React.FC = () => {
   };
 
   // Validación del correo electrónico
-  const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email);
+  const isEmailValid = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i.test(formData.email);
 
   // Verificar confirmación de contraseña
   const isPasswordConfirmed = formData.confirmPassword === formData.password;
@@ -52,7 +52,7 @@ const LoginForm: React.FC = () => {
     },
     {
       label: "La contraseña debe contener al menos un número",
-      isValid: /[0-9]/.test(formData.password),
+      isValid: /\d/.test(formData.password),
     },
     {
       label: "La contraseña debe contener al menos un caracter especial",
@@ -110,9 +110,9 @@ const LoginForm: React.FC = () => {
 
           {showPasswordRules && (
             <ul className="mt-2 text-sm list-disc pl-5">
-              {passwordValidationRules.map((rule, index) => (
+              {passwordValidationRules.map((rule) => (
                 <li
-                  key={index}
+                  key={rule.label}
                   className={rule.isValid ? 'text-white' : 'text-red-500'}
                 >
                   {rule.label}

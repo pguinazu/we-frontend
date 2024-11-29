@@ -12,7 +12,6 @@ import { authService } from '../services/authService';
 const LoginPersonalInfoForm: React.FC = () => {
   const { formData, setFormData } = useForm();
   const [showPopUp, setShowPopUp] = useState(false);
-  // const [touchedFields, setTouchedFields] = useState({ name: false, lastName: false, phone: false });
 
   const router = useRouter();
 
@@ -28,9 +27,7 @@ const LoginPersonalInfoForm: React.FC = () => {
   };
 
   const handleTermsChange = () => {
-    // setTermsAccepted((prev) => !prev);
     setFormData({ ...formData, termsAccepted: !formData.termsAccepted });
-
   };
 
   const handleOpenPopUp = () => {
@@ -41,12 +38,6 @@ const LoginPersonalInfoForm: React.FC = () => {
     setShowPopUp(false);
   };
 
-  // const handleInputChange = (setter: React.Dispatch<React.SetStateAction<string>>, field: string) =>
-  //   (e: React.ChangeEvent<HTMLInputElement>) => {
-  //     setter(e.target.value);
-  //     setTouchedFields((prev) => ({ ...prev, [field]: true }));
-  // };
-
   // Validaciones
   const isNameValid = /^[a-zA-Z\s]+$/.test(formData.firstName);
   const isLastNameValid = /^[a-zA-Z\s]+$/.test(formData.lastName);
@@ -55,7 +46,7 @@ const LoginPersonalInfoForm: React.FC = () => {
   const isFormValid = isNameValid && isLastNameValid ; //agregar validacion isPhoneValid, revisando regla segun autocomplete de codigo de area
 
   return (
-    <div className="relative mt-4 w-full h-auto bg-[#202020] shadow-md rounded-md flex flex-col gap-6 p-2 pb-3">
+    <div className="relative mt-10 w-full h-auto bg-[#202020] shadow-md rounded-md flex flex-col gap-6 p-2 pb-3">
       <div className="flex flex-col gap-4">
         <TextField
           label="Nombre"
@@ -104,13 +95,14 @@ const LoginPersonalInfoForm: React.FC = () => {
 
       <div className="flex items-center gap-2">
         <input
+          id="termsAccepted"
           type="checkbox"
           checked={formData.termsAccepted}
           onChange={handleTermsChange}
           className="w-4 h-4 bg-[#65558F]"
         />
-        <label className="text-[#FEF7FF] text-sm">
-          Aceptar <a href="#" className="underline" onClick={handleOpenPopUp}>términos y condiciones</a>
+        <label htmlFor="termsAccepted" className="text-[#FEF7FF] text-sm">
+          Aceptar <button className="underline" onClick={handleOpenPopUp}>términos y condiciones</button>
         </label>
       </div>
 
@@ -135,7 +127,7 @@ const LoginPersonalInfoForm: React.FC = () => {
       {showPopUp && (
         <PopUp onClose={handleClosePopUp}>
           <div className="text-black">
-            <h2 className="text-lg mb-4">Términos y Condiciones</h2>
+            <h2 className="text-lg  mb-4">Términos y Condiciones</h2>
             <p>Aquí van los términos y condiciones del servicio...</p>
           </div>
         </PopUp>
