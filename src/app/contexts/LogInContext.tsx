@@ -15,7 +15,7 @@ const LoginContext = createContext<LoginContextProps | undefined>(undefined);
 // Crea el proveedor del contexto
 export const LoginProvider = ({ children }: { children: ReactNode }) => {
   const [loginData, setLoginData] = useState<LoginData>({
-    userEmail: '',
+    username: '',
     password: '',
     rememberMe: false,
   });

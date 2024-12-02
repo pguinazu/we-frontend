@@ -10,7 +10,7 @@ export interface SignUpForm {
 }
 
 export interface LoginData {
-  userEmail: string;
+  username: string;
   password: string;
   rememberMe?: boolean;
 }

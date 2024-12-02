@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useMemo } from "react";
 
 interface CryptoContextValue {
   selectedCrypto: {
@@ -26,10 +26,19 @@ export const CryptoProvider: React.FC<{ children: React.ReactNode }> = ({
   const [selectedCrypto, setSelectedCrypto] = useState<CryptoContextValue["selectedCrypto"]>(null);
   const [selectedNetwork, setSelectedNetwork] = useState<CryptoContextValue["selectedNetwork"]>(null);
 
+  // Memorizar el valor del contexto
+  const value = useMemo(
+    () => ({
+      selectedCrypto,
+      setSelectedCrypto,
+      selectedNetwork,
+      setSelectedNetwork,
+    }),
+    [selectedCrypto, selectedNetwork] // Dependencias
+  );
+
   return (
-    <CryptoContext.Provider
-      value={{ selectedCrypto, setSelectedCrypto, selectedNetwork, setSelectedNetwork }}
-    >
+    <CryptoContext.Provider value={value}>
       {children}
     </CryptoContext.Provider>
   );
