@@ -34,8 +34,7 @@ const LoginForm: React.FC = () => {
     router.push('/auth/login-last-step');
   };
 
-  // Validación del correo electrónico
-  const isEmailValid = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i.test(formData.email);
+  // Validación del correo electrónico: reemplazar por yup y formik
 
   // Verificar confirmación de contraseña
   const isPasswordConfirmed = formData.confirmPassword === formData.password;
@@ -61,7 +60,7 @@ const LoginForm: React.FC = () => {
   ];
 
   // Determinar si el formulario es válido
-  const isFormValid = isEmailValid && isPasswordConfirmed && passwordValidationRules.every(rule => rule.isValid);
+  const isFormValid = isPasswordConfirmed && passwordValidationRules.every(rule => rule.isValid);
 
   return (
     <div className="relative w-full max-w-xs p-5 bg-[#202020] shadow-md rounded-md flex flex-col gap-6">
@@ -74,11 +73,11 @@ const LoginForm: React.FC = () => {
           value={formData.email}
           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
           onBlur={() => handleBlur('email')}
-          error={!isEmailValid && touchedFields.email}
-          helperText={!isEmailValid && touchedFields.email ? "Correo electrónico no válido" : ""}
+          error={!touchedFields.email}
+          helperText={!touchedFields.email ? "Correo electrónico no válido" : ""}
           InputProps={{
             style: { backgroundColor: '#FAFAFA' },
-            endAdornment: !isEmailValid && touchedFields.email ? (
+            endAdornment: !touchedFields.email ? (
               <InputAdornment position="end">
                 <ErrorOutline color="error" />
               </InputAdornment>

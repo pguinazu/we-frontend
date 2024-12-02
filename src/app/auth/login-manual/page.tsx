@@ -5,25 +5,22 @@ import { TextField, Checkbox, InputAdornment } from '@mui/material';
 import Button from '@/app/components/Button';
 import Title from '@/app/components/Title';
 import Subtitle from '@/app/components/Subtitle';
-import { Visibility, VisibilityOff, ErrorOutline } from '@mui/icons-material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useRouter } from 'next/navigation';
 import { useLogin } from '@/app/contexts/LogInContext';
-import { authService } from '@/app/services/authService';
+import { authService } from '@/app/services/auth/authService';
 
 const LoginPage = () => {
   const { loginData, setLoginData } = useLogin();
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
-  const [emailError, setEmailError] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
-  const [touched, setTouched] = useState({ email: false, password: false });
 
   const router = useRouter();
 
   const passwordValidationRules = [
     loginData.password.length >= 8 && loginData.password.length <= 16,
     /[A-Z]/.test(loginData.password),
-    /[0-9]/.test(loginData.password),
+    /\d/.test(loginData.password),
     /[!@#$%^&*(),.?":{}|<>]/.test(loginData.password),
   ];
 
@@ -44,7 +41,7 @@ const LoginPage = () => {
     setShowPassword((prev) => !prev);
   };
 
-  const isFormValid = loginData.userEmail !== '' && loginData.password !== '' && isPasswordValid;
+  const isFormValid = loginData.username !== '' && loginData.password !== '' && isPasswordValid;
 
   return (
     <div
@@ -74,25 +71,13 @@ const LoginPage = () => {
           label="Correo electrónico"
           placeholder="juan@gmail.com"
           variant="filled"
-          value={loginData.userEmail}
+          value={loginData.username}
           onChange={(e) =>
-            setLoginData({ ...loginData, userEmail: e.target.value })
+            setLoginData({ ...loginData, username: e.target.value })
           }
           fullWidth
-          error={emailError && touched.email}
-          helperText={
-            emailError && touched.email
-              ? "Este correo no se encuentra registrado"
-              : ""
-          }
           InputProps={{
-            style: { backgroundColor: "#FAFAFA" },
-            endAdornment:
-              emailError && touched.email ? (
-                <InputAdornment position="end">
-                  <ErrorOutline color="error" />
-                </InputAdornment>
-              ) : null,
+            style: { backgroundColor: "#FAFAFA" }
           }}
         />
 
@@ -106,28 +91,16 @@ const LoginPage = () => {
             setLoginData({ ...loginData, password: e.target.value })
           }
           fullWidth
-          error={passwordError && touched.password}
-          helperText={
-            passwordError && touched.password
-              ? "La contraseña ingresada no es correcta, volve a intentarlo"
-              : ""
-          }
           InputProps={{
             style: { backgroundColor: "#FAFAFA" },
             endAdornment:
-              passwordError && touched.password ? (
-                <InputAdornment position="end">
-                  <ErrorOutline color="error" />
-                </InputAdornment>
-              ) : (
-                <InputAdornment
-                  position="end"
-                  onClick={togglePasswordVisibility}
-                  style={{ cursor: "pointer" }}
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </InputAdornment>
-              ),
+              <InputAdornment
+                position="end"
+                onClick={togglePasswordVisibility}
+                style={{ cursor: "pointer" }}
+              >
+                {showPassword ? <VisibilityOff /> : <Visibility />}
+              </InputAdornment>
           }}
         />
 

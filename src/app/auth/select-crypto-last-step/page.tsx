@@ -39,13 +39,13 @@ const CryptoFinalScreen = () => {
 
   return (
     <div className="w-full h-full flex flex-col items-start p-5">
-      <div
+      <button
         className="absolute top-5 left-5 flex items-center text-[#FEF7FF] cursor-pointer"
         onClick={() => router.back()}
       >
         <ArrowBackIcon className="mr-2" />
         <span>Volver</span>
-      </div>
+      </button>
 
       <div className="w-full mt-16">
         <Title
@@ -66,12 +66,12 @@ const CryptoFinalScreen = () => {
               {selectedNetwork?.hash || "Hash no disponible"}
             </p>
           </div>
-          <div
+          <button
             onClick={handleCopyClick}
             className="w-10 h-10 bg-[#FAFAFA] rounded-full flex items-center justify-center cursor-pointer shrink-0"
           >
             <ContentCopyIcon className="text-[#202020]" />
-          </div>
+          </button>
         </div>
       </div>
 
@@ -81,12 +81,13 @@ const CryptoFinalScreen = () => {
           text="Seleccionaste"
           textAlign="left"
         />
-        <Subtitle
-          text="Modificar"
-          textAlign="right"
-          className="underline cursor-pointer"
-          onClick={handleModifyClick}
-        />
+        <button onClick={handleModifyClick}>
+          <Subtitle
+            text="Modificar"
+            textAlign="right"
+            className="underline cursor-pointer"
+          />
+        </button>
       </div>
 
       <div className="w-full bg-[#202020] p-5 rounded-lg shadow-md mt-2">

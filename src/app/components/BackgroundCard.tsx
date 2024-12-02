@@ -20,7 +20,7 @@ interface BackgroundCardProps {
 const BackgroundCard: React.FC<BackgroundCardProps> = ({
   backgroundColor = "#151415",
   shadowColor = "rgba(0, 0, 0, 0.15)",
-  width = "100%", // Cambiado para que ocupe todo el ancho
+  width = "100%", // Ancho del componente
   height = "515px",
   borderRadius = "0px 0px 60px 60px", // Bordes hacia abajo
   padding = "0px",

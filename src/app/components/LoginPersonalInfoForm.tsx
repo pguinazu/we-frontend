@@ -7,7 +7,7 @@ import PopUp from './PopUp';
 import { useRouter } from 'next/navigation';
 import PhoneInput2 from './PhoneInput2';
 import { useForm } from '../contexts/SignUpContext';
-import { authService } from '../services/authService';
+import { authService } from '../services/auth/authService';
 
 const LoginPersonalInfoForm: React.FC = () => {
   const { formData, setFormData } = useForm();

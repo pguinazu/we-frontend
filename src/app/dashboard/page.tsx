@@ -28,7 +28,7 @@ export default function HomePage() {
 
   return (
     <div>
-      {/* Fondo detrás de todo con el nuevo color */}
+      {/* Background con el nuevo color */}
       <BackgroundCard
         height="375px"
         backgroundColor="#181818" // Color de fondo actualizado
