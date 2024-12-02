@@ -4,12 +4,12 @@ import React, { createContext, useContext, useState, useMemo } from "react";
 
 interface CryptoContextValue {
   selectedCrypto: {
-    icon: string;
+    icon?: string; 
     title: string;
     subtitle: string;
   } | null;
   selectedNetwork: {
-    icon: string;
+    icon?: string; 
     title: string;
     subtitle: string;
     hash: string;

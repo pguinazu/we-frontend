@@ -1,33 +1,45 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import CryptoCard from "@/app/components/CryptoCard";
 import Subtitle from "@/app/components/Subtitle";
 import { useCryptoContext } from "../../contexts/CryptoContext";
+import { blockchainService } from "../../services/blockchain/blockchainService";
+import { Network } from "../../interfaces/cryptoData";
 
 const SelectCryptoRed = () => {
   const { setSelectedNetwork } = useCryptoContext();
-  const networks = [
-    {
-      icon: "/icons/Tron.png",
-      title: "Tron (TRC 20)",
-      subtitle: "Red nativa para hacer transferencias de Tron",
-      hash: "a1b2c3d4e5f6g7h8i9j0",
-    },
-    {
-      icon: "/icons/Polygon.png",
-      title: "Polygon",
-      subtitle: "Red nativa de MATIC",
-      hash: "z9y8x7w6v5u4t3s2r1q0",
-    },
-  ];
+  const [networks, setNetworks] = useState<Network[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   const router = useRouter();
 
-  const handleCardClick = (network: typeof networks[0]) => {
-    setSelectedNetwork(network);
+  useEffect(() => {
+    const fetchNetworks = async () => {
+      try {
+        setLoading(true);
+        const data = await blockchainService.getBlockchains();
+        setNetworks(data);
+      } catch (err) {
+        setError("Error al cargar las redes");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchNetworks();
+  }, []);
+
+  const handleCardClick = (network: Network) => {
+    setSelectedNetwork({
+      icon: network.icon, // Esto será opcional
+      title: network.name,
+      subtitle: `Red ${network.name}`,
+      hash: `hash-${network.id}`, // Generar hash ficticio por ahora
+    });
     router.push("/auth/select-crypto-last-step");
   };
 
@@ -48,14 +60,14 @@ const SelectCryptoRed = () => {
       <div className="w-full bg-[#202020] p-5 rounded-md shadow-md flex flex-col gap-4 mt-4">
         {networks.map((network) => (
           <button
-            key={network.hash}
+            key={network.id}
             onClick={() => handleCardClick(network)}
             className="cursor-pointer"
           >
             <CryptoCard
-              icon={network.icon}
-              title={network.title}
-              subtitle={network.subtitle}
+              icon={network.icon} // Esto será opcional
+              title={network.name}
+              subtitle={`Red ${network.name}`}
             />
           </button>
         ))}

@@ -99,11 +99,7 @@ const CryptoFinalScreen = () => {
               <SmallText text="Moneda" className="text-[#FAFAFA]" />
             </div>
             <div className="flex items-center gap-2 shrink-0">
-              <img
-                src={selectedCrypto?.icon || "/icons/default.png"}
-                alt={selectedCrypto?.title || "Criptomoneda"}
-                className="w-6 h-6"
-              />
+             
               <SmallText
                 text={selectedCrypto?.title || "Criptomoneda"}
                 className="text-[#FAFAFA] max-w-[140px] overflow-hidden"
@@ -122,11 +118,7 @@ const CryptoFinalScreen = () => {
               <SmallText text="Red" className="text-[#FAFAFA]" />
             </div>
             <div className="flex items-center gap-2 shrink-0">
-              <img
-                src={selectedNetwork?.icon || "/icons/default.png"}
-                alt={selectedNetwork?.title || "Red"}
-                className="w-6 h-6"
-              />
+              
               <SmallText
                 text={selectedNetwork?.title || "Red"}
                 className="text-[#FAFAFA] max-w-[140px] overflow-hidden"

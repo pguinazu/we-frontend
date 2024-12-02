@@ -1,40 +1,44 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import CryptoCard from "@/app/components/CryptoCard";
 import Subtitle from "@/app/components/Subtitle";
+import CryptoCard from "@/app/components/CryptoCard";
 import { useCryptoContext } from "../../contexts/CryptoContext";
-import { blockchainService } from '../../services/blockchain/blockchainService';
+import { blockchainService } from "../../services/blockchain/blockchainService";
+import { Crypto } from "../../interfaces/cryptoData";
 
 const SelectCrypto = () => {
   const { setSelectedCrypto } = useCryptoContext();
-  useEffect(() => {
-    blockchainService.getBlockchains();
-  }, []);
-  const cryptos = [
-    {
-      icon: "/icons/USDC.png",
-      title: "USDC",
-      subtitle: "USDC",
-    },
-    {
-      icon: "/icons/Tether.png",
-      title: "Tether",
-      subtitle: "USDT",
-    },
-    {
-      icon: "/icons/DAI.png",
-      title: "DAI",
-      subtitle: "DAI",
-    },
-  ];
+  const [cryptos, setCryptos] = useState<Crypto[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   const router = useRouter();
 
-  const handleCardClick = (crypto: typeof cryptos[0]) => {
-    setSelectedCrypto(crypto);
+  useEffect(() => {
+    const fetchCryptos = async () => {
+      try {
+        setLoading(true);
+        const data = await blockchainService.getTokens();
+        setCryptos(data);
+      } catch (err) {
+        setError("Error al cargar las criptomonedas");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCryptos();
+  }, []);
+
+  const handleCardClick = (crypto: Crypto) => {
+    setSelectedCrypto({
+      icon: "?", // Icono placeholder
+      title: crypto.name,
+      subtitle: crypto.symbol || crypto.name,
+    });
     router.push("/auth/select-crypto-red");
   };
 
@@ -55,14 +59,13 @@ const SelectCrypto = () => {
       <div className="w-full bg-[#202020] p-5 rounded-md shadow-md flex flex-col gap-4 mt-4">
         {cryptos.map((crypto) => (
           <button
-            key={crypto.title}
+            key={crypto.id}
             onClick={() => handleCardClick(crypto)}
             className="cursor-pointer"
           >
             <CryptoCard
-              icon={crypto.icon}
-              title={crypto.title}
-              subtitle={crypto.subtitle}
+              title={crypto.name}
+              subtitle={crypto.symbol || "Sin símbolo"}
             />
           </button>
         ))}
