@@ -46,7 +46,7 @@ const LoginPersonalInfoForm: React.FC = () => {
   const isFormValid = isNameValid && isLastNameValid ; //agregar validacion isPhoneValid, revisando regla segun autocomplete de codigo de area
 
   return (
-    <div className="relative mt-2 w-full h-auto bg-[#202020] shadow-md rounded-md flex flex-col gap-6 p-2 pb-3">
+    <div className="relative mt-2 w-full h-auto bg-[#202020] shadow-md rounded-md flex flex-col gap-6 p-3 pb-3">
       <div className="flex flex-col gap-4">
         <TextField
           label="Nombre"

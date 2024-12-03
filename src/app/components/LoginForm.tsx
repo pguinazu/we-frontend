@@ -63,96 +63,97 @@ const LoginForm: React.FC = () => {
   const isFormValid = isPasswordConfirmed && passwordValidationRules.every(rule => rule.isValid);
 
   return (
-    <div className="relative w-full max-w-xs p-5 bg-[#202020] shadow-md rounded-md flex flex-col gap-6">
-      <div className="flex flex-col gap-4">
-        <TextField
-          label="Correo electrónico"
-          placeholder="juan@gmail.com"
-          variant="filled"
-          fullWidth
-          value={formData.email}
-          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-          onBlur={() => handleBlur('email')}
-          error={!touchedFields.email}
-          helperText={!touchedFields.email ? "Correo electrónico no válido" : ""}
-          InputProps={{
-            style: { backgroundColor: '#FAFAFA' },
-            endAdornment: !touchedFields.email ? (
-              <InputAdornment position="end">
-                <ErrorOutline color="error" />
-              </InputAdornment>
-            ) : null,
-          }}
-        />
+    <div className="relative w-full max-w-xs p-3 bg-[#202020] shadow-md rounded-md flex flex-col gap-6">
+  <div className="flex flex-col gap-4">
+    <TextField
+      label="Correo electrónico"
+      placeholder="juan@gmail.com"
+      variant="filled"
+      fullWidth
+      value={formData.email}
+      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+      onBlur={() => handleBlur('email')}
+      error={!touchedFields.email}
+      helperText={!touchedFields.email ? "Correo electrónico no válido" : ""}
+      InputProps={{
+        style: { backgroundColor: '#FAFAFA' },
+        endAdornment: !touchedFields.email ? (
+          <InputAdornment position="end">
+            <ErrorOutline color="error" />
+          </InputAdornment>
+        ) : null,
+      }}
+    />
 
-        <div className="relative">
-          <TextField
-            label="Contraseña"
-            placeholder="Contraseña"
-            variant="filled"
-            type={showPassword ? 'text' : 'password'}
-            fullWidth
-            value={formData.password}
-            onChange={handlePasswordChange}
-            onBlur={() => handleBlur('password')}
-            InputProps={{
-              style: { backgroundColor: '#FAFAFA' },
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={handleClickShowPassword}>
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
-
-          {showPasswordRules && (
-            <ul className="mt-2 text-sm list-disc pl-5">
-              {passwordValidationRules.map((rule) => (
-                <li
-                  key={rule.label}
-                  className={rule.isValid ? 'text-white' : 'text-red-500'}
-                >
-                  {rule.label}
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-
-        <TextField
-          label="Confirmar contraseña"
-          placeholder="Repetir contraseña"
-          variant="filled"
-          type={showConfirmPassword ? 'text' : 'password'}
-          fullWidth
-          value={formData.confirmPassword}
-          onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
-          onBlur={() => handleBlur('confirmPassword')}
-          error={!isPasswordConfirmed && touchedFields.confirmPassword}
-          helperText={!isPasswordConfirmed && touchedFields.confirmPassword ? "Las contraseñas no coinciden" : ""}
-          InputProps={{
-            style: { backgroundColor: '#FAFAFA' },
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton onClick={handleClickShowConfirmPassword}>
-                  {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-        />
-      </div>
-
-      <Button
-        label="Continuar"
-        onClick={handleContinueClick}
+    <div className="relative">
+      <TextField
+        label="Contraseña"
+        placeholder="Contraseña"
+        variant="filled"
+        type={showPassword ? 'text' : 'password'}
         fullWidth
-        disabled={!isFormValid}
-        className={!isFormValid ? 'opacity-50 cursor-not-allowed' : ''}
+        value={formData.password}
+        onChange={handlePasswordChange}
+        onBlur={() => handleBlur('password')}
+        InputProps={{
+          style: { backgroundColor: '#FAFAFA' },
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton onClick={handleClickShowPassword}>
+                {showPassword ? <VisibilityOff /> : <Visibility />}
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
       />
+
+      {showPasswordRules && (
+        <ul className="mt-2 text-sm list-disc pl-5">
+          {passwordValidationRules.map((rule) => (
+            <li
+              key={rule.label}
+              className={rule.isValid ? 'text-white' : 'text-red-500'}
+            >
+              {rule.label}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
+
+    <TextField
+      label="Confirmar contraseña"
+      placeholder="Repetir contraseña"
+      variant="filled"
+      type={showConfirmPassword ? 'text' : 'password'}
+      fullWidth
+      value={formData.confirmPassword}
+      onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
+      onBlur={() => handleBlur('confirmPassword')}
+      error={!isPasswordConfirmed && touchedFields.confirmPassword}
+      helperText={!isPasswordConfirmed && touchedFields.confirmPassword ? "Las contraseñas no coinciden" : ""}
+      InputProps={{
+        style: { backgroundColor: '#FAFAFA' },
+        endAdornment: (
+          <InputAdornment position="end">
+            <IconButton onClick={handleClickShowConfirmPassword}>
+              {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+            </IconButton>
+          </InputAdornment>
+        ),
+      }}
+    />
+  </div>
+
+  <Button
+    label="Continuar"
+    onClick={handleContinueClick}
+    fullWidth
+    disabled={!isFormValid}
+    className={!isFormValid ? 'opacity-50 cursor-not-allowed' : ''}
+  />
+</div>
+
   );
 };
 
