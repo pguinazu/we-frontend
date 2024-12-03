@@ -20,18 +20,23 @@ const SuccessAccountCreated = () => {
 
   return (
     <div className="relative w-full h-full flex flex-col items-center justify-center">
-      <div className="flex flex-col items-center gap-5">
+      <div className="flex flex-col items-center gap-5 mt-40">
         <div className="flex justify-center items-center">
-          <CheckCircleIcon
-            className="text-green-700"
-            style={{
-              fontSize: '150px',
-            }}
+          <img
+            src="/icons/Success.png"
+            alt="Success Icon"
+            className="icon-class"
+            height={125}
+            width={125}
           />
         </div>
-        <Title className="text-center text-white text-[20px] leading-[28px] w-[241px]" textAlign="center" text="¡Felicitaciones, tu cuenta se ha creado con éxito!" />
+        <Title
+          className="text-center text-white"
+          textAlign="center"
+          text="¡Felicitaciones, tu cuenta se ha creado con éxito!"
+        />
       </div>
-      <div className="flex flex-col items-center gap-5 mt-10 w-[296px]">
+      <div className="flex flex-col items-center gap-5 mt-56 w-[296px]">
         <Button
           label="Ingresar a mi cuenta"
           onClick={handleGoToAccount}
