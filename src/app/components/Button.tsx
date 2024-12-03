@@ -2,15 +2,24 @@ import React from 'react';
 
 interface ButtonProps {
   label: string | React.ReactNode;
-  onClick: () => void;
+  onClick?: () => void;
   fullWidth?: boolean;
   className?: string;
   disabled?: boolean;
+  type?: "button" | "submit" | "reset"; // Agregar el tipo aquí
 }
 
-const Button: React.FC<ButtonProps> = ({ label, onClick, fullWidth = false, className = '', disabled = false }) => {
+const Button: React.FC<ButtonProps> = ({ 
+  label, 
+  onClick, 
+  fullWidth = false, 
+  className = '', 
+  disabled = false,
+  type = "button", // Valor predeterminado
+}) => {
   return (
     <button
+      type={type} // Asignar el tipo aquí
       style={{ 
         textAlign: 'center',
         color: '#000000',
