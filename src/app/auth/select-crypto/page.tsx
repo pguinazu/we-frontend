@@ -12,21 +12,15 @@ import { Crypto } from "../../interfaces/cryptoData";
 const SelectCrypto = () => {
   const { setSelectedCrypto } = useCryptoContext();
   const [cryptos, setCryptos] = useState<Crypto[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-
   const router = useRouter();
 
   useEffect(() => {
     const fetchCryptos = async () => {
       try {
-        setLoading(true);
         const data = await blockchainService.getTokens();
         setCryptos(data);
-      } catch (err) {
-        setError("Error al cargar las criptomonedas");
-      } finally {
-        setLoading(false);
+      } catch {
+        console.error("Error al cargar las criptomonedas");
       }
     };
 
@@ -37,7 +31,7 @@ const SelectCrypto = () => {
     setSelectedCrypto({
       icon: "?", // Icono placeholder
       title: crypto.name,
-      subtitle: crypto.symbol || crypto.name,
+      subtitle: crypto.symbol ?? crypto.name,
     });
     router.push("/auth/select-crypto-red");
   };
@@ -65,7 +59,7 @@ const SelectCrypto = () => {
           >
             <CryptoCard
               title={crypto.name}
-              subtitle={crypto.symbol || "Sin símbolo"}
+              subtitle={crypto.symbol ?? "Sin símbolo"}
             />
           </button>
         ))}

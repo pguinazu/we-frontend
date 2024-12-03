@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useMemo } from 'react';
 import { LoginData } from '../interfaces/formData'; // Usa la interfaz LoginData definida
 
 // Define las propiedades del contexto
@@ -20,8 +20,11 @@ export const LoginProvider = ({ children }: { children: ReactNode }) => {
     rememberMe: false,
   });
 
+  // Memoriza el objeto `value` para evitar su recreación en cada render
+  const value = useMemo(() => ({ loginData, setLoginData }), [loginData]);
+
   return (
-    <LoginContext.Provider value={{ loginData, setLoginData }}>
+    <LoginContext.Provider value={value}>
       {children}
     </LoginContext.Provider>
   );

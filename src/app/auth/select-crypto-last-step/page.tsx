@@ -19,7 +19,7 @@ const CryptoFinalScreen = () => {
   const { selectedCrypto, selectedNetwork } = useCryptoContext();
 
   const handleCopyClick = () => {
-    navigator.clipboard.writeText(selectedNetwork?.hash || "Hash no disponible");
+    navigator.clipboard.writeText(selectedNetwork?.hash ?? "Hash no disponible");
     alert("Dirección copiada al portapapeles");
   };
 
@@ -49,7 +49,7 @@ const CryptoFinalScreen = () => {
 
       <div className="w-full mt-16">
         <Title
-          text={`Dirección de ${selectedCrypto?.title || "Criptomoneda"}`}
+          text={`Dirección de ${selectedCrypto?.title ?? "Criptomoneda"}`}
           textAlign="center"
         />
       </div>
@@ -58,12 +58,12 @@ const CryptoFinalScreen = () => {
         <div className="flex justify-between items-center flex-wrap">
           <div className="max-w-[80%]">
             <Subtitle
-              text={`Tu dirección de ${selectedNetwork?.title || "Red"}`}
+              text={`Tu dirección de ${selectedNetwork?.title ?? "Red"}`}
               textAlign="left"
               className="text-[#FAFAFA]"
             />
             <p className="text-[#FEF7FF] text-sm mt-1 break-words">
-              {selectedNetwork?.hash || "Hash no disponible"}
+              {selectedNetwork?.hash ?? "Hash no disponible"}
             </p>
           </div>
           <button
@@ -77,10 +77,7 @@ const CryptoFinalScreen = () => {
 
       {/* Encabezado de selección */}
       <div className="w-full flex justify-between items-center mt-6 px-5">
-        <Subtitle
-          text="Seleccionaste"
-          textAlign="left"
-        />
+        <Subtitle text="Seleccionaste" textAlign="left" />
         <button onClick={handleModifyClick}>
           <Subtitle
             text="Modificar"
@@ -99,11 +96,10 @@ const CryptoFinalScreen = () => {
               <SmallText text="Moneda" className="text-[#FAFAFA]" />
             </div>
             <div className="flex items-center gap-2 shrink-0">
-             
               <SmallText
-                text={selectedCrypto?.title || "Criptomoneda"}
+                text={selectedCrypto?.title ?? "Criptomoneda"}
                 className="text-[#FAFAFA] max-w-[140px] overflow-hidden"
-                title={selectedCrypto?.title || "Criptomoneda"}
+                title={selectedCrypto?.title ?? "Criptomoneda"}
               />
             </div>
           </div>
@@ -118,11 +114,10 @@ const CryptoFinalScreen = () => {
               <SmallText text="Red" className="text-[#FAFAFA]" />
             </div>
             <div className="flex items-center gap-2 shrink-0">
-              
               <SmallText
-                text={selectedNetwork?.title || "Red"}
+                text={selectedNetwork?.title ?? "Red"}
                 className="text-[#FAFAFA] max-w-[140px] overflow-hidden"
-                title={selectedNetwork?.title || "Red"}
+                title={selectedNetwork?.title ?? "Red"}
               />
             </div>
           </div>
@@ -132,7 +127,7 @@ const CryptoFinalScreen = () => {
       <div className="w-full bg-[#202020] p-5 rounded-lg shadow-md mt-6 flex items-center gap-4">
         <InfoOutlinedIcon className="text-[#FAFAFA] w-5 h-5 shrink-0" />
         <Subtitle
-          text={`Asegúrate de depositar ${selectedCrypto?.title || "Criptomoneda"} desde la red elegida: ${selectedNetwork?.title || "Red"}. De lo contrario perderás tus fondos y no podrás recuperarlos.`}
+          text={`Asegúrate de depositar ${selectedCrypto?.title ?? "Criptomoneda"} desde la red elegida: ${selectedNetwork?.title ?? "Red"}. De lo contrario perderás tus fondos y no podrás recuperarlos.`}
           textAlign="left"
           className="text-[#FAFAFA]"
         />

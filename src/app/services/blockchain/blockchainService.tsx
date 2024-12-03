@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api-dev.we.asf.dev/api';
+const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'https://api-dev.we.asf.dev/api';
 
 export const blockchainService = {
     getTokens: async () => {

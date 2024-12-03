@@ -12,21 +12,16 @@ import { Network } from "../../interfaces/cryptoData";
 const SelectCryptoRed = () => {
   const { setSelectedNetwork } = useCryptoContext();
   const [networks, setNetworks] = useState<Network[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
 
   const router = useRouter();
 
   useEffect(() => {
     const fetchNetworks = async () => {
       try {
-        setLoading(true);
         const data = await blockchainService.getBlockchains();
         setNetworks(data);
-      } catch (err) {
-        setError("Error al cargar las redes");
-      } finally {
-        setLoading(false);
+      } catch {
+        console.error("Error al cargar las redes");
       }
     };
 
