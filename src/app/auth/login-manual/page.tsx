@@ -11,6 +11,25 @@ import { useLogin } from '@/app/contexts/LogInContext';
 import { authService } from '@/app/services/auth/authService';
 
 const LoginPage = () => {
+
+  const handleGoogleLogin = async () => {
+    try {
+      const googleLoginUrl = await authService.loginWithGoogle();
+      window.location.href = googleLoginUrl; // Redirige a la URL de Google
+    } catch (error) {
+      console.error('Error al iniciar sesión con Google:', error);
+    }
+  };
+
+  const handleFacebookLogin = async () => {
+    try {
+      const facebookLoginUrl = await authService.loginWithFacebook();
+      window.location.href = facebookLoginUrl; // Redirige a la URL de Facebook
+    } catch (error) {
+      console.error('Error al iniciar sesión con Facebook:', error);
+    }
+  };
+
   const { loginData, setLoginData } = useLogin();
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
@@ -53,7 +72,7 @@ const LoginPage = () => {
     >
       {/* Encabezado */}
       <div className="w-full max-w-xs mb-4">
-        <div className="flex items-center gap-3 mb-2 px-2 pt-7">
+        <div className="flex items-center gap-3 mb-2 px-2 pt-9">
           <img src="/icons/WeIcon.png" alt="We Icon" className="w-8 h-8" />
           <Title text="Iniciar sesión" textAlign="left" />
         </div>
@@ -150,7 +169,7 @@ const LoginPage = () => {
               </span>
             </div>
           }
-          onClick={() => {}}
+          onClick={handleGoogleLogin}
           fullWidth
           className="flex items-center justify-center"
         />
@@ -168,7 +187,7 @@ const LoginPage = () => {
               </span>
             </div>
           }
-          onClick={() => {}}
+          onClick={handleFacebookLogin}
           fullWidth
           className="flex items-center justify-center"
         />

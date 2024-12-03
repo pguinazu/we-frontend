@@ -7,8 +7,28 @@ import PopUp from '../../components/PopUp';
 import LoginPersonalInfoForm from '../../components/LoginPersonalInfoForm';
 import { useRouter } from 'next/navigation';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { authService } from '@/app/services/auth/authService';
 
 const LoginScreenLastStep = () => {
+
+  const handleGoogleLogin = async () => {
+    try {
+      const googleLoginUrl = await authService.loginWithGoogle();
+      window.location.href = googleLoginUrl; // Redirige a la URL de Google
+    } catch (error) {
+      console.error('Error al iniciar sesión con Google:', error);
+    }
+  };
+
+  const handleFacebookLogin = async () => {
+    try {
+      const facebookLoginUrl = await authService.loginWithFacebook();
+      window.location.href = facebookLoginUrl; // Redirige a la URL de Facebook
+    } catch (error) {
+      console.error('Error al iniciar sesión con Facebook:', error);
+    }
+  };
+
   const [showPopUp, setShowPopUp] = useState(false);
   const router = useRouter();
 
@@ -41,9 +61,43 @@ const LoginScreenLastStep = () => {
         o ingresá con redes sociales
       </div>
 
-      <div className="flex flex-col gap-4 w-full">
-        <Button label="Registrarse con Google" onClick={() => {}} fullWidth />
-        <Button label="Registrarse con Facebook" onClick={() => {}} fullWidth />
+      {/* Botones de redes sociales */}
+      <div className="flex flex-col gap-4 w-full max-w-xs">
+        <Button
+          label={
+            <div className="flex items-center justify-center gap-3 h-full">
+              <img
+                src="/icons/Google.png"
+                alt="Google Icon"
+                className="w-8 h-8"
+              />
+              <span className="text-[16px] leading-none">
+                Registrarse con Google
+              </span>
+            </div>
+          }
+          onClick={handleGoogleLogin}
+          fullWidth
+          className="flex items-center justify-center"
+        />
+
+        <Button
+          label={
+            <div className="flex items-center justify-center gap-3 h-full">
+              <img
+                src="/icons/Facebook.png"
+                alt="Facebook Icon"
+                className="w-8 h-8"
+              />
+              <span className="text-[16px] leading-none">
+                Registrarse con Facebook
+              </span>
+            </div>
+          }
+          onClick={handleFacebookLogin}
+          fullWidth
+          className="flex items-center justify-center"
+        />
       </div>
 
       {showPopUp && (
