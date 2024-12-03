@@ -13,6 +13,7 @@ import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlin
 import UsbOutlinedIcon from "@mui/icons-material/UsbOutlined";
 import SmallText from "@/app/components/SmallText";
 import { useCryptoContext } from "../../contexts/CryptoContext";
+import Text from "@/app/components/Text";
 
 const CryptoFinalScreen = () => {
   const router = useRouter();
@@ -76,16 +77,17 @@ const CryptoFinalScreen = () => {
       </div>
 
       {/* Encabezado de selección */}
-      <div className="w-full flex justify-between items-center mt-6 px-5">
-        <Subtitle text="Seleccionaste" textAlign="left" />
-        <button onClick={handleModifyClick}>
-          <Subtitle
-            text="Modificar"
-            textAlign="right"
-            className="underline cursor-pointer"
-          />
-        </button>
-      </div>
+      {/* Encabezado de selección */}
+<div className="w-full flex justify-between items-center mt-6">
+  <Text text="Seleccionaste" textAlign="left" color="#FFFFFF" className="flex-grow" />
+  <button
+    onClick={handleModifyClick}
+    className="underline cursor-pointer flex-shrink-0"
+  >
+    <Text text="Modificar" textAlign="right" color="#AFAFAF" />
+  </button>
+</div>
+
 
       <div className="w-full bg-[#202020] p-5 rounded-lg shadow-md mt-2">
         <div className="">
