@@ -4,7 +4,8 @@
 @tailwind utilities;
 
 html, body {
-  @apply h-full;
+  @apply w-full min-h-screen;
+  margin: 0;
   background: linear-gradient(3.12deg, #000000 3.74%, #232323 79.77%, #434343 124.44%);
   font-family: var(--FontFamilyGeneral);
 }
