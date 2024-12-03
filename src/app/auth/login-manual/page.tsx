@@ -85,7 +85,7 @@ const LoginPage = () => {
   </div>
 
   {/* Formulario */}
-  <div className="relative w-full max-w-xs p-3< bg-[#202020] shadow-md rounded-md flex flex-col gap-6">
+  <div className="relative w-full max-w-xs p-3 bg-[#202020] shadow-md rounded-md flex flex-col gap-6">
     <TextField
       label="Correo electrónico"
       placeholder="juan@gmail.com"
