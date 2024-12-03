@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Button from '../components/Button';
 import PopUp from './PopUp';
-import PhoneInput from './PhoneInput1';
+import PhoneInput from './PhoneInput';
 
 const LoginPersonalInfoPhone: React.FC = () => {
   const [termsAccepted, setTermsAccepted] = useState(false);

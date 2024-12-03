@@ -5,7 +5,7 @@ import { TextField, Button, InputAdornment } from '@mui/material';
 import { ErrorOutline } from '@mui/icons-material';
 import PopUp from './PopUp';
 import { useRouter } from 'next/navigation';
-import PhoneInput2 from './PhoneInput2';
+import PhoneInput from './PhoneInput';
 import { useForm } from '../contexts/SignUpContext';
 import { authService } from '../services/auth/authService';
 
@@ -90,7 +90,7 @@ const LoginPersonalInfoForm: React.FC = () => {
           }}
         />
 
-        <PhoneInput2 />
+        <PhoneInput />
       </div>
 
       <div className="flex items-center gap-2">

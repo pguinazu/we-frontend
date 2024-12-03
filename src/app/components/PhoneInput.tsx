@@ -2,7 +2,7 @@ import { TextField, Autocomplete, InputAdornment } from '@mui/material';
 import { useForm } from '../contexts/SignUpContext';
 import countries from '../../../public/select-options/countries.json';
 
-export default function PhoneInput2() {
+export default function PhoneInput() {
   const { formData, setFormData } = useForm();
 
   const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
