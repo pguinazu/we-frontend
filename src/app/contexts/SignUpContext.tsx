@@ -1,7 +1,7 @@
-'use client'
+'use client';
 
 // FormContext.tsx
-import React, { createContext, useContext, useState, ReactNode, useMemo } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useMemo, useEffect } from 'react';
 import { SignUpForm } from '../interfaces/formData';
 
 // Define las propiedades del contexto, que incluyen los datos y una función para actualizar los datos
@@ -15,25 +15,32 @@ const FormContext = createContext<FormContextProps | undefined>(undefined);
 
 // Crea el proveedor del contexto, que envuelve a los componentes que necesitan acceso a los datos
 export const FormProvider = ({ children }: { children: ReactNode }) => {
-  const [formData, setFormData] = useState<SignUpForm>({
-    email: '',
-    password: '',
-    confirmPassword: '', // sacar/confirmar si se saca para peticion a api
-    firstName: '',
-    lastName: '',
-    termsAccepted: false, // sacar/confirmar si se saca para peticion a api
-    phoneNumber: '',
-    phoneCountryCode: ''
+  const [formData, setFormData] = useState<SignUpForm>(() => {
+    // Intenta cargar datos del localStorage
+    const savedData = localStorage.getItem('formData');
+    return savedData
+      ? JSON.parse(savedData)
+      : {
+          email: '',
+          password: '',
+          confirmPassword: '', // sacar/confirmar si se saca para peticion a api
+          firstName: '',
+          lastName: '',
+          termsAccepted: false, // sacar/confirmar si se saca para peticion a api
+          phoneNumber: '',
+          phoneCountryCode: '',
+        };
   });
+
+  // Guarda los datos en localStorage cuando cambian
+  useEffect(() => {
+    localStorage.setItem('formData', JSON.stringify(formData));
+  }, [formData]);
 
   // Usa useMemo para evitar la recreación del valor del contexto en cada render
   const contextValue = useMemo(() => ({ formData, setFormData }), [formData]);
 
-  return (
-    <FormContext.Provider value={contextValue}>
-      {children}
-    </FormContext.Provider>
-  );
+  return <FormContext.Provider value={contextValue}>{children}</FormContext.Provider>;
 };
 
 // Hook personalizado para usar el contexto en los componentes

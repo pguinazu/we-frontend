@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState, useMemo } from "react";
+import React, { createContext, useContext, useState, useMemo, useEffect } from "react";
 
 interface CryptoContextValue {
   selectedCrypto: {
@@ -20,13 +20,34 @@ interface CryptoContextValue {
 
 const CryptoContext = createContext<CryptoContextValue | undefined>(undefined);
 
-export const CryptoProvider: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
-  const [selectedCrypto, setSelectedCrypto] = useState<CryptoContextValue["selectedCrypto"]>(null);
-  const [selectedNetwork, setSelectedNetwork] = useState<CryptoContextValue["selectedNetwork"]>(null);
+export const CryptoProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [selectedCrypto, setSelectedCrypto] = useState<CryptoContextValue["selectedCrypto"]>(() => {
+    const savedCrypto = localStorage.getItem("selectedCrypto");
+    return savedCrypto ? JSON.parse(savedCrypto) : null;
+  });
 
-  // Memorizar el valor del contexto
+  const [selectedNetwork, setSelectedNetwork] = useState<CryptoContextValue["selectedNetwork"]>(() => {
+    const savedNetwork = localStorage.getItem("selectedNetwork");
+    return savedNetwork ? JSON.parse(savedNetwork) : null;
+  });
+
+  // Guarda en localStorage cuando cambian los valores
+  useEffect(() => {
+    if (selectedCrypto) {
+      localStorage.setItem("selectedCrypto", JSON.stringify(selectedCrypto));
+    } else {
+      localStorage.removeItem("selectedCrypto");
+    }
+  }, [selectedCrypto]);
+
+  useEffect(() => {
+    if (selectedNetwork) {
+      localStorage.setItem("selectedNetwork", JSON.stringify(selectedNetwork));
+    } else {
+      localStorage.removeItem("selectedNetwork");
+    }
+  }, [selectedNetwork]);
+
   const value = useMemo(
     () => ({
       selectedCrypto,
@@ -34,7 +55,7 @@ export const CryptoProvider: React.FC<{ children: React.ReactNode }> = ({
       selectedNetwork,
       setSelectedNetwork,
     }),
-    [selectedCrypto, selectedNetwork] // Dependencias
+    [selectedCrypto, selectedNetwork]
   );
 
   return (
