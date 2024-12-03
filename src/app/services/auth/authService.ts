@@ -2,7 +2,7 @@ import axios from 'axios';
 import { SignUpForm } from "../../interfaces/formData";
 
 const api = '/api';
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api-dev.we.asf.dev';
+const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'https://api-dev.we.asf.dev';
 
 export const authService = {
   signUp: async (data: SignUpForm) => {
