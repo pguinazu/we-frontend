@@ -1,26 +1,65 @@
 import { TextField, Autocomplete, InputAdornment } from '@mui/material';
 import { useForm } from '../contexts/SignUpContext';
 import countries from '../../../public/select-options/countries.json';
+import * as yup from 'yup';
+import { useState } from 'react';
 
-export default function PhoneInput() {
+interface PhoneInputProps {
+  onValidChange: (isValid: boolean) => void;
+}
+
+export default function PhoneInput({ onValidChange }: PhoneInputProps) {
   const { formData, setFormData } = useForm();
+  const [errors, setErrors] = useState<{ phoneNumber?: string }>({});
+  const [touched, setTouched] = useState<{ phoneNumber: boolean }>({ phoneNumber: false });
+
+  // Validaciones con yup
+  const phoneSchema = yup.object().shape({
+    phoneNumber: yup
+      .string()
+      .matches(/^\d+$/, 'El número de teléfono debe contener solo números')
+      .required('El número de teléfono es obligatorio'),
+  });
+
+  const validatePhoneNumber = (value: string) => {
+    try {
+      phoneSchema.validateSyncAt('phoneNumber', { phoneNumber: value });
+      setErrors((prev) => ({ ...prev, phoneNumber: undefined }));
+      onValidChange(true); // Notificar que es válido
+    } catch (error: any) {
+      setErrors((prev) => ({ ...prev, phoneNumber: error.message }));
+      onValidChange(false); // Notificar que no es válido
+    }
+  };
 
   const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, phoneNumber: event.target.value });
+    const value = event.target.value;
+
+    // Actualizar siempre el valor en el campo para que el usuario lo vea
+    setFormData({ ...formData, phoneNumber: value });
+
+    // Validar el valor después de cada cambio
+    validatePhoneNumber(value);
+  };
+
+  const handleBlur = (field: keyof typeof touched) => {
+    setTouched({ ...touched, [field]: true });
   };
 
   const handleCountryCodeChange = (
     event: React.SyntheticEvent<Element, Event>,
     newValue: { label: string; code: string } | null
   ) => {
-    if (newValue) setFormData({ ...formData, phoneCountryCode: newValue.code });
+    if (newValue) {
+      setFormData({ ...formData, phoneCountryCode: newValue.code });
+    }
   };
 
   const countryCodes = countries;
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex gap-2 items-center">
+    <div className="flex flex-col gap-2">
+      <div className="flex gap-2 items-start">
         <Autocomplete
           options={countryCodes}
           getOptionLabel={(option) => `${option.label} (${option.code})`}
@@ -32,9 +71,13 @@ export default function PhoneInput() {
               label="País"
               variant="filled"
               style={{ backgroundColor: '#FAFAFA' }}
+              sx={{ minWidth: 120 }}
+              inputProps={{
+                ...params.inputProps,
+                readOnly: true, // Evitar escritura manual, pero mantener interacción
+              }}
             />
           )}
-          sx={{ minWidth: 120 }}
         />
         <TextField
           label="Teléfono"
@@ -42,7 +85,9 @@ export default function PhoneInput() {
           variant="filled"
           value={formData.phoneNumber}
           onChange={handlePhoneChange}
+          onBlur={() => handleBlur('phoneNumber')} // Marcar el campo como "tocado" al salir
           fullWidth
+          error={!!errors.phoneNumber} // Mostrar error inmediatamente si es inválido
           InputProps={{
             style: { backgroundColor: '#FAFAFA' },
             startAdornment: (
@@ -51,6 +96,11 @@ export default function PhoneInput() {
           }}
         />
       </div>
+      {errors.phoneNumber && (
+        <div className="text-red-500 text-sm mt-1 w-full">
+          {errors.phoneNumber}
+        </div>
+      )}
     </div>
   );
 }

@@ -1,159 +1,185 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { TextField, IconButton, InputAdornment } from '@mui/material';
-import { Visibility, VisibilityOff, ErrorOutline } from '@mui/icons-material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import Button from '../components/Button';
 import { useRouter } from 'next/navigation';
-import { useForm } from '../contexts/SignUpContext'; 
+import { useForm } from '../contexts/SignUpContext';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
 
 const LoginForm: React.FC = () => {
   const { formData, setFormData } = useForm();
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [showPasswordRules, setShowPasswordRules] = useState(false);
-  const [touchedFields, setTouchedFields] = useState({ email: false, password: false, confirmPassword: false });
-  
   const router = useRouter();
-  
+
+  const [showPassword, setShowPassword] = React.useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
+
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleClickShowConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
 
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newPassword = e.target.value;
-    setFormData({ ...formData, password: newPassword });
-    setShowPasswordRules(true);
-  };
+  // Yup schema for password
+  const passwordSchema = yup
+    .string()
+    .min(8, 'La contraseña debe tener mínimo 8 caracteres y máximo 16 caracteres')
+    .max(16, 'La contraseña debe tener mínimo 8 caracteres y máximo 16 caracteres')
+    .matches(/[A-Z]/, 'La contraseña debe contener al menos una Mayúscula')
+    .matches(/\d/, 'La contraseña debe contener al menos un número')
+    .matches(/[!@#$%^&*(),.?":{}|<>]/, 'La contraseña debe contener al menos un carácter especial');
 
-  const handleBlur = (field: string) => {
-    setTouchedFields((prev) => ({ ...prev, [field]: true }));
-  };
+  const validationSchema = yup.object({
+    email: yup
+      .string()
+      .email('Correo electrónico no válido')
+      .required('El correo es obligatorio'),
+    password: passwordSchema.required('La contraseña es obligatoria'),
+    confirmPassword: yup
+      .string()
+      .oneOf([yup.ref('password')], 'Las contraseñas no coinciden')
+      .required('La confirmación de contraseña es obligatoria'),
+  });
 
-  const handleContinueClick = () => {
-    console.log("Form data:", formData); // Log para ver los datos en consola
-    router.push('/auth/login-last-step');
-  };
+  const formik = useFormik({
+    initialValues: {
+      email: formData.email,
+      password: formData.password,
+      confirmPassword: formData.confirmPassword,
+      firstName: formData.firstName || '',
+      lastName: formData.lastName || '',
+      termsAccepted: formData.termsAccepted || false,
+      phoneNumber: formData.phoneNumber || '',
+      phoneCountryCode: formData.phoneCountryCode || '',
+    },
+    validationSchema,
+    onSubmit: (values) => {
+      setFormData(values);
+      router.push('/auth/login-last-step');
+    },
+  });
 
-  // Validación del correo electrónico: reemplazar por yup y formik
-
-  // Verificar confirmación de contraseña
-  const isPasswordConfirmed = formData.confirmPassword === formData.password;
-
-  // Reglas de validación de contraseña
+  // Password validation rules derived from Yup schema
   const passwordValidationRules = [
     {
-      label: "La contraseña debe tener mínimo 8 caracteres y máximo 16 caracteres",
-      isValid: formData.password.length >= 8 && formData.password.length <= 16,
+      label: 'La contraseña debe tener mínimo 8 caracteres y máximo 16 caracteres',
+      isValid: formik.values.password.length >= 8 && formik.values.password.length <= 16,
     },
     {
-      label: "La contraseña debe contener al menos una Mayúscula",
-      isValid: /[A-Z]/.test(formData.password),
+      label: 'La contraseña debe contener al menos una Mayúscula',
+      isValid: /[A-Z]/.test(formik.values.password || ''),
     },
     {
-      label: "La contraseña debe contener al menos un número",
-      isValid: /\d/.test(formData.password),
+      label: 'La contraseña debe contener al menos un número',
+      isValid: /\d/.test(formik.values.password || ''),
     },
     {
-      label: "La contraseña debe contener al menos un caracter especial",
-      isValid: /[!@#$%^&*(),.?":{}|<>]/.test(formData.password),
+      label: 'La contraseña debe contener al menos un carácter especial',
+      isValid: /[!@#$%^&*(),.?":{}|<>]/.test(formik.values.password || ''),
     },
   ];
 
-  // Determinar si el formulario es válido
-  const isFormValid = isPasswordConfirmed && passwordValidationRules.every(rule => rule.isValid);
-
   return (
-    <div className="relative w-full max-w-xs p-3 bg-[#202020] shadow-md rounded-md flex flex-col gap-6">
-  <div className="flex flex-col gap-4">
-    <TextField
-      label="Correo electrónico"
-      placeholder="juan@gmail.com"
-      variant="filled"
-      fullWidth
-      value={formData.email}
-      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-      onBlur={() => handleBlur('email')}
-      error={!touchedFields.email}
-      helperText={!touchedFields.email ? "Correo electrónico no válido" : ""}
-      InputProps={{
-        style: { backgroundColor: '#FAFAFA' },
-        endAdornment: !touchedFields.email ? (
-          <InputAdornment position="end">
-            <ErrorOutline color="error" />
-          </InputAdornment>
-        ) : null,
-      }}
-    />
+    <form
+      onSubmit={formik.handleSubmit}
+      className="relative w-full max-w-xs p-3 bg-[#202020] shadow-md rounded-md flex flex-col gap-6"
+    >
+      <div className="flex flex-col gap-4">
+        {/* Email Field */}
+        <TextField
+          label="Correo electrónico"
+          placeholder="juan@gmail.com"
+          variant="filled"
+          fullWidth
+          name="email"
+          value={formik.values.email}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.email && Boolean(formik.errors.email)}
+          helperText={formik.touched.email && formik.errors.email}
+          InputProps={{ style: { backgroundColor: '#FAFAFA' } }}
+        />
 
-    <div className="relative">
-      <TextField
-        label="Contraseña"
-        placeholder="Contraseña"
-        variant="filled"
-        type={showPassword ? 'text' : 'password'}
+        {/* Password Field */}
+        <div className="relative">
+          <TextField
+            label="Contraseña"
+            placeholder="Contraseña"
+            variant="filled"
+            type={showPassword ? 'text' : 'password'}
+            fullWidth
+            name="password"
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.password && Boolean(formik.errors.password)}
+            helperText={formik.touched.password && formik.errors.password}
+            InputProps={{
+              style: { backgroundColor: '#FAFAFA' },
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={handleClickShowPassword}>
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+
+          {/* Password Validation Rules */}
+          {(formik.touched.password || formik.values.password) && (
+            <ul className="mt-2 text-sm list-disc pl-5">
+              {passwordValidationRules.map((rule, index) => (
+                <li
+                  key={index}
+                  className={rule.isValid ? 'text-white' : 'text-red-500'}
+                >
+                  {rule.label}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+
+        {/* Confirm Password Field */}
+        <TextField
+          label="Confirmar contraseña"
+          placeholder="Repetir contraseña"
+          variant="filled"
+          type={showConfirmPassword ? 'text' : 'password'}
+          fullWidth
+          name="confirmPassword"
+          value={formik.values.confirmPassword}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={
+            formik.touched.confirmPassword &&
+            Boolean(formik.errors.confirmPassword)
+          }
+          helperText={
+            formik.touched.confirmPassword && formik.errors.confirmPassword
+          }
+          InputProps={{
+            style: { backgroundColor: '#FAFAFA' },
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton onClick={handleClickShowConfirmPassword}>
+                  {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+        />
+      </div>
+
+      {/* Submit Button */}
+      <Button
+        label="Continuar"
+        type="submit"
         fullWidth
-        value={formData.password}
-        onChange={handlePasswordChange}
-        onBlur={() => handleBlur('password')}
-        InputProps={{
-          style: { backgroundColor: '#FAFAFA' },
-          endAdornment: (
-            <InputAdornment position="end">
-              <IconButton onClick={handleClickShowPassword}>
-                {showPassword ? <VisibilityOff /> : <Visibility />}
-              </IconButton>
-            </InputAdornment>
-          ),
-        }}
+        disabled={!formik.isValid || !formik.dirty}
+        className={!formik.isValid ? 'opacity-50 cursor-not-allowed' : ''}
       />
-
-      {showPasswordRules && (
-        <ul className="mt-2 text-sm list-disc pl-5">
-          {passwordValidationRules.map((rule) => (
-            <li
-              key={rule.label}
-              className={rule.isValid ? 'text-white' : 'text-red-500'}
-            >
-              {rule.label}
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
-
-    <TextField
-      label="Confirmar contraseña"
-      placeholder="Repetir contraseña"
-      variant="filled"
-      type={showConfirmPassword ? 'text' : 'password'}
-      fullWidth
-      value={formData.confirmPassword}
-      onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
-      onBlur={() => handleBlur('confirmPassword')}
-      error={!isPasswordConfirmed && touchedFields.confirmPassword}
-      helperText={!isPasswordConfirmed && touchedFields.confirmPassword ? "Las contraseñas no coinciden" : ""}
-      InputProps={{
-        style: { backgroundColor: '#FAFAFA' },
-        endAdornment: (
-          <InputAdornment position="end">
-            <IconButton onClick={handleClickShowConfirmPassword}>
-              {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
-            </IconButton>
-          </InputAdornment>
-        ),
-      }}
-    />
-  </div>
-
-  <Button
-    label="Continuar"
-    onClick={handleContinueClick}
-    fullWidth
-    disabled={!isFormValid}
-    className={!isFormValid ? 'opacity-50 cursor-not-allowed' : ''}
-  />
-</div>
-
+    </form>
   );
 };
 

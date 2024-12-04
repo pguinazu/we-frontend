@@ -53,7 +53,7 @@ export default function IntroScreen() {
             <button
               onClick={handleLoginClick}
               className="underline cursor-pointer bg-transparent border-none p-0 text-sm"
-              style={{ all: 'unset' }} // Para eliminar estilos nativos del botón
+              style={{ textDecoration: 'underline' }} // Para eliminar estilos nativos del botón
             >
               Ingresa
             </button>

@@ -70,7 +70,7 @@ export default function LoginPage() {
           className="flex items-center justify-center"
         />
 
-        <Button
+        <Button 
           label={
             <div className="flex items-center justify-center gap-3 h-full">
               <img
@@ -85,7 +85,7 @@ export default function LoginPage() {
           }
           onClick={handleFacebookLogin}
           fullWidth
-          className="flex items-center justify-center"
+          className="flex items-center justify-center mb-5"
         />
       </div>
     </main>

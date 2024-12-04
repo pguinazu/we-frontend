@@ -2,16 +2,25 @@ import React from 'react';
 
 interface ButtonProps {
   label: string | React.ReactNode;
-  onClick: () => void;
+  onClick?: () => void; // Cambiar a opcional
+  type?: 'button' | 'submit' | 'reset'; // Soporte para atributo `type`
   fullWidth?: boolean;
   className?: string;
   disabled?: boolean;
 }
 
-const Button: React.FC<ButtonProps> = ({ label, onClick, fullWidth = false, className = '', disabled = false }) => {
+const Button: React.FC<ButtonProps> = ({
+  label,
+  onClick,
+  type = 'button', // Valor predeterminado para `type`
+  fullWidth = false,
+  className = '',
+  disabled = false,
+}) => {
   return (
     <button
-      style={{ 
+      type={type} // Usar el atributo `type`
+      style={{
         textAlign: 'center',
         color: '#000000',
         fontWeight: '600',
