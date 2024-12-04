@@ -39,7 +39,12 @@ const LoginPage = () => {
     validateOnChange: true,
     onSubmit: async (values, { setErrors }) => {
       try {
-        const result = await authService.login(values);
+        const result = await authService.login({
+          username: values.username,
+          password: values.password,
+          rememberMe,
+        });
+        localStorage.setItem('user', JSON.stringify(result));
         router.push('/dashboard');
       } catch (error) {
         if (
@@ -122,7 +127,7 @@ const LoginPage = () => {
           label="Contraseña"
           placeholder="Contraseña"
           variant="filled"
-          type={formik.errors.password ? 'text' : showPassword ? 'text' : 'password'}
+          type={showPassword ? 'text' : 'password'}
           name="password"
           value={formik.values.password}
           onChange={formik.handleChange}
@@ -132,21 +137,20 @@ const LoginPage = () => {
           InputProps={{
             style: { backgroundColor: '#FAFAFA' },
             endAdornment: (
-              <>
-                {formik.errors.password && formik.touched.password ? (
-                  <InputAdornment position="end">
-                    <ErrorOutline color="error" />
-                  </InputAdornment>
-                ) : (
-                  <InputAdornment
-                    position="end"
-                    onClick={togglePasswordVisibility}
-                    style={{ cursor: 'pointer' }}
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </InputAdornment>
-                )}
-              </>
+              <InputAdornment position="end">
+                <button
+                  type="button"
+                  onClick={togglePasswordVisibility}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer',
+                  }}
+                  aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </button>
+              </InputAdornment>
             ),
           }}
         />
