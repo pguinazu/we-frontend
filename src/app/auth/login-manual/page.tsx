@@ -79,7 +79,7 @@ const LoginPage = () => {
       className="flex flex-col items-center justify-start min-h-screen px-6"
       style={{
         background:
-          'linear-gradient(3.12deg, #000000 3.74%, #232323 79.77%, #434343 124.44%)',
+          "linear-gradient(3.12deg, #000000 3.74%, #232323 79.77%, #434343 124.44%)",
       }}
     >
       {/* Encabezado */}
@@ -112,48 +112,51 @@ const LoginPage = () => {
           helperText={formik.touched.username && formik.errors.username}
           fullWidth
           InputProps={{
-            style: { backgroundColor: '#FAFAFA' },
-            endAdornment: (
-              formik.errors.username && formik.touched.username && (
-                <InputAdornment position="end">
-                  <ErrorOutline color="error" />
-                </InputAdornment>
-              )
-            ),
-          }}
-        />
-
-        <TextField
-          label="Contraseña"
-          placeholder="Contraseña"
-          variant="filled"
-          type={showPassword ? 'text' : 'password'}
-          name="password"
-          value={formik.values.password}
-          onChange={formik.handleChange}
-          error={Boolean(formik.errors.password && formik.touched.password)}
-          helperText={formik.touched.password && formik.errors.password}
-          fullWidth
-          InputProps={{
-            style: { backgroundColor: '#FAFAFA' },
-            endAdornment: (
+            style: { backgroundColor: "#FAFAFA" },
+            endAdornment: formik.errors.username && formik.touched.username && (
               <InputAdornment position="end">
-                <button
-                  type="button"
-                  onClick={togglePasswordVisibility}
-                  style={{
-                    background: 'none',
-                    border: 'none',
-                    cursor: 'pointer',
-                  }}
-                  aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </button>
+                <ErrorOutline color="error" />
               </InputAdornment>
             ),
           }}
         />
+
+<TextField
+  label="Contraseña"
+  placeholder="Contraseña"
+  variant="filled"
+  type={formik.errors.password && formik.touched.password ? 'text' : showPassword ? 'text' : 'password'}
+  name="password"
+  value={formik.values.password}
+  onChange={formik.handleChange}
+  error={Boolean(formik.errors.password && formik.touched.password)}
+  helperText={formik.touched.password && formik.errors.password}
+  fullWidth
+  InputProps={{
+    style: { backgroundColor: '#FAFAFA' },
+    endAdornment: (
+      <InputAdornment position="end">
+        {formik.errors.password && formik.touched.password ? (
+          <ErrorOutline color="error" />
+        ) : (
+          <button
+            type="button"
+            onClick={togglePasswordVisibility}
+            style={{
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+            }}
+            aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
+          >
+            {showPassword ? <VisibilityOff /> : <Visibility />}
+          </button>
+        )}
+      </InputAdornment>
+    ),
+  }}
+/>
+
 
         {/* Recordarme y Olvidé mi contraseña */}
         <div className="flex justify-between items-center w-full text-[#FAFAFA] text-[12px]">
@@ -161,7 +164,7 @@ const LoginPage = () => {
             <Checkbox
               checked={rememberMe}
               onChange={(e) => setRememberMe(e.target.checked)}
-              style={{ color: '#FAFAFA', padding: '0 4px 0 0' }}
+              style={{ color: "#FAFAFA", padding: "0 4px 0 0" }}
               size="small"
             />
             <span>Recordarme</span>
@@ -206,7 +209,7 @@ const LoginPage = () => {
               const googleLoginUrl = await authService.loginWithGoogle();
               window.location.href = googleLoginUrl;
             } catch (error) {
-              console.error('Error al iniciar sesión con Google:', error);
+              console.error("Error al iniciar sesión con Google:", error);
             }
           }}
           fullWidth
@@ -231,7 +234,7 @@ const LoginPage = () => {
               const facebookLoginUrl = await authService.loginWithFacebook();
               window.location.href = facebookLoginUrl;
             } catch (error) {
-              console.error('Error al iniciar sesión con Facebook:', error);
+              console.error("Error al iniciar sesión con Facebook:", error);
             }
           }}
           fullWidth
@@ -241,7 +244,7 @@ const LoginPage = () => {
 
       {/* Registro */}
       <div className="text-center mt-6 text-[#FAFAFA] text-[14px]">
-        ¿Aún no tienes cuenta?{' '}
+        ¿Aún no tienes cuenta?{" "}
         <a href="/auth/register" className="underline">
           Regístrate
         </a>
