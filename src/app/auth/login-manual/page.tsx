@@ -1,38 +1,59 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { TextField, Checkbox, InputAdornment } from '@mui/material';
-import Button from '@/app/components/Button';
-import Title from '@/app/components/Title';
-import Subtitle from '@/app/components/Subtitle';
-import { Visibility, VisibilityOff, ErrorOutline } from '@mui/icons-material';
-import { useRouter } from 'next/navigation';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { authService } from '@/app/services/auth/authService';
+import React, { useState } from "react";
+import { TextField, Checkbox, InputAdornment } from "@mui/material";
+import Button from "@/app/components/Button";
+import Title from "@/app/components/Title";
+import Subtitle from "@/app/components/Subtitle";
+import { Visibility, VisibilityOff, ErrorOutline } from "@mui/icons-material";
+import { useRouter } from "next/navigation";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { authService } from "@/app/services/auth/authService";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const router = useRouter();
 
+  const handleGoogleLogin = async () => {
+    try {
+      const googleLoginUrl = await authService.loginWithGoogle();
+      window.location.href = googleLoginUrl; // Redirige a la URL de Google
+    } catch (error) {
+      console.error('Error al iniciar sesión con Google:', error);
+    }
+  };
+
+  const handleFacebookLogin = async () => {
+    try {
+      const facebookLoginUrl = await authService.loginWithFacebook();
+      window.location.href = facebookLoginUrl; // Redirige a la URL de Facebook
+    } catch (error) {
+      console.error('Error al iniciar sesión con Facebook:', error);
+    }
+  };
+
   const validationSchema = Yup.object({
     username: Yup.string()
-      .email('Este correo no se encuentra registrado')
-      .required('El correo electrónico es obligatorio'),
+      .email("Este correo no se encuentra registrado")
+      .required("El correo electrónico es obligatorio"),
     password: Yup.string()
-      .matches(/[A-Z]/, 'Debe contener al menos una mayúscula')
-      .matches(/\d/, 'Debe contener al menos un número')
-      .matches(/[!@#$%^&*(),.?":{}|<>]/, 'Debe contener al menos un carácter especial')
-      .min(8, 'Debe tener entre 8 y 16 caracteres')
-      .max(16, 'Debe tener entre 8 y 16 caracteres')
-      .required('La contraseña es obligatoria'),
+      .matches(/[A-Z]/, "Debe contener al menos una mayúscula")
+      .matches(/\d/, "Debe contener al menos un número")
+      .matches(
+        /[!@#$%^&*(),.?":{}|<>]/,
+        "Debe contener al menos un carácter especial"
+      )
+      .min(8, "Debe tener entre 8 y 16 caracteres")
+      .max(16, "Debe tener entre 8 y 16 caracteres")
+      .required("La contraseña es obligatoria"),
   });
 
   const formik = useFormik({
     initialValues: {
-      username: '',
-      password: '',
+      username: "",
+      password: "",
     },
     validationSchema,
     validateOnBlur: true,
@@ -44,21 +65,22 @@ const LoginPage = () => {
           password: values.password,
           rememberMe,
         });
-        localStorage.setItem('user', JSON.stringify(result));
-        router.push('/dashboard');
+        localStorage.setItem("user", JSON.stringify(result));
+        router.push("/dashboard");
       } catch (error) {
         if (
           error &&
-          typeof error === 'object' &&
-          'response' in error &&
+          typeof error === "object" &&
+          "response" in error &&
           (error as any).response.status === 401
         ) {
           setErrors({
-            username: 'Este correo no se encuentra registrado',
-            password: 'La contraseña ingresada no es correcta, volvé a intentarlo',
+            username: "Este correo no se encuentra registrado",
+            password:
+              "La contraseña ingresada no es correcta, volvé a intentarlo",
           });
         } else {
-          console.error('Error al iniciar sesión:', error);
+          console.error("Error al iniciar sesión:", error);
         }
       }
     },
@@ -66,6 +88,14 @@ const LoginPage = () => {
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
+  };
+
+  // Determinando el tipo de campo de contraseña
+  const determinePasswordType = () => {
+    if (formik.errors.password && formik.touched.password) {
+      return "text";
+    }
+    return showPassword ? "text" : "password";
   };
 
   const isFormValid =
@@ -102,74 +132,66 @@ const LoginPage = () => {
         className="relative w-full max-w-xs p-3 bg-[#202020] shadow-md rounded-md flex flex-col gap-6"
       >
         <TextField
-  label="Correo electrónico"
-  placeholder="juan@gmail.com"
-  variant="filled"
-  name="username"
-  value={formik.values.username}
-  onChange={formik.handleChange}
-  onBlur={formik.handleBlur}
-  error={Boolean(formik.errors.username && formik.touched.username)}
-  helperText={formik.touched.username && formik.errors.username}
-  fullWidth
-  InputProps={{
-    style: { backgroundColor: "#FAFAFA" },
-    endAdornment: (
-      <InputAdornment position="end">
-        {formik.errors.username && formik.touched.username && (
-          <ErrorOutline color="error" />
-        )}
-      </InputAdornment>
-    ),
-  }}
-/>
+          label="Correo electrónico"
+          placeholder="juan@gmail.com"
+          variant="filled"
+          name="username"
+          value={formik.values.username}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={Boolean(formik.errors.username && formik.touched.username)}
+          helperText={formik.touched.username && formik.errors.username}
+          fullWidth
+          InputProps={{
+            style: { backgroundColor: "#FAFAFA" },
+            endAdornment: (
+              <InputAdornment position="end">
+                {formik.errors.username && formik.touched.username && (
+                  <ErrorOutline color="error" />
+                )}
+              </InputAdornment>
+            ),
+          }}
+        />
 
-
-<TextField
-  label="Contraseña"
-  placeholder="Contraseña"
-  variant="filled"
-  type={
-    formik.errors.password && formik.touched.password
-      ? 'text' // Muestra la contraseña si hay un error
-      : showPassword
-      ? 'text'
-      : 'password'
-  }
-  name="password"
-  value={formik.values.password}
-  onChange={formik.handleChange}
-  onBlur={formik.handleBlur}
-  error={Boolean(formik.errors.password && formik.touched.password)}
-  helperText={formik.touched.password && formik.errors.password}
-  fullWidth
-  InputProps={{
-    style: { backgroundColor: '#FAFAFA' },
-    endAdornment: (
-      <InputAdornment position="end">
-        {formik.errors.password && formik.touched.password ? (
-          <ErrorOutline color="error" /> // Muestra el ícono de error
-        ) : (
-          <button
-            type="button"
-            onClick={togglePasswordVisibility}
-            style={{
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-            }}
-            aria-label={
-              showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'
-            }
-          >
-            {showPassword ? <VisibilityOff /> : <Visibility />}
-          </button>
-        )}
-      </InputAdornment>
-    ),
-  }}
-/>
-
+        <TextField
+          label="Contraseña"
+          placeholder="Contraseña"
+          variant="filled"
+          type={determinePasswordType()}
+          name="password"
+          value={formik.values.password}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={Boolean(formik.errors.password && formik.touched.password)}
+          helperText={formik.touched.password && formik.errors.password}
+          fullWidth
+          InputProps={{
+            style: { backgroundColor: "#FAFAFA" },
+            endAdornment: (
+              <InputAdornment position="end">
+                {formik.errors.password && formik.touched.password ? (
+                  <ErrorOutline color="error" />
+                ) : (
+                  <button
+                    type="button"
+                    onClick={togglePasswordVisibility}
+                    style={{
+                      background: "none",
+                      border: "none",
+                      cursor: "pointer",
+                    }}
+                    aria-label={
+                      showPassword ? "Ocultar contraseña" : "Mostrar contraseña"
+                    }
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </button>
+                )}
+              </InputAdornment>
+            ),
+          }}
+        />
 
         {/* Recordarme y Olvidé mi contraseña */}
         <div className="flex justify-between items-center w-full text-[#FAFAFA] text-[12px]">
@@ -203,6 +225,7 @@ const LoginPage = () => {
       />
 
       {/* Botones de redes sociales */}
+      {/* Botones de redes sociales */}
       <div className="flex flex-col gap-4 w-full max-w-xs">
         <Button
           label={
@@ -217,14 +240,7 @@ const LoginPage = () => {
               </span>
             </div>
           }
-          onClick={async () => {
-            try {
-              const googleLoginUrl = await authService.loginWithGoogle();
-              window.location.href = googleLoginUrl;
-            } catch (error) {
-              console.error("Error al iniciar sesión con Google:", error);
-            }
-          }}
+          onClick={handleGoogleLogin}
           fullWidth
           className="flex items-center justify-center"
         />
@@ -242,14 +258,7 @@ const LoginPage = () => {
               </span>
             </div>
           }
-          onClick={async () => {
-            try {
-              const facebookLoginUrl = await authService.loginWithFacebook();
-              window.location.href = facebookLoginUrl;
-            } catch (error) {
-              console.error("Error al iniciar sesión con Facebook:", error);
-            }
-          }}
+          onClick={handleFacebookLogin}
           fullWidth
           className="flex items-center justify-center"
         />
