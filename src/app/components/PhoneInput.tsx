@@ -74,7 +74,7 @@ export default function PhoneInput({ onValidChange }: PhoneInputProps) {
               sx={{ minWidth: 120 }}
               inputProps={{
                 ...params.inputProps,
-                readOnly: true, // Evitar escritura manual, pero mantener interacción
+                readOnly: false, // Evitar escritura manual, pero mantener interacción
               }}
             />
           )}
