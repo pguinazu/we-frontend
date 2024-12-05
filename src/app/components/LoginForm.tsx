@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { TextField, IconButton, InputAdornment } from '@mui/material';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { Visibility, VisibilityOff, ErrorOutline } from '@mui/icons-material';
 import Button from '../components/Button';
 import { useRouter } from 'next/navigation';
 import { useForm } from '../contexts/SignUpContext';
@@ -17,7 +17,8 @@ const LoginForm: React.FC = () => {
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
 
   const handleClickShowPassword = () => setShowPassword(!showPassword);
-  const handleClickShowConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
+  const handleClickShowConfirmPassword = () =>
+    setShowConfirmPassword(!showConfirmPassword);
 
   // Yup schema for password
   const passwordSchema = yup
@@ -58,7 +59,6 @@ const LoginForm: React.FC = () => {
     },
   });
 
-  // Password validation rules derived from Yup schema
   const passwordValidationRules = [
     {
       label: 'La contraseña debe tener mínimo 8 caracteres y máximo 16 caracteres',
@@ -96,7 +96,17 @@ const LoginForm: React.FC = () => {
           onBlur={formik.handleBlur}
           error={formik.touched.email && Boolean(formik.errors.email)}
           helperText={formik.touched.email && formik.errors.email}
-          InputProps={{ style: { backgroundColor: '#FAFAFA' } }}
+          InputProps={{
+            style: { backgroundColor: '#FAFAFA' },
+            endAdornment: (
+              formik.touched.email &&
+              formik.errors.email && (
+                <InputAdornment position="end">
+                  <ErrorOutline color="error" />
+                </InputAdornment>
+              )
+            ),
+          }}
         />
 
         {/* Password Field */}
@@ -105,7 +115,13 @@ const LoginForm: React.FC = () => {
             label="Contraseña"
             placeholder="Contraseña"
             variant="filled"
-            type={showPassword ? 'text' : 'password'}
+            type={
+              formik.errors.password && formik.touched.password
+                ? 'text'
+                : showPassword
+                ? 'text'
+                : 'password'
+            }
             fullWidth
             name="password"
             value={formik.values.password}
@@ -117,9 +133,13 @@ const LoginForm: React.FC = () => {
               style: { backgroundColor: '#FAFAFA' },
               endAdornment: (
                 <InputAdornment position="end">
-                  <IconButton onClick={handleClickShowPassword}>
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
+                  {formik.errors.password && formik.touched.password ? (
+                    <ErrorOutline color="error" />
+                  ) : (
+                    <IconButton onClick={handleClickShowPassword}>
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  )}
                 </InputAdornment>
               ),
             }}
@@ -145,7 +165,13 @@ const LoginForm: React.FC = () => {
           label="Confirmar contraseña"
           placeholder="Repetir contraseña"
           variant="filled"
-          type={showConfirmPassword ? 'text' : 'password'}
+          type={
+            formik.errors.confirmPassword && formik.touched.confirmPassword
+              ? 'text'
+              : showConfirmPassword
+              ? 'text'
+              : 'password'
+          }
           fullWidth
           name="confirmPassword"
           value={formik.values.confirmPassword}
@@ -162,9 +188,13 @@ const LoginForm: React.FC = () => {
             style: { backgroundColor: '#FAFAFA' },
             endAdornment: (
               <InputAdornment position="end">
-                <IconButton onClick={handleClickShowConfirmPassword}>
-                  {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
+                {formik.errors.confirmPassword && formik.touched.confirmPassword ? (
+                  <ErrorOutline color="error" />
+                ) : (
+                  <IconButton onClick={handleClickShowConfirmPassword}>
+                    {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                )}
               </InputAdornment>
             ),
           }}
