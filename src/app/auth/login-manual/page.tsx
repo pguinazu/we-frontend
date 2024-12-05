@@ -102,33 +102,44 @@ const LoginPage = () => {
         className="relative w-full max-w-xs p-3 bg-[#202020] shadow-md rounded-md flex flex-col gap-6"
       >
         <TextField
-          label="Correo electrónico"
-          placeholder="juan@gmail.com"
-          variant="filled"
-          name="username"
-          value={formik.values.username}
-          onChange={formik.handleChange}
-          error={Boolean(formik.errors.username && formik.touched.username)}
-          helperText={formik.touched.username && formik.errors.username}
-          fullWidth
-          InputProps={{
-            style: { backgroundColor: "#FAFAFA" },
-            endAdornment: formik.errors.username && formik.touched.username && (
-              <InputAdornment position="end">
-                <ErrorOutline color="error" />
-              </InputAdornment>
-            ),
-          }}
-        />
+  label="Correo electrónico"
+  placeholder="juan@gmail.com"
+  variant="filled"
+  name="username"
+  value={formik.values.username}
+  onChange={formik.handleChange}
+  onBlur={formik.handleBlur}
+  error={Boolean(formik.errors.username && formik.touched.username)}
+  helperText={formik.touched.username && formik.errors.username}
+  fullWidth
+  InputProps={{
+    style: { backgroundColor: "#FAFAFA" },
+    endAdornment: (
+      <InputAdornment position="end">
+        {formik.errors.username && formik.touched.username && (
+          <ErrorOutline color="error" />
+        )}
+      </InputAdornment>
+    ),
+  }}
+/>
+
 
 <TextField
   label="Contraseña"
   placeholder="Contraseña"
   variant="filled"
-  type={formik.errors.password && formik.touched.password ? 'text' : showPassword ? 'text' : 'password'}
+  type={
+    formik.errors.password && formik.touched.password
+      ? 'text' // Muestra la contraseña si hay un error
+      : showPassword
+      ? 'text'
+      : 'password'
+  }
   name="password"
   value={formik.values.password}
   onChange={formik.handleChange}
+  onBlur={formik.handleBlur}
   error={Boolean(formik.errors.password && formik.touched.password)}
   helperText={formik.touched.password && formik.errors.password}
   fullWidth
@@ -137,7 +148,7 @@ const LoginPage = () => {
     endAdornment: (
       <InputAdornment position="end">
         {formik.errors.password && formik.touched.password ? (
-          <ErrorOutline color="error" />
+          <ErrorOutline color="error" /> // Muestra el ícono de error
         ) : (
           <button
             type="button"
@@ -147,7 +158,9 @@ const LoginPage = () => {
               border: 'none',
               cursor: 'pointer',
             }}
-            aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
+            aria-label={
+              showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'
+            }
           >
             {showPassword ? <VisibilityOff /> : <Visibility />}
           </button>
