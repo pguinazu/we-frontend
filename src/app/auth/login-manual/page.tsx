@@ -65,7 +65,6 @@ const LoginPage = () => {
           password: values.password,
           rememberMe,
         });
-        localStorage.setItem("user", JSON.stringify(result));
         router.push("/dashboard");
       } catch (error) {
         if (
@@ -224,7 +223,6 @@ const LoginPage = () => {
         text="o ingresá con redes sociales"
       />
 
-      {/* Botones de redes sociales */}
       {/* Botones de redes sociales */}
       <div className="flex flex-col gap-4 w-full max-w-xs">
         <Button
