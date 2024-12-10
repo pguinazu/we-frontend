@@ -9,6 +9,7 @@ import PhoneInput from './PhoneInput';
 import { useForm } from '../contexts/SignUpContext';
 import { authService } from '../services/auth/authService';
 import * as yup from 'yup';
+import { useAuth } from '@/app/contexts/AuthContext';
 
 interface TouchedState {
   firstName: boolean;
@@ -28,6 +29,7 @@ const LoginPersonalInfoForm: React.FC = () => {
   const [isPhoneValid, setIsPhoneValid] = useState(false);
 
   const router = useRouter();
+  const { setToken } = useAuth();
 
   // Validación con yup
   const schema = yup.object().shape({
@@ -46,8 +48,12 @@ const LoginPersonalInfoForm: React.FC = () => {
     try {
       schema.validateSyncAt(field, { [field]: value });
       setErrors((prev) => ({ ...prev, [field]: undefined }));
-    } catch (error: any) {
-      setErrors((prev) => ({ ...prev, [field]: error.message }));
+    } catch (error: unknown) {
+      if (error instanceof yup.ValidationError) {
+        setErrors((prev) => ({ ...prev, [field]: error.message }));
+      } else {
+        console.error("Unexpected error during validation:", error);
+      }
     }
   };
 
@@ -67,7 +73,7 @@ const LoginPersonalInfoForm: React.FC = () => {
     console.log('Form data:', formData);
     try {
       await schema.validate(formData, { abortEarly: false });
-      const result = await authService.signUp(formData);
+      const result = await authService.signUp(formData, setToken);
       console.log('User registered:', result);
       router.push('/auth/success-account');
     } catch (error) {

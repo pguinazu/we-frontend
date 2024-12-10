@@ -4,6 +4,7 @@ import "./globals.css";
 import { FormProvider } from "./contexts/SignUpContext";
 import { CryptoProvider } from "./contexts/CryptoContext";
 import { LoginProvider } from "./contexts/LogInContext";
+import { AuthProvider } from "./contexts/AuthContext";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -31,11 +32,15 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <FormProvider>
-          <LoginProvider>
-            <CryptoProvider>{children}</CryptoProvider>
-          </LoginProvider>
-        </FormProvider>
+        <AuthProvider>
+          <FormProvider>
+            <LoginProvider>
+              <CryptoProvider>
+                  {children}
+              </CryptoProvider>
+            </LoginProvider>
+          </FormProvider>
+        </AuthProvider>
       </body>
     </html>
   );

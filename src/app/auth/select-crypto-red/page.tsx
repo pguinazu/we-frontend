@@ -33,7 +33,7 @@ const SelectCryptoRed = () => {
       icon: network.icon, // Esto será opcional
       title: network.name,
       subtitle: `Red ${network.name}`,
-      hash: `hash-${network.id}`, // Generar hash ficticio por ahora
+      id: network.id,
     });
     router.push("/auth/select-crypto-last-step");
   };

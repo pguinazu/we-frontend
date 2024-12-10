@@ -8,7 +8,7 @@ interface PhoneInputProps {
   onValidChange: (isValid: boolean) => void;
 }
 
-export default function PhoneInput({ onValidChange }: PhoneInputProps) {
+export default function PhoneInput({ onValidChange }: Readonly<PhoneInputProps>) {
   const { formData, setFormData } = useForm();
   const [errors, setErrors] = useState<{ phoneNumber?: string }>({});
   const [touched, setTouched] = useState<{ phoneNumber: boolean }>({ phoneNumber: false });
@@ -26,9 +26,11 @@ export default function PhoneInput({ onValidChange }: PhoneInputProps) {
       phoneSchema.validateSyncAt('phoneNumber', { phoneNumber: value });
       setErrors((prev) => ({ ...prev, phoneNumber: undefined }));
       onValidChange(true); // Notificar que es válido
-    } catch (error: any) {
-      setErrors((prev) => ({ ...prev, phoneNumber: error.message }));
-      onValidChange(false); // Notificar que no es válido
+    } catch (error: unknown) {
+      if (error instanceof yup.ValidationError) {
+        setErrors((prev) => ({ ...prev, phoneNumber: error.message }));
+        onValidChange(false); // Notificar que no es válido
+      }
     }
   };
 

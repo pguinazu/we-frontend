@@ -7,12 +7,13 @@ interface CryptoContextValue {
     icon?: string; 
     title: string;
     subtitle: string;
+    id: number;
   } | null;
   selectedNetwork: {
     icon?: string; 
     title: string;
     subtitle: string;
-    hash: string;
+    id: number;
   } | null;
   setSelectedCrypto: (crypto: CryptoContextValue["selectedCrypto"]) => void;
   setSelectedNetwork: (network: CryptoContextValue["selectedNetwork"]) => void;

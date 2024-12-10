@@ -4,7 +4,7 @@ export interface Crypto {
   name: string;
   symbol: string | null;
   disabled: boolean;
-  blockchains: any[];
+  blockchains: Network[];
 }
 
 export interface Network {
@@ -12,5 +12,5 @@ export interface Network {
   id: number;
   name: string;
   disabled: boolean;
-  tokens: any[];
+  tokens: Crypto[];
 }

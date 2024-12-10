@@ -32,6 +32,7 @@ const SelectCrypto = () => {
       icon: "?", // Icono placeholder
       title: crypto.name,
       subtitle: crypto.symbol ?? crypto.name,
+      id: crypto.id,
     });
     router.push("/auth/select-crypto-red");
   };

@@ -28,7 +28,7 @@ const LoginPersonalInfoPhone: React.FC = () => {
   return (
     <div className="relative mt-10 w-full h-auto bg-[#202020] shadow-md rounded-md flex flex-col gap-6">
       <div className="flex flex-col gap-4">
-        <PhoneInput />
+        <PhoneInput onValidChange={() => {}} />
       </div>
 
       <div className="flex items-center gap-2">
