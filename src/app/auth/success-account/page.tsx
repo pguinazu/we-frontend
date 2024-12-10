@@ -2,7 +2,6 @@
 
 import React from 'react';
 import Button from '../../components/Button';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import BlackButton from '@/app/components/BlackButton';
 import Title from '@/app/components/Title';
 import { useRouter } from 'next/navigation';

@@ -10,11 +10,18 @@ import { useRouter } from "next/navigation";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { authService } from "@/app/services/auth/authService";
+import { useAuth } from '@/app/contexts/AuthContext';
 
 const LoginPage = () => {
+  interface ApiError { // pasar a un archivo de interfaces global
+    response: {
+      status: number;
+    };
+  }
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const router = useRouter();
+  const { setToken } = useAuth();
 
   const handleGoogleLogin = async () => {
     try {
@@ -60,18 +67,22 @@ const LoginPage = () => {
     validateOnChange: true,
     onSubmit: async (values, { setErrors }) => {
       try {
-        const result = await authService.login({
-          username: values.username,
-          password: values.password,
-          rememberMe,
-        });
+        const result = await authService.login(
+          {
+            username: values.username,
+            password: values.password,
+            rememberMe,
+          },
+          setToken
+        );        localStorage.setItem("user", JSON.stringify(result));
+
         router.push("/dashboard");
       } catch (error) {
         if (
           error &&
           typeof error === "object" &&
           "response" in error &&
-          (error as any).response.status === 401
+          (error as ApiError).response.status === 401
         ) {
           setErrors({
             username: "Este correo no se encuentra registrado",

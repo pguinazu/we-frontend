@@ -49,7 +49,15 @@ const PopUp: React.FC<PopUpProps> = ({ children, onClose }) => {
 };
 
 PopUp.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: (props, propName, componentName, location, propFullName) => {
+    const value = props[propName];
+    if (typeof value === 'bigint') {
+      return new Error(
+        `${propFullName || propName} en el componente ${componentName} no puede ser de tipo bigint.`
+      );
+    }
+    return PropTypes.node(props, propName, componentName, location, propFullName);
+  },
   onClose: PropTypes.func.isRequired,
 };
 

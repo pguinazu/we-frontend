@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
@@ -14,13 +14,32 @@ import UsbOutlinedIcon from "@mui/icons-material/UsbOutlined";
 import SmallText from "@/app/components/SmallText";
 import { useCryptoContext } from "../../contexts/CryptoContext";
 import Text from "@/app/components/Text";
+import { blockchainService } from "@/app/services/blockchain/blockchainService";
 
 const CryptoFinalScreen = () => {
+  const [ hash, setHash ] = useState();
   const router = useRouter();
   const { selectedCrypto, selectedNetwork } = useCryptoContext();
 
+  //crea un useEffect para consumir el servicio getAddressByCryptoId pasandole el id de la criptomoneda y el id de la red:
+
+  React.useEffect(() => {
+    if (selectedCrypto && selectedNetwork) {
+      // Consumir el servicio getAddressByCryptoId pasandole el id de la criptomoneda y el id de la red:
+      blockchainService
+        .getAddressByCryptoId(selectedCrypto.id, selectedNetwork.id)
+        .then((response) => {
+          console.log("Respuesta del servidor:", response);
+          setHash(response.data.address);
+        })
+        .catch((error) => {
+          console.error("Error al consumir el servicio:", error);
+        });
+    }
+  }, [selectedCrypto, selectedNetwork]);
+
   const handleCopyClick = () => {
-    navigator.clipboard.writeText(selectedNetwork?.hash ?? "Hash no disponible");
+    navigator.clipboard.writeText(hash ?? "Hash no disponible");
     alert("Dirección copiada al portapapeles");
   };
 
@@ -64,7 +83,7 @@ const CryptoFinalScreen = () => {
               className="text-[#FAFAFA]"
             />
             <p className="text-[#FEF7FF] text-sm mt-1 break-words">
-              {selectedNetwork?.hash ?? "Hash no disponible"}
+              {hash ?? "Hash no disponible"}
             </p>
           </div>
           <button
