@@ -13,29 +13,49 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useForm } from '../contexts/SignUpContext';
 import BackgroundCard from '../components/BackgroundCard';
+import { useCardState } from '../contexts/CardStateContext';
+import { cardService } from '../services/card/cardService';
 
 export default function HomePage() {
   const { formData } = useForm();
   const router = useRouter();
+  const { isCardPaused, setIsCardPaused } = useCardState();
+
 
   const handleReceiveClick = () => {
     router.push('/auth/select-crypto');
   };
 
-  const handlePauseCardClick = () => {
-    router.push('/auth/pause-card');
-    console.log('Pausar tarjeta');
+  const handlePauseCardClick = async () => {
+    const cardId = "4569";  // ID hardcodeado hasta que esté el servicio de getId o lo que sea
+  
+    if (isCardPaused) {
+      // Activar la tarjeta
+      try {
+        const response = await cardService.resumeCard(cardId);
+        console.log('Tarjeta activada:', response);
+        setIsCardPaused(false);  // Actualiza el estado para reflejar que la tarjeta está activa
+      } catch (error) {
+        console.error('Error al activar la tarjeta:', error);
+      }
+    } else {
+      // Pausar la tarjeta
+      try {
+        router.push("/auth/pause-card");  // Redirige a la página de pausa
+      } catch (error) {
+        console.error('Error al pausar la tarjeta:', error);
+      }
+    }
   };
+  
 
   return (
     <div>
-      {/* Background con el nuevo color */}
       <BackgroundCard
         height="375px"
-        backgroundColor="#262429"
+        backgroundColor="#111111"
         shadowColor="rgba(0, 0, 0, 0.15)"
       />
-
       <main className="flex flex-col items-center min-h-screen text-white relative z-10 mt-2">
         <div className="flex items-center px-8 mt-4 w-full">
           <div className="bg-[#EADDFF] text-[#4F378A] flex items-center justify-center rounded-full w-8 h-8 ml-2">
@@ -43,8 +63,10 @@ export default function HomePage() {
           </div>
           <span className="text-sm ml-2">Hola {formData.firstName}</span>
         </div>
-
-        <div className="relative w-[296px] bg-gradient-to-r from-black to-[#434343] rounded-lg p-6 shadow-lg mt-6 z-10">
+        <div
+          className="relative w-[296px] bg-gradient-to-r from-black to-[#434343] rounded-lg p-6 shadow-lg mt-6 z-10"
+          style={{ filter: isCardPaused ? 'grayscale(100%) brightness(50%) contrast(70%) saturate(20%)' : 'none' }}
+        >
           <div className="flex justify-between items-center mb-2">
             <div className="flex items-center gap-2">
               <Image src="/icons/VisaIcon.png" alt="Visa Icon" width={50} height={20} />
@@ -64,7 +86,6 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-
         <div className="flex mt-4 space-x-4 w-[296px] z-10">
           <BlackButton
             label={
@@ -75,9 +96,16 @@ export default function HomePage() {
             fullWidth
             onClick={handleReceiveClick}
             className="text-sm bg-[#100F0F] text-[#FAFAFA] rounded-md h-[68px]"
+            style={{ filter: isCardPaused ? 'grayscale(100%) brightness(50%) contrast(70%) saturate(20%)' : 'none' }}
+            disabled={isCardPaused}
           />
+
           <BlackButton
             label={
+              isCardPaused ?
+              <>
+                <PauseCircleOutlineIcon className="mr-2" />Activar tarjeta
+              </> :
               <>
                 <PauseCircleOutlineIcon className="mr-2" />Pausar tarjeta
               </>
@@ -95,10 +123,8 @@ export default function HomePage() {
             className="text-center"
           />
         </div>
-
         <div className="flex flex-col items-start mt-10 px-8 w-full z-10">
           <Subtitle text="¿Dónde podes usar la tarjeta?" textAlign="left" />
-
           <div className="flex justify-between mt-4 w-full">
             <div className="flex items-center justify-center w-[70px] h-[48px]">
               <Image src="/icons/ApplePayIcon.png" alt="Apple Pay" width={70} height={24} />
@@ -113,7 +139,6 @@ export default function HomePage() {
               <Image src="/icons/PayPalIcon.png" alt="PayPal" width={70} height={24} />
             </div>
           </div>
-
           <Subtitle
             text={
               <>
