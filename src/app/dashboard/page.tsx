@@ -32,7 +32,7 @@ export default function HomePage() {
       {/* Background con el nuevo color */}
       <BackgroundCard
         height="375px"
-        backgroundColor="#181818" // Color de fondo actualizado
+        backgroundColor="#262429"
         shadowColor="rgba(0, 0, 0, 0.15)"
       />
 
