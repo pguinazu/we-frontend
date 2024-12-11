@@ -23,6 +23,7 @@ export default function HomePage() {
   };
 
   const handlePauseCardClick = () => {
+    router.push('/auth/pause-card');
     console.log('Pausar tarjeta');
   };
 
