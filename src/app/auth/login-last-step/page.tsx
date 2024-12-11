@@ -1,20 +1,24 @@
 'use client';
+
 import React, { useState } from 'react';
 import Button from '../../components/Button';
 import Subtitle from '../../components/Subtitle';
 import Title from '../../components/Title';
 import PopUp from '../../components/PopUp';
 import LoginPersonalInfoForm from '../../components/LoginPersonalInfoForm';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { authService } from '@/app/services/auth/authService';
 
 const LoginScreenLastStep = () => {
+  const [showPopUp, setShowPopUp] = useState(false);
+  const router = useRouter();
 
   const handleGoogleLogin = async () => {
     try {
       const googleLoginUrl = await authService.loginWithGoogle();
-      window.location.href = googleLoginUrl; // Redirige a la URL de Google
+      window.location.href = googleLoginUrl;
     } catch (error) {
       console.error('Error al iniciar sesión con Google:', error);
     }
@@ -23,14 +27,11 @@ const LoginScreenLastStep = () => {
   const handleFacebookLogin = async () => {
     try {
       const facebookLoginUrl = await authService.loginWithFacebook();
-      window.location.href = facebookLoginUrl; // Redirige a la URL de Facebook
+      window.location.href = facebookLoginUrl;
     } catch (error) {
       console.error('Error al iniciar sesión con Facebook:', error);
     }
   };
-
-  const [showPopUp, setShowPopUp] = useState(false);
-  const router = useRouter();
 
   const handleClosePopUp = () => {
     setShowPopUp(false);
@@ -38,7 +39,6 @@ const LoginScreenLastStep = () => {
 
   return (
     <div className="w-full h-full flex flex-col items-center p-5 relative">
-      {/* Cambiado de div a botón para mayor accesibilidad */}
       <button
         type="button"
         className="w-full flex items-center mb-4 text-[#FEF7FF] cursor-pointer bg-transparent border-none p-0"
@@ -61,16 +61,11 @@ const LoginScreenLastStep = () => {
         o ingresá con redes sociales
       </div>
 
-      {/* Botones de redes sociales */}
       <div className="flex flex-col gap-4 w-full max-w-xs">
         <Button
           label={
             <div className="flex items-center justify-center gap-3 h-full">
-              <img
-                src="/icons/Google.png"
-                alt="Google Icon"
-                className="w-8 h-8"
-              />
+              <Image src="/icons/Google.png" alt="Google Icon" width={32} height={32} layout="fixed" />
               <span className="text-[16px] leading-none">
                 Registrarse con Google
               </span>
@@ -84,11 +79,7 @@ const LoginScreenLastStep = () => {
         <Button
           label={
             <div className="flex items-center justify-center gap-3 h-full">
-              <img
-                src="/icons/Facebook.png"
-                alt="Facebook Icon"
-                className="w-8 h-8"
-              />
+              <Image src="/icons/Facebook.png" alt="Facebook Icon" width={32} height={32} layout="fixed" />
               <span className="text-[16px] leading-none">
                 Registrarse con Facebook
               </span>

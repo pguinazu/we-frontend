@@ -4,7 +4,7 @@ import api from '../api';
 export const authService = {
   signUp: async (data: SignUpForm, setToken: (token: string | null) => void) => {
     const response = await api.post('/signup', data);
-    setToken(response.data.token); // almacena token en contexto y cookies
+    setToken(response.data.id_token); // almacena token en contexto y cookies
     return response.data;
   },
 

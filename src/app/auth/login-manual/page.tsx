@@ -11,6 +11,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { authService } from "@/app/services/auth/authService";
 import { useAuth } from '@/app/contexts/AuthContext';
+import Image from "next/image";
 
 const LoginPage = () => {
   interface ApiError { // pasar a un archivo de interfaces global
@@ -74,8 +75,9 @@ const LoginPage = () => {
             rememberMe,
           },
           setToken
-        );
+        );        
         localStorage.setItem("user", JSON.stringify(result));
+
         router.push("/dashboard");
       } catch (error) {
         if (
@@ -86,8 +88,7 @@ const LoginPage = () => {
         ) {
           setErrors({
             username: "Este correo no se encuentra registrado",
-            password:
-              "La contraseña ingresada no es correcta, volvé a intentarlo",
+            password: "La contraseña ingresada no es correcta, volvé a intentarlo",
           });
         } else {
           console.error("Error al iniciar sesión:", error);
@@ -100,7 +101,6 @@ const LoginPage = () => {
     setShowPassword((prev) => !prev);
   };
 
-  // Determinando el tipo de campo de contraseña
   const determinePasswordType = () => {
     if (formik.errors.password && formik.touched.password) {
       return "text";
@@ -118,14 +118,12 @@ const LoginPage = () => {
     <div
       className="flex flex-col items-center justify-start min-h-screen px-6"
       style={{
-        background:
-          "linear-gradient(3.12deg, #000000 3.74%, #232323 79.77%, #434343 124.44%)",
+        background: "linear-gradient(3.12deg, #000000 3.74%, #232323 79.77%, #434343 124.44%)",
       }}
     >
-      {/* Encabezado */}
       <div className="w-full max-w-xs mb-4">
         <div className="flex items-center gap-3 mb-2 px-2 pt-9">
-          <img src="/icons/WeIcon.png" alt="We Icon" className="w-8 h-8" />
+          <Image src="/icons/WeIcon.png" alt="We Icon" width={32} height={32} />
           <Title text="Iniciar sesión" textAlign="left" />
         </div>
         <div className="w-full">
@@ -136,7 +134,6 @@ const LoginPage = () => {
         </div>
       </div>
 
-      {/* Formulario */}
       <form
         onSubmit={formik.handleSubmit}
         className="relative w-full max-w-xs p-3 bg-[#202020] shadow-md rounded-md flex flex-col gap-6"
@@ -191,9 +188,7 @@ const LoginPage = () => {
                       border: "none",
                       cursor: "pointer",
                     }}
-                    aria-label={
-                      showPassword ? "Ocultar contraseña" : "Mostrar contraseña"
-                    }
+                    aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
                   >
                     {showPassword ? <VisibilityOff /> : <Visibility />}
                   </button>
@@ -203,7 +198,6 @@ const LoginPage = () => {
           }}
         />
 
-        {/* Recordarme y Olvidé mi contraseña */}
         <div className="flex justify-between items-center w-full text-[#FAFAFA] text-[12px]">
           <div className="flex items-center space-x-1">
             <Checkbox
@@ -228,23 +222,16 @@ const LoginPage = () => {
         />
       </form>
 
-      {/* Separador de redes sociales */}
       <Subtitle
         className="w-full text-center mt-8 mb-4"
         text="o ingresá con redes sociales"
       />
 
-      {/* Botones de redes sociales */}
-      {/* Botones de redes sociales */}
       <div className="flex flex-col gap-4 w-full max-w-xs">
         <Button
           label={
             <div className="flex items-center justify-center gap-3 h-full">
-              <img
-                src="/icons/Google.png"
-                alt="Google Icon"
-                className="w-8 h-8"
-              />
+              <Image src="/icons/Google.png" alt="Google Icon" width={32} height={32} />
               <span className="text-[16px] leading-none">
                 Registrarse con Google
               </span>
@@ -258,11 +245,7 @@ const LoginPage = () => {
         <Button
           label={
             <div className="flex items-center justify-center gap-3 h-full">
-              <img
-                src="/icons/Facebook.png"
-                alt="Facebook Icon"
-                className="w-8 h-8"
-              />
+              <Image src="/icons/Facebook.png" alt="Facebook Icon" width={32} height={32} />
               <span className="text-[16px] leading-none">
                 Registrarse con Facebook
               </span>
@@ -274,7 +257,6 @@ const LoginPage = () => {
         />
       </div>
 
-      {/* Registro */}
       <div className="text-center mt-6 text-[#FAFAFA] text-[14px]">
         ¿Aún no tienes cuenta?{" "}
         <a href="/auth/register" className="underline">

@@ -1,4 +1,7 @@
 {
-  "extends": ["next/core-web-vitals", "next/typescript", "plugin:sonarjs/recommended"],
-  "plugins": ["sonarjs"]
+  "extends": ["next/core-web-vitals", "next/typescript"],
+  "rules": {
+  // "next/no-img-element": "error",
+  "@typescript-eslint/no-explicit-any": "error"
+}
 }

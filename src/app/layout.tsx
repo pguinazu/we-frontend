@@ -5,6 +5,7 @@ import { FormProvider } from "./contexts/SignUpContext";
 import { CryptoProvider } from "./contexts/CryptoContext";
 import { LoginProvider } from "./contexts/LogInContext";
 import { AuthProvider } from "./contexts/AuthContext";
+import { CardStateProvider } from "./contexts/CardStateContext";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -35,9 +36,9 @@ export default function RootLayout({
         <AuthProvider>
           <FormProvider>
             <LoginProvider>
-              <CryptoProvider>
-                  {children}
-              </CryptoProvider>
+              <CardStateProvider>
+                <CryptoProvider>{children}</CryptoProvider>
+              </CardStateProvider>
             </LoginProvider>
           </FormProvider>
         </AuthProvider>
