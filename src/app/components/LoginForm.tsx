@@ -8,15 +8,12 @@ import { useRouter } from 'next/navigation';
 import { useForm } from '../contexts/SignUpContext';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { authService } from '../services/auth/authService';
-import { useAuth } from '../contexts/AuthContext';
 import axios from 'axios';
 
 
 const LoginForm: React.FC = () => {
   const { formData, setFormData } = useForm();
   const router = useRouter();
-  const { setToken } = useAuth();
 
   const [showPassword, setShowPassword] = React.useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
@@ -61,7 +58,6 @@ const LoginForm: React.FC = () => {
     onSubmit: async (values) => {
       try {
         setFormData(values);
-        const data = await authService.signUp(values, setToken);
         router.push('/auth/login-last-step');
       } catch (error) {
         if (
