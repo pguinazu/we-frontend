@@ -259,7 +259,7 @@ const LoginPage = () => {
 
       <div className="text-center mt-6 text-[#FAFAFA] text-[14px]">
         ¿Aún no tienes cuenta?{" "}
-        <a href="/auth/register" className="underline">
+        <a href="/auth/login" className="underline">
           Regístrate
         </a>
       </div>
