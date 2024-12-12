@@ -128,7 +128,6 @@ const LoginForm: React.FC = () => {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             error={formik.touched.password && Boolean(formik.errors.password)}
-            helperText={formik.touched.password && formik.errors.password}
             InputProps={{
               style: { backgroundColor: '#FAFAFA' },
               endAdornment: (
