@@ -8,10 +8,15 @@ import { useRouter } from 'next/navigation';
 import { useForm } from '../contexts/SignUpContext';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import { authService } from '../services/auth/authService';
+import { useAuth } from '../contexts/AuthContext';
+import axios from 'axios';
+
 
 const LoginForm: React.FC = () => {
   const { formData, setFormData } = useForm();
   const router = useRouter();
+  const { setToken } = useAuth();
 
   const [showPassword, setShowPassword] = React.useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
@@ -53,11 +58,26 @@ const LoginForm: React.FC = () => {
       phoneCountryCode: formData.phoneCountryCode || '',
     },
     validationSchema,
-    onSubmit: (values) => {
-      setFormData(values);
-      router.push('/auth/login-last-step');
+    onSubmit: async (values) => {
+      try {
+        setFormData(values);
+        const data = await authService.signUp(values, setToken);
+        router.push('/auth/login-last-step');
+      } catch (error) {
+        if (
+          axios.isAxiosError(error) &&
+          error.response &&
+          error.response.data &&
+          error.response.data.type === "https://www.jhipster.tech/problem/login-already-used"
+        ) {
+          formik.setFieldError('email', 'Este correo electrónico ya está registrado');
+        } else {
+          console.error('Error al registrarse:', error);
+        }
+      }
     },
   });
+  
 
   const passwordValidationRules = [
     {
@@ -99,8 +119,7 @@ const LoginForm: React.FC = () => {
           InputProps={{
             style: { backgroundColor: '#FAFAFA' },
             endAdornment: (
-              formik.touched.email &&
-              formik.errors.email && (
+              formik.touched.email && formik.errors.email && (
                 <InputAdornment position="end">
                   <ErrorOutline color="error" />
                 </InputAdornment>
@@ -108,6 +127,7 @@ const LoginForm: React.FC = () => {
             ),
           }}
         />
+
 
         {/* Password Field */}
         <div className="relative">
