@@ -1,79 +1,54 @@
-'use client';
+"use client"
 
-import React from 'react';
-import { TextField, IconButton, InputAdornment } from '@mui/material';
-import { Visibility, VisibilityOff, ErrorOutline } from '@mui/icons-material';
-import Button from '../components/Button';
-import { useRouter } from 'next/navigation';
-import { useForm } from '../contexts/SignUpContext';
-import { useFormik } from 'formik';
-import * as yup from 'yup';
-import axios from 'axios';
+import React, { useState } from "react";
+import { TextField, InputAdornment, IconButton } from "@mui/material";
+import Button from "@/app/components/Button";
+import Title from "@/app/components/Title";
+import Subtitle from "@/app/components/Subtitle";
+import { Visibility, VisibilityOff, ErrorOutline } from "@mui/icons-material";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
+const LoginPage = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-const LoginForm: React.FC = () => {
-  const { formData, setFormData } = useForm();
-  const router = useRouter();
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
 
-  const [showPassword, setShowPassword] = React.useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
-
-  const handleClickShowPassword = () => setShowPassword(!showPassword);
-  const handleClickShowConfirmPassword = () =>
+  const handleClickShowConfirmPassword = () => {
     setShowConfirmPassword(!showConfirmPassword);
+  };
 
-  // Yup schema for password
-  const passwordSchema = yup
-    .string()
-    .min(8, 'La contraseña debe tener mínimo 8 caracteres y máximo 16 caracteres')
-    .max(16, 'La contraseña debe tener mínimo 8 caracteres y máximo 16 caracteres')
-    .matches(/[A-Z]/, 'La contraseña debe contener al menos una Mayúscula')
-    .matches(/\d/, 'La contraseña debe contener al menos un número')
-    .matches(/[!@#$%^&*(),.?":{}|<>]/, 'La contraseña debe contener al menos un carácter especial');
-
-  const validationSchema = yup.object({
-    email: yup
-      .string()
-      .email('Correo electrónico no válido')
-      .required('El correo es obligatorio'),
-    password: passwordSchema.required('La contraseña es obligatoria'),
-    confirmPassword: yup
-      .string()
-      .oneOf([yup.ref('password')], 'Las contraseñas no coinciden')
-      .required('La confirmación de contraseña es obligatoria'),
+  const validationSchema = Yup.object({
+    password: Yup.string()
+      .matches(/[A-Z]/, "Debe contener al menos una mayúscula")
+      .matches(/\d/, "Debe contener al menos un número")
+      .matches(
+        /[!@#$%^&*(),.?":{}|<>]/,
+        "Debe contener al menos un carácter especial"
+      )
+      .min(8, "Debe tener entre 8 y 16 caracteres")
+      .max(16, "Debe tener entre 8 y 16 caracteres")
+      .required("La contraseña es obligatoria"),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref('password'), undefined], "Las contraseñas deben coincidir")
+      .required("Confirmar contraseña es obligatorio"),
   });
 
   const formik = useFormik({
     initialValues: {
-      email: formData.email,
-      password: formData.password,
-      confirmPassword: formData.confirmPassword,
-      firstName: formData.firstName || '',
-      lastName: formData.lastName || '',
-      termsAccepted: formData.termsAccepted || false,
-      phoneNumber: formData.phoneNumber || '',
-      phoneCountryCode: formData.phoneCountryCode || '',
+      password: "",
+      confirmPassword: "",
     },
     validationSchema,
-    onSubmit: async (values) => {
-      try {
-        setFormData(values);
-        router.push('/auth/login-last-step');
-      } catch (error) {
-        if (
-          axios.isAxiosError(error) &&
-          error.response &&
-          error.response.data &&
-          error.response.data.type === "https://www.jhipster.tech/problem/login-already-used"
-        ) {
-          formik.setFieldError('email', 'Este correo electrónico ya está registrado');
-        } else {
-          console.error('Error al registrarse:', error);
-        }
-      }
+    validateOnBlur: true,
+    validateOnChange: true,
+    onSubmit: (values) => {
+      console.log('Formulario enviado:', values);
     },
   });
-  
 
   const passwordValidationRules = [
     {
@@ -94,37 +69,31 @@ const LoginForm: React.FC = () => {
     },
   ];
 
+  const isFormValid = formik.isValid && formik.dirty && !formik.isSubmitting && formik.values.password === formik.values.confirmPassword;
+
   return (
-    <form
-      onSubmit={formik.handleSubmit}
-      className="relative w-full max-w-xs p-3 bg-[#202020] shadow-md rounded-md flex flex-col gap-6"
+    <div
+      className="flex flex-col items-center justify-start min-h-screen px-6"
+      style={{
+        background: "linear-gradient(3.12deg, #000000 3.74%, #232323 79.77%, #434343 124.44%)",
+      }}
     >
-      <div className="flex flex-col gap-4">
-        {/* Email Field */}
-        <TextField
-          label="Correo electrónico"
-          placeholder="juan@gmail.com"
-          variant="filled"
-          fullWidth
-          name="email"
-          value={formik.values.email}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.email && Boolean(formik.errors.email)}
-          helperText={formik.touched.email && formik.errors.email}
-          InputProps={{
-            style: { backgroundColor: '#FAFAFA' },
-            endAdornment: (
-              formik.touched.email && formik.errors.email && (
-                <InputAdornment position="end">
-                  <ErrorOutline color="error" />
-                </InputAdornment>
-              )
-            ),
-          }}
-        />
+      <div className="w-full max-w-xs mb-4">
+        <div className="flex items-center gap-3 mb-2 px-2 pt-9">
+          <Title text="Crear nueva contraseña" textAlign="left" />
+        </div>
+        <div className="w-full">
+          <Subtitle
+            text="Crea tu nueva contraseña para poder ingresar a tu cuenta"
+            textAlign="left"
+          />
+        </div>
+      </div>
 
-
+      <form
+        onSubmit={formik.handleSubmit}
+        className="relative w-full max-w-xs p-3 bg-[#202020] shadow-md rounded-md flex flex-col gap-6"
+      >
         {/* Password Field */}
         <div className="relative">
           <TextField
@@ -214,18 +183,17 @@ const LoginForm: React.FC = () => {
             ),
           }}
         />
-      </div>
 
-      {/* Submit Button */}
-      <Button
-        label="Continuar"
-        type="submit"
-        fullWidth
-        disabled={!formik.isValid || !formik.dirty}
-        className={!formik.isValid ? 'opacity-50 cursor-not-allowed' : ''}
-      />
-    </form>
+        <Button
+          label="Restablecer contraseña"
+          type="submit"
+          fullWidth={true}
+          className="bg-[#FAFAFA] text-[#202022]"
+          disabled={!isFormValid}
+        />
+      </form>
+    </div>
   );
 };
 
-export default LoginForm;
+export default LoginPage;

@@ -24,6 +24,10 @@ const LoginPage = () => {
   const router = useRouter();
   const { setToken } = useAuth();
 
+  const handleForgotPasswordClick = () => {
+    router.push('/auth/restore-password');
+  };
+
   const handleGoogleLogin = async () => {
     try {
       const googleLoginUrl = await authService.loginWithGoogle();
@@ -199,19 +203,22 @@ const LoginPage = () => {
         />
 
         <div className="flex justify-between items-center w-full text-[#FAFAFA] text-[12px]">
-          <div className="flex items-center space-x-1">
-            <Checkbox
-              checked={rememberMe}
-              onChange={(e) => setRememberMe(e.target.checked)}
-              style={{ color: "#FAFAFA", padding: "0 4px 0 0" }}
-              size="small"
-            />
-            <span>Recordarme</span>
-          </div>
-          <span className="cursor-pointer underline text-[11px] font-medium whitespace-nowrap">
-            ¿Te olvidaste la contraseña?
-          </span>
-        </div>
+              <div className="flex items-center space-x-1">
+                <Checkbox
+                  checked={rememberMe}
+                  onChange={(e) => setRememberMe(e.target.checked)}
+                  style={{ color: "#FAFAFA", padding: "0 4px 0 0" }}
+                  size="small"
+                />
+                <span>Recordarme</span>
+              </div>
+              <span
+                className="cursor-pointer underline text-[11px] font-medium whitespace-nowrap"
+                onClick={handleForgotPasswordClick}
+              >
+                ¿Te olvidaste la contraseña?
+              </span>
+            </div>
 
         <Button
           label="Ingresar"
@@ -259,7 +266,7 @@ const LoginPage = () => {
 
       <div className="text-center mt-6 text-[#FAFAFA] text-[14px]">
         ¿Aún no tienes cuenta?{" "}
-        <a href="/auth/register" className="underline">
+        <a href="/auth/login" className="underline">
           Regístrate
         </a>
       </div>
