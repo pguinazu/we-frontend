@@ -17,10 +17,9 @@ import { cardService } from '../../services/card/cardService';
 const CryptoFinalScreen = () => {
   const router = useRouter();
   const [showModal, setShowModal] = useState(false);
-  const { setIsCardPaused } = useCardState();
+  const { setIsCardPaused, cardId } = useCardState();
 
-  const confirmPauseCard = async () => {
-    const cardId = "4569"; // Asegúrate de obtener este ID de alguna forma dinámica si necesario
+  const confirmPauseCard = async () => { 
     try {
       const response = await cardService.pauseCard(cardId);
       console.log('Tarjeta pausada:', response);
