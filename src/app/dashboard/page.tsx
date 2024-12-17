@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
 import Title from '../components/Title';
 import Subtitle from '../components/Subtitle';
@@ -19,35 +19,55 @@ import { cardService } from '../services/card/cardService';
 export default function HomePage() {
   const { formData } = useForm();
   const router = useRouter();
-  const { isCardPaused, setIsCardPaused } = useCardState();
+  const { isCardPaused, setIsCardPaused, cardId, setCardId } = useCardState();
 
+  useEffect(() => {
+    const fetchCardData = async () => {
+      try {
+        const data = await cardService.getCurrentCards();
+        setCardId(data.idCard);
+      } catch (error) {
+        console.error('Error fetching card data:', error);
+      }
+    };
+    fetchCardData();
+  }, [setCardId]);
+
+  useEffect(() => {
+    if (cardId) {
+      const fetchStatus = async () => {
+        try {
+          const statusData = await cardService.getStatus(cardId);
+          setIsCardPaused(statusData.paused);
+        } catch (error) {
+          console.error('Error fetching card status:', error);
+        }
+      };
+      fetchStatus();
+    }
+  }, [cardId, setIsCardPaused]);
 
   const handleReceiveClick = () => {
     router.push('/auth/select-crypto');
   };
 
   const handlePauseCardClick = async () => {
-    const cardId = "4569";  // ID hardcodeado hasta que esté el servicio de getId o lo que sea
-  
     if (isCardPaused) {
-      // Activar la tarjeta
       try {
         const response = await cardService.resumeCard(cardId);
         console.log('Tarjeta activada:', response);
-        setIsCardPaused(false);  // Actualiza el estado para reflejar que la tarjeta está activa
+        setIsCardPaused(false);
       } catch (error) {
         console.error('Error al activar la tarjeta:', error);
       }
     } else {
-      // Pausar la tarjeta
       try {
-        router.push("/auth/pause-card");  // Redirige a la página de pausa
+        router.push("/auth/pause-card");
       } catch (error) {
         console.error('Error al pausar la tarjeta:', error);
       }
     }
   };
-  
 
   return (
     <div>

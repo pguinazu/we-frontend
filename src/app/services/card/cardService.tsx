@@ -18,12 +18,12 @@ export const cardService = {
     return response.data;
   },
 
-  pauseCard: async (cardId: string) => {
+  pauseCard: async (cardId: number | null) => {
     const response = await api.post(`/cards/${cardId}/deactivate`);
     return response.data;
   },
 
-  resumeCard: async (cardId: string) => {
+  resumeCard: async (cardId: number | null) => {
     const response = await api.post(`/cards/${cardId}/activate`);
     return response.data;
   },
@@ -33,4 +33,10 @@ export const cardService = {
     const response = await api.get(`/cards/${cardId}/transactions`, { params });
     return response.data;
   },
+
+  getStatus: async (cardId: number) => {
+    const response = await api.get(`cards/${cardId}/status`);
+    return response.data;
+  },
+
 };
