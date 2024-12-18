@@ -28,7 +28,7 @@ export const cardService = {
     return response.data;
   },
 
-  getCardTransactions: async (cardId: string, size = 5, page = 0) => {
+  getCardTransactions: async (cardId: number, size = 5, page = 0) => {
     const params = { size, page, sort: 'date,DESC' };
     const response = await api.get(`/cards/${cardId}/transactions`, { params });
     return response.data;

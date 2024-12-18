@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Title from '../components/Title';
 import Subtitle from '../components/Subtitle';
 import BlackButton from '../components/BlackButton';
+import Movement from '../components/Movement';
 import OutboxIcon from '@mui/icons-material/Outbox';
 import PauseCircleOutlineIcon from '@mui/icons-material/PauseCircleOutline';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
@@ -17,6 +18,7 @@ import { useCardState } from '../contexts/CardStateContext';
 import { cardService } from '../services/card/cardService';
 
 export default function HomePage() {
+  const [movements, setMovements] = useState<string[]>([]);
   const { formData } = useForm();
   const router = useRouter();
   const { isCardPaused, setIsCardPaused, cardId, setCardId } = useCardState();
@@ -47,6 +49,38 @@ export default function HomePage() {
     }
   }, [cardId, setIsCardPaused]);
 
+  useEffect(() => {
+    const fetchMovements = async () => {
+      try {
+        if (cardId) {
+          const { transactions } = await cardService.getCardTransactions(cardId, 3, 0);
+          const formattedTransactions = transactions.map((transaction: { 
+            type: string; 
+            entity?: string; 
+            amount_received?: string; 
+            date: string; 
+            amount?: string; 
+          }) => ({
+            title:
+              transaction.type === "card"
+                ? `Pagaste en ${transaction.entity}`
+                : `Recibiste ${transaction.amount_received}`,
+            date: transaction.date,
+            amount:
+              transaction.type === "card"
+                ? transaction.amount || "N/A"
+                : transaction.amount_received || "N/A",
+          }));
+          setMovements(formattedTransactions); 
+        }
+      } catch (error) {
+        console.error("Error fetching movements:", error);
+      }
+    };
+    fetchMovements();
+  }, [cardId]);
+  
+    
   const handleReceiveClick = () => {
     router.push('/auth/select-crypto');
   };
@@ -135,17 +169,39 @@ export default function HomePage() {
             className="text-sm bg-[#202020] text-[#FAFAFA] rounded-md h-[68px]"
           />
         </div>
-        <div className="flex flex-col items-center mt-10 0 z-10">
-          <OutboxIcon className="text-white mb-4 !text-[50px]" />
-          <Title text="Aún no hay movimientos" className="text-center text-xl pb-3" />
-          <Subtitle
-            text="Pronto podrás ver los últimos movimientos que realizaste en tu cuenta"
-            className="text-center"
-          />
-        </div>
         <div className="flex flex-col items-start mt-10 px-8 w-full z-10">
+          {movements.length > 0 ? (
+            <>
+              <div className="flex justify-between items-center w-full mb-4">
+                <span className="text-lg font-semibold text-[#FEF7FF]">Últimos movimientos</span>
+                <Link href="/movements" className="text-xs underline text-[#FEF7FF]">
+                  Ver todos
+                </Link>
+              </div>
+              <div className="flex flex-col gap-2 w-full">
+            {movements.slice(0, 3).map((movement, index) => (
+              <Movement
+                key={index}
+                title={movement.title}
+                date={movement.date}
+              />
+            ))}
+          </div>
+            </>
+          ) : (
+            <div className="flex flex-col items-center">
+              <OutboxIcon className="text-white mb-4 !text-[50px]" />
+              <Title text="Aún no hay movimientos" className="text-center text-xl pb-3" />
+              <Subtitle
+                text="Pronto podrás ver los últimos movimientos que realizaste en tu cuenta"
+                className="text-center"
+              />
+            </div>
+          )}
+        </div>
+        <div className="flex flex-col items-start mt-10 px-8 w-full z-10 mb-4">
           <Subtitle text="¿Dónde podes usar la tarjeta?" textAlign="left" />
-          <div className="flex justify-between mt-4 w-full">
+          <div className="flex justify-between mt-2 w-full">
             <div className="flex items-center justify-center w-[70px] h-[48px]">
               <Image src="/icons/ApplePayIcon.png" alt="Apple Pay" width={70} height={24} />
             </div>
