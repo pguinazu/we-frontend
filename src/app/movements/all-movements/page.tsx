@@ -8,8 +8,13 @@ import Movement from "@/app/components/Movement";
 import { cardService } from '../../services/card/cardService';
 import { useCardState } from '../../contexts/CardStateContext';
 
+interface MovementData {
+  title: string;
+  date: string;
+}
+
 const AllMovements = () => {
-    const [movements, setMovements] = useState([]); 
+    const [movements, setMovements] = useState<MovementData[]>([]); 
     const router = useRouter();
     const { cardId } = useCardState();
 
@@ -18,7 +23,7 @@ const AllMovements = () => {
           try {
             if (cardId) {
               const { transactions } = await cardService.getCardTransactions(cardId, 10, 0);
-              const formattedTransactions = transactions.map((transaction) => ({
+              const formattedTransactions = transactions.map((transaction: { type: string; entity: string; amount_received: string; date: string; }) => ({
                 title:
                   transaction.type === "card"
                     ? `Pagaste en ${transaction.entity}`
