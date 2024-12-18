@@ -174,7 +174,7 @@ export default function HomePage() {
             <>
               <div className="flex justify-between items-center w-full mb-4">
                 <span className="text-lg font-semibold text-[#FEF7FF]">Últimos movimientos</span>
-                <Link href="/movements" className="text-xs underline text-[#FEF7FF]">
+                <Link href="/movements/all-movements  " className="text-xs underline text-[#FEF7FF]">
                   Ver todos
                 </Link>
               </div>
