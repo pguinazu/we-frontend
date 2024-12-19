@@ -34,7 +34,7 @@ const SelectCrypto = () => {
       subtitle: crypto.symbol ?? crypto.name,
       id: crypto.id,
     });
-    router.push("/auth/select-crypto-red");
+    router.push("/crypto/select-crypto-red");
   };
 
   return (
