@@ -40,7 +40,7 @@ const AllMovements = () => {
     }, [cardId]);
 
     return (
-        <div className="w-full h-full flex flex-col items-start p-5 relative">
+        <div className="w-full h-full flex flex-col items-start relative">
           <button
             className="absolute top-5 left-5 flex items-center text-[#FEF7FF] cursor-pointer"
             onClick={() => router.back()}
@@ -49,11 +49,11 @@ const AllMovements = () => {
             <span>Volver</span>
           </button>
 
-          <div className="w-full mt-12">
-            <Subtitle text="Últimos movimientos" textAlign="left" />
+          <div className="w-full mt-12 pt-8">
+            <Subtitle text="Últimos movimientos" textAlign="left"/>
           </div>
 
-          <div className="flex flex-col items-start mt-10 px-8 w-full z-10">
+          <div className="flex flex-col items-start mt-2 px-8 w-full z-10 mb-10">
               <div className="flex flex-col gap-2 w-full">
                   {movements.map((movement, index) => (
                     <Movement
