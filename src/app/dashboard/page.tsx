@@ -82,7 +82,7 @@ export default function HomePage() {
   
     
   const handleReceiveClick = () => {
-    router.push('/auth/select-crypto');
+    router.push('/crypto/select-crypto');
   };
 
   const handlePauseCardClick = async () => {
@@ -96,7 +96,7 @@ export default function HomePage() {
       }
     } else {
       try {
-        router.push("/auth/pause-card");
+        router.push("/card/pause-card");
       } catch (error) {
         console.error('Error al pausar la tarjeta:', error);
       }
