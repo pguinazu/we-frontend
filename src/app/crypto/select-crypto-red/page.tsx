@@ -35,7 +35,7 @@ const SelectCryptoRed = () => {
       subtitle: `Red ${network.name}`,
       id: network.id,
     });
-    router.push("/cryptoauth/select-crypto-last-step");
+    router.push("/crypto/select-crypto-last-step");
   };
 
   return (
