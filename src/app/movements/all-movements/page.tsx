@@ -8,13 +8,19 @@ import Movement from "@/app/components/Movement";
 import { cardService } from '../../services/card/cardService';
 import { useCardState } from '../../contexts/CardStateContext';
 
-interface MovementData {
-  title: string;
+interface Transaction {
+  id: string;
+  type: "wallet" | "card";
+  entity?: string;
+  amount_received?: string;
   date: string;
+  amount?: string;
+  wallet_address?: string;
+  status?: string;
 }
 
 const AllMovements = () => {
-    const [movements, setMovements] = useState<MovementData[]>([]); 
+    const [movements, setMovements] = useState<Transaction[]>([]); 
     const router = useRouter();
     const { cardId } = useCardState();
 
@@ -23,14 +29,7 @@ const AllMovements = () => {
           try {
             if (cardId) {
               const { transactions } = await cardService.getCardTransactions(cardId, 10, 0);
-              const formattedTransactions = transactions.map((transaction: { type: string; entity: string; amount_received: string; date: string; }) => ({
-                title:
-                  transaction.type === "card"
-                    ? `Pagaste en ${transaction.entity}`
-                    : `Recibiste ${transaction.amount_received}`,
-                date: transaction.date,
-              }));
-              setMovements(formattedTransactions); 
+              setMovements(transactions); // Guardamos las transacciones completas
             }
           } catch (error) {
             console.error("Error fetching movements:", error);
@@ -38,6 +37,18 @@ const AllMovements = () => {
         };
         fetchMovements();
     }, [cardId]);
+
+    const handleViewDetails = (transaction: Transaction) => {
+        if (transaction.type === 'wallet') {
+            router.push(
+              `/movements/crypto-movements?id=${transaction.id}&amount=${transaction.amount_received}&date=${transaction.date}&wallet_address=${transaction.wallet_address ?? 'N/A'}`
+            );
+        } else if (transaction.type === 'card') {
+            router.push(
+              `/movements/credit-movements?id=${transaction.id}&amount=${transaction.amount}&date=${transaction.date}&entity=${transaction.entity ?? 'N/A'}&status=${transaction.status ?? 'N/A'}`
+            );
+        }
+    };
 
     return (
         <div className="w-full h-full flex flex-col items-start relative">
@@ -58,8 +69,14 @@ const AllMovements = () => {
                   {movements.map((movement, index) => (
                     <Movement
                       key={index}
-                      title={movement.title}
+                      title={
+                        movement.type === 'card'
+                          ? `Pagaste en ${movement.entity}`
+                          : `Recibiste ${movement.amount_received}`
+                      }
                       date={movement.date}
+                      transaction={movement} // Pasamos la transacción completa
+                      onClick={() => handleViewDetails(movement)} // Pasamos la función de clic
                     />
                   ))}
               </div>
