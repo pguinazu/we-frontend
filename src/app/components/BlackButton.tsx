@@ -2,7 +2,7 @@ import React from 'react';
 
 interface ButtonProps {
   label: string | React.ReactNode;
-  onClick: () => void;
+  onClick?: () => void;
   fullWidth?: boolean;
   className?: string;
   style?: React.CSSProperties;  

@@ -54,7 +54,7 @@ const CryptoFinalScreen = () => {
   };
 
   const handleModifyClick = () => {
-    router.push("/auth/select-crypto");
+    router.push("/crypto/select-crypto");
   };
 
   return (

@@ -1,7 +1,8 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api-dev.we.asf.dev/api';
+// const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api-dev.we.asf.dev/api';
+const API_URL = "http://localhost:8080/api"
 
 // Crear instancia de Axios
 const api = axios.create({

@@ -3,39 +3,38 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import CryptoCard from "@/app/components/CryptoCard";
 import Subtitle from "@/app/components/Subtitle";
+import CryptoCard from "@/app/components/CryptoCard";
 import { useCryptoContext } from "../../contexts/CryptoContext";
 import { blockchainService } from "../../services/blockchain/blockchainService";
-import { Network } from "../../interfaces/cryptoData";
+import { Crypto } from "../../interfaces/cryptoData";
 
-const SelectCryptoRed = () => {
-  const { setSelectedNetwork } = useCryptoContext();
-  const [networks, setNetworks] = useState<Network[]>([]);
-
+const SelectCrypto = () => {
+  const { setSelectedCrypto } = useCryptoContext();
+  const [cryptos, setCryptos] = useState<Crypto[]>([]);
   const router = useRouter();
 
   useEffect(() => {
-    const fetchNetworks = async () => {
+    const fetchCryptos = async () => {
       try {
-        const data = await blockchainService.getBlockchains();
-        setNetworks(data);
+        const data = await blockchainService.getTokens();
+        setCryptos(data);
       } catch {
-        console.error("Error al cargar las redes");
+        console.error("Error al cargar las criptomonedas");
       }
     };
 
-    fetchNetworks();
+    fetchCryptos();
   }, []);
 
-  const handleCardClick = (network: Network) => {
-    setSelectedNetwork({
-      icon: network.icon, // Esto será opcional
-      title: network.name,
-      subtitle: `Red ${network.name}`,
-      id: network.id,
+  const handleCardClick = (crypto: Crypto) => {
+    setSelectedCrypto({
+      icon: "?", // Icono placeholder
+      title: crypto.name,
+      subtitle: crypto.symbol ?? crypto.name,
+      id: crypto.id,
     });
-    router.push("/auth/select-crypto-last-step");
+    router.push("/crypto/select-crypto-red");
   };
 
   return (
@@ -49,20 +48,19 @@ const SelectCryptoRed = () => {
       </button>
 
       <div className="w-full mt-12">
-        <Subtitle text="Elegí la red para recibir" textAlign="left" />
+        <Subtitle text="Elegí la crypto que queres recibir" textAlign="left" />
       </div>
 
       <div className="w-full bg-[#202020] p-5 rounded-md shadow-md flex flex-col gap-4 mt-4">
-        {networks.map((network) => (
+        {cryptos.map((crypto) => (
           <button
-            key={network.id}
-            onClick={() => handleCardClick(network)}
+            key={crypto.id}
+            onClick={() => handleCardClick(crypto)}
             className="cursor-pointer"
           >
             <CryptoCard
-              icon={network.icon} // Esto será opcional
-              title={network.name}
-              subtitle={`Red ${network.name}`}
+              title={crypto.name}
+              subtitle={crypto.symbol ?? "Sin símbolo"}
             />
           </button>
         ))}
@@ -71,4 +69,4 @@ const SelectCryptoRed = () => {
   );
 };
 
-export default SelectCryptoRed;
+export default SelectCrypto;
